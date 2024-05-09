@@ -1,0 +1,9 @@
+[{
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.moe.app",
+      "sha256_cert_fingerprints":
+      ["CC:6E:77:FC:F5:31:55:68:D7:69:3D:2E:37:72:80:D7:32:46:4F:AD:A9:7A:1F:F4:CD:AA:55:8F:CA:74:17:4F"]
+    }
+  }]
