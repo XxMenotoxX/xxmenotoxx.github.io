@@ -1,0 +1,16 @@
+body {
+  background-color: lightcyan;
+}
+
+h1 {
+  color: blue;
+}
+
+p {
+  color: darkslateblue;
+  padding: 30px;
+}
+
+a {
+  color: purple;
+}
