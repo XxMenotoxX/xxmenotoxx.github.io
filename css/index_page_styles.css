@@ -10,7 +10,24 @@ p {
   color: darkslateblue;
   padding: 30px;
 }
+a:link {
+  color: green;
+  background-color: transparent;
+  text-decoration: wavy;
+}
+a:visited {
+  color: pink;
+  background-color: transparent;
+  text-decoration: underline;
+}
+a:hover {
+  columns: red;
+  background-color: transparent;
+  text-decoration: line-through;
+}
 
-a {
-  color: purple;
+a:active {
+  color: yellow;
+  background-color: black;
+  text-decoration: dashed;
 }
