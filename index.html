@@ -8,11 +8,68 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Welcome</title>
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/css/index_page_styles.css" />
   </head>
   <body>
- 
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#news">News</a></li>
+      <li><a href="#contact_us">Contact Us</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+
+    <div class="container">
+      <div class="container-dev">
+        <h2 class="city">london</h2>
+        <p>london is the capital city on england</p>
+        <p>London has over 13 million inhabitants</p>
+      </div>
+      <div class="container-dev">
+        <h2 class="city">Oslo</h2>
+        <p>Oslo is the capital city of Norway.</p>
+        <p>Oslo has over 600.000 inhabitants.</p>
+      </div>
+
+      <div class="container-dev">
+        <h2 class="city">Rome</h2>
+        <p>Rome is the capital city of Italy.</p>
+        <p>Rome has almost 3 million inhabitants.</p>
+      </div>
+    </div>
+
+    <button
+      id="button"
+      onclick="clicked=!clicked;
+      console.log(clicked)
+      showHideFunction();"
+    >
+      Hide Elements
+    </button><br>
+     <a href="https://google.com" target="aa" >display google on the iframe</a><br>
+    <iframe src="pages/practice_html.html" title="google" name="aa">aa</iframe>
+    <script>
+      var clicked = false;
+
+      function showHideFunction() {
+        const x = document.getElementsByClassName("city");
+        const arr = Array.from(x);
+        if (clicked == false) {
+          for (let i = 0; i < arr.length; i++) {
+            const element = arr[i];
+            element.style.display = "block";
+          }
+          document.querySelector("#button").innerHTML = "Hide Titles";
+        } else {
+          for (let i = 0; i < arr.length; i++) {
+            const element = arr[i];
+            element.style.display = "none";
+          }
+          document.querySelector("#button").innerHTML = "Show Titles";
+        }
+      }
+    </script>
   </body>
 </html>

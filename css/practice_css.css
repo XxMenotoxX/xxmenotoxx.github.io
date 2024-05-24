@@ -1,0 +1,59 @@
+body {
+    background-color: white;
+  
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  
+  h1 {
+    color: blue;
+  }
+  
+  p {
+    color: darkslateblue;
+    padding: 30px;
+  }
+  a:link {
+    color: green;
+    background-color: transparent;
+    text-decoration: underline;
+  }
+  a:visited {
+    color: pink;
+    background-color: transparent;
+    text-decoration: underline;
+  }
+  a:hover {
+    columns: red;
+    background-color: transparent;
+    text-decoration: line-through;
+  }
+  
+  a:active {
+    color: yellow;
+    background-color: black;
+    text-decoration: dashed;
+  }
+  
+  th,
+  td {
+    text-align: center;
+    padding: 8px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  caption {
+    padding: 10px;
+    font-weight: bold;
+    font-size: 20px;
+  }
+  
+  tr:hover {
+    background-color: #d5eeee;
+  }
+  tr {
+    border-bottom: 1px solid black;
+  }
