@@ -1,0 +1,1566 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <!-- GitHub Pages preview build -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="data:," />
+  <title>نياشين | إعادة تصميم الصفحة الرئيسية</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f3f5f9;
+      --surface: #fcfcfd;
+      --soft: #f7f8fb;
+      --ink: #172238;
+      --muted: #687386;
+      --line: #dfe4ec;
+      --navy: #22263a;
+      --gold: #b89432;
+      --gold-soft: #fbf6e8;
+      --blue: #3159c7;
+      --blue-soft: #edf2ff;
+      --red: #b93b36;
+      --red-soft: #fdecea;
+      --amber: #a86108;
+      --amber-soft: #fff1d4;
+      --green: #28764a;
+      --green-soft: #eaf6ee;
+      --radius: 16px;
+      --shadow: 0 14px 38px rgba(23, 34, 56, .07);
+    }
+
+    * { box-sizing: border-box; }
+    html { background: var(--bg); }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "IBM Plex Sans Arabic", "Noto Sans Arabic", Tahoma, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    [hidden] { display: none !important; }
+
+    .icon {
+      width: 19px;
+      height: 19px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex: 0 0 auto;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 232px;
+      grid-template-areas: "main side";
+      direction: ltr;
+    }
+
+    .main, .sidebar { direction: rtl; }
+
+    .sidebar {
+      grid-area: side;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      padding: 22px 16px;
+      background: var(--navy);
+      color: #dfe3ed;
+      overflow-y: auto;
+    }
+
+    .logo {
+      height: 58px;
+      padding: 5px 8px 17px;
+      border-bottom: 1px solid rgba(255,255,255,.09);
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img { width: 135px; height: auto; display: block; }
+    .nav-group-title { margin: 23px 10px 8px; color: #858da0; font-size: 10px; font-weight: 800; }
+    .nav { display: grid; gap: 3px; }
+    .nav button, .nav a {
+      min-height: 43px;
+      padding: 0 11px;
+      border: 0;
+      border-radius: 10px;
+      background: transparent;
+      color: inherit;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: right;
+      font-size: 12px;
+      text-decoration: none;
+    }
+    .nav button.active, .nav a.active { background: rgba(255,255,255,.095); color: #fff; }
+    .nav button.active .icon, .nav a.active .icon { color: var(--gold); }
+    .nav-badge { margin-right: auto; min-width: 22px; padding: 2px 6px; border-radius: 999px; background: rgba(255,255,255,.11); color: #dfe3ed; text-align: center; font-size: 9px; }
+    .nav-badge.danger { background: var(--red); color: white; }
+    .nav-chevron { margin-right: auto; color: #8f97a9; }
+
+    .main { grid-area: main; min-width: 0; }
+    .topbar {
+      height: 66px;
+      padding: 0 27px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(252,252,253,.94);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 4;
+      backdrop-filter: blur(14px);
+    }
+
+    .title-block { min-width: 180px; }
+    .title-block h1 { margin: 0; font-size: 20px; }
+    .title-block p { margin: 4px 0 0; color: var(--muted); font-size: 10px; }
+    .search {
+      width: min(380px, 35vw);
+      height: 39px;
+      margin-right: auto;
+      padding: 0 13px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: var(--soft);
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .search input { width: 100%; border: 0; outline: 0; background: transparent; color: var(--ink); }
+    .round-button {
+      width: 39px;
+      height: 39px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: var(--surface);
+      color: var(--ink);
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+    .notify-dot { position: absolute; top: 7px; right: 7px; width: 7px; height: 7px; border-radius: 50%; background: var(--red); box-shadow: 0 0 0 2px var(--surface); }
+
+    .content { padding: 22px 27px 40px; }
+    .page-actions { margin-bottom: 16px; display: flex; align-items: center; gap: 9px; }
+    .small-button {
+      min-height: 38px;
+      padding: 0 13px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface);
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 750;
+      text-decoration: none;
+    }
+    .small-button.statement { margin-right: auto; background: var(--green); border-color: var(--green); color: white; cursor: pointer; }
+
+    .metrics {
+      margin-bottom: 17px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: 0 8px 24px rgba(23,34,56,.04);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      overflow: hidden;
+    }
+    .metric { min-height: 84px; padding: 17px 18px; display: flex; align-items: center; gap: 13px; }
+    .metric + .metric { border-right: 1px solid var(--line); }
+    .metric-icon { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; }
+    .metric strong { display: block; font-size: 23px; line-height: 1; }
+    .metric span { display: block; margin-top: 6px; color: var(--muted); font-size: 10px; }
+    .metric.red .metric-icon { color: var(--red); background: var(--red-soft); }
+    .metric.amber .metric-icon { color: var(--amber); background: var(--amber-soft); }
+    .metric.blue .metric-icon { color: var(--blue); background: var(--blue-soft); }
+    .metric.green .metric-icon { color: var(--green); background: var(--green-soft); }
+
+    .secondary-summary {
+      margin: -5px 0 17px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+    }
+    .secondary-item {
+      min-height: 45px;
+      padding: 0 13px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 10px;
+    }
+    .secondary-item strong { margin-right: auto; font-size: 12px; }
+    .secondary-item a, .secondary-item button {
+      margin-right: auto;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--blue);
+      font: inherit;
+      font-weight: 900;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .module-tabs {
+      margin-bottom: 13px;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--surface);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3px;
+    }
+    .module-tab {
+      min-height: 42px;
+      padding: 0 12px;
+      border: 0;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .module-tab.active { background: var(--navy); color: white; }
+    .count { min-width: 22px; padding: 2px 6px; border-radius: 999px; background: var(--soft); color: var(--muted); text-align: center; font-size: 9px; }
+    .module-tab.active .count { background: rgba(255,255,255,.13); color: white; }
+
+    .module-panel { display: none; }
+    .module-panel.active { display: block; }
+    .module-shell {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .module-head { min-height: 62px; padding: 14px 19px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 12px; }
+    .module-head h2 { margin: 0; font-size: 16px; }
+    .module-head p { margin: 4px 0 0; color: var(--muted); font-size: 10px; }
+    .module-head-actions { margin-right: auto; display: flex; gap: 7px; }
+
+    .assignment-columns { padding: 17px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; align-items: start; }
+    .assignment-card { border: 1px solid var(--line); border-radius: 15px; background: var(--surface); overflow: hidden; }
+    .assignment-card.incoming { border-color: #cfd9f3; }
+    .assignment-card.outgoing { border-color: #e1d3a7; }
+    .assignment-head { padding: 15px 16px 13px; border-bottom: 1px solid var(--line); background: var(--soft); }
+    .assignment-head-top { display: flex; align-items: center; gap: 9px; }
+    .assignment-head h3 { margin: 0; font-size: 14px; }
+    .direction { padding: 4px 8px; border-radius: 999px; font-size: 9px; font-weight: 900; }
+    .incoming .direction { background: var(--blue-soft); color: var(--blue); }
+    .outgoing .direction { background: var(--gold-soft); color: #846716; }
+    .assignment-meta { margin-top: 12px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 9px; }
+    .meta span { display: block; color: var(--muted); font-size: 8px; }
+    .meta strong { display: block; margin-top: 3px; font-size: 10px; white-space: nowrap; }
+
+    .topic-table-head, .topic-row {
+      display: grid;
+      grid-template-columns: 27px minmax(120px, 1.4fr) 80px 82px 72px 24px;
+      gap: 8px;
+      align-items: center;
+    }
+    .topic-table-head { min-height: 37px; padding: 0 12px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 8px; font-weight: 800; }
+    .topic { border-bottom: 1px solid var(--line); }
+    .topic:last-child { border-bottom: 0; }
+    .topic-row { width: 100%; min-height: 56px; padding: 8px 12px; border: 0; background: transparent; color: var(--ink); text-align: right; }
+    .topic-row strong { display: block; font-size: 10px; }
+    .topic-row small { display: block; margin-top: 2px; color: var(--muted); font-size: 8px; }
+    .topic:hover, .topic.open { background: #fcfaf3; }
+    .topic-chevron { transition: transform 180ms ease; }
+    .topic.open .topic-chevron { transform: rotate(180deg); }
+    .topic-details { display: none; padding: 0 12px 12px 47px; }
+    .topic.open .topic-details { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .data-block { min-height: 61px; padding: 10px 11px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+    .data-block.full { grid-column: 1 / -1; }
+    .data-block label { display: block; margin-bottom: 5px; color: var(--muted); font-size: 8px; font-weight: 800; }
+    .data-block p { margin: 0; font-size: 10px; line-height: 1.6; }
+    .empty-value { color: #8b94a4; }
+    .link-action, .select-action {
+      min-height: 29px;
+      padding: 0 9px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--soft);
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 9px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    .select-action.primary { background: var(--navy); color: white; border-color: var(--navy); }
+    .action-list { display: flex; flex-wrap: wrap; gap: 6px; }
+    .card-note { padding: 10px 14px; border-top: 1px solid var(--line); background: var(--soft); color: var(--muted); font-size: 9px; text-align: center; }
+
+    .index-head, .index-link {
+      display: grid;
+      grid-template-columns: 27px minmax(165px, 1.5fr) 80px 76px 92px 22px;
+      gap: 8px;
+      align-items: center;
+    }
+    .index-head { min-height: 37px; padding: 0 12px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 8px; font-weight: 800; }
+    .index-link {
+      min-height: 68px;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      color: var(--ink);
+      background: var(--surface);
+      text-decoration: none;
+      transition: background 160ms ease, color 160ms ease;
+    }
+    .index-link:hover { background: var(--blue-soft); color: #244ba9; }
+    .index-link strong { display: block; font-size: 10px; }
+    .index-link small { display: block; margin-top: 3px; color: var(--muted); font-size: 8px; line-height: 1.4; }
+    .index-link .destination { color: var(--blue); font-weight: 900; }
+    .index-link .go-icon { color: var(--blue); transition: transform 160ms ease; }
+    .index-link:hover .go-icon { transform: translateX(-3px); }
+    .completed-topics { border-top: 1px solid var(--line); background: var(--soft); }
+    .completed-topics summary { min-height: 39px; padding: 0 13px; display: flex; align-items: center; gap: 8px; color: var(--ink); font-size: 9px; font-weight: 900; cursor: pointer; list-style: none; }
+    .completed-topics summary::-webkit-details-marker { display: none; }
+    .completed-content { padding: 0 10px 10px; }
+    .completed-content .mobile-data-card { display: block; padding: 11px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+    .completed-content .mobile-data-card h3 { margin: 0 0 9px; font-size: 10px; line-height: 1.6; }
+    .completed-content .mobile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .completed-content .mobile-field span { display: block; color: var(--muted); font-size: 8px; }
+    .completed-content .mobile-field strong { display: block; margin-top: 3px; font-size: 9px; line-height: 1.5; }
+    .completed-content .mobile-field.wide { grid-column: 1 / -1; }
+
+    .sub-tabs { padding: 12px 17px 0; display: flex; gap: 6px; }
+    .sub-tab { min-height: 35px; padding: 0 12px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); color: var(--muted); font-size: 10px; font-weight: 800; }
+    .sub-tab.active { background: var(--blue-soft); color: var(--blue); border-color: #ccd9ff; }
+
+    .table-wrap { margin: 14px 17px 17px; border: 1px solid var(--line); border-radius: 12px; overflow-x: auto; }
+    table { width: 100%; min-width: 1080px; border-collapse: collapse; font-size: 9px; }
+    th { padding: 10px 8px; background: var(--soft); color: var(--muted); text-align: right; white-space: nowrap; }
+    td { padding: 11px 8px; border-top: 1px solid var(--line); vertical-align: top; line-height: 1.5; }
+    .long-cell { min-width: 230px; max-width: 310px; }
+    .ltr { direction: ltr; unicode-bidi: embed; text-align: right; }
+    .status { display: inline-flex; align-items: center; gap: 5px; padding: 4px 7px; border-radius: 999px; font-size: 8px; font-weight: 900; white-space: nowrap; }
+    .status::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+    .status.good { background: var(--green-soft); color: var(--green); }
+    .status.waiting { background: var(--amber-soft); color: var(--amber); }
+    .pagination { padding: 0 17px 16px; display: flex; align-items: center; gap: 7px; color: var(--muted); font-size: 9px; }
+    .pagination button { width: 29px; height: 29px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); }
+    .pagination span { margin-left: auto; }
+
+    .violation-card-mobile, .daily-cards { display: none; }
+    .empty-state { margin: 15px 17px 17px; min-height: 250px; border: 1px dashed #cbd2de; border-radius: 13px; background: var(--soft); display: grid; place-items: center; text-align: center; }
+    .empty-state .icon { width: 28px; height: 28px; color: var(--muted); }
+    .empty-state h3 { margin: 8px 0 4px; font-size: 13px; }
+    .empty-state p { margin: 0; color: var(--muted); font-size: 10px; }
+    .schema-note { margin: 0 17px 17px; color: var(--muted); font-size: 9px; line-height: 1.7; }
+
+    .bottom-nav { display: none; }
+
+    @media (max-width: 1180px) {
+      .app { grid-template-columns: minmax(0, 1fr) 205px; }
+      .assignment-columns { grid-template-columns: 1fr; }
+      .assignment-meta { grid-template-columns: repeat(5, minmax(0,1fr)); }
+    }
+
+    @media (max-width: 760px) {
+      body { padding-bottom: 69px; }
+      .app { display: block; }
+      .sidebar { display: none; }
+      .topbar { height: 61px; padding: 0 14px; }
+      .title-block { min-width: 0; flex: 1; }
+      .title-block h1 { font-size: 17px; }
+      .title-block p { font-size: 9px; }
+      .search, .desktop-bell { display: none; }
+      .content { padding: 13px 13px 24px; }
+      .page-actions { margin-bottom: 12px; overflow-x: auto; scrollbar-width: none; }
+      .page-actions::-webkit-scrollbar { display: none; }
+      .small-button { flex: 0 0 auto; min-height: 35px; padding-inline: 10px; }
+      .small-button.statement { margin-right: 0; }
+      .metrics { grid-template-columns: repeat(2,1fr); margin-bottom: 12px; }
+      .metric { min-height: 76px; padding: 12px; gap: 9px; }
+      .metric + .metric { border-right: 0; }
+      .metric:nth-child(even) { border-right: 1px solid var(--line); }
+      .metric:nth-child(n+3) { border-top: 1px solid var(--line); }
+      .metric-icon { width: 35px; height: 35px; border-radius: 10px; }
+      .metric strong { font-size: 20px; }
+      .metric span { font-size: 9px; line-height: 1.3; }
+      .secondary-summary { grid-template-columns: 1fr; margin-bottom: 12px; }
+
+      .module-tabs { display: flex; overflow-x: auto; scrollbar-width: none; }
+      .module-tabs::-webkit-scrollbar { display: none; }
+      .module-tab { flex: 0 0 auto; min-width: 130px; min-height: 39px; }
+      .module-shell { border-radius: 15px; }
+      .module-head { min-height: 57px; padding: 12px 13px; }
+      .module-head h2 { font-size: 14px; }
+      .module-head p { font-size: 9px; }
+      .module-head-actions .small-button span { display: none; }
+      .module-head-actions .small-button { width: 34px; padding: 0; justify-content: center; }
+      .assignment-columns { padding: 11px; display: block; }
+      .assignment-card + .assignment-card { margin-top: 11px; }
+      .assignment-head { padding: 13px; }
+      .assignment-head-top { flex-wrap: wrap; }
+      .assignment-head h3 { font-size: 12px; }
+      .assignment-meta { grid-template-columns: repeat(3,1fr); gap: 8px; }
+      .topic-table-head { display: none; }
+      .index-head { display: none; }
+      .index-link {
+        margin: 9px;
+        min-height: 103px;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 11px;
+        grid-template-columns: 24px minmax(0,1fr) 24px;
+        grid-template-areas: "num title arrow" "num meta arrow" "num action arrow";
+        gap: 7px 9px;
+      }
+      .index-link > span:nth-child(1) { grid-area: num; align-self: start; }
+      .index-link > span:nth-child(2) { grid-area: title; }
+      .index-link > span:nth-child(3) { grid-area: meta; }
+      .index-link > span:nth-child(4) { display: none; }
+      .index-link > span:nth-child(5) { display: block; grid-area: action; justify-self: start; }
+      .index-link > svg { grid-area: arrow; }
+      .topic { margin: 9px; border: 1px solid var(--line); border-radius: 11px; overflow: hidden; }
+      .topic-row {
+        min-height: 74px;
+        grid-template-columns: 24px minmax(0,1fr) 24px;
+        grid-template-areas: "num title chevron" "num person chevron";
+        gap: 5px 8px;
+      }
+      .topic-row > span:nth-child(1) { grid-area: num; align-self: start; }
+      .topic-row > span:nth-child(2) { grid-area: title; }
+      .topic-row > span:nth-child(3) { grid-area: person; }
+      .topic-row > span:nth-child(4) { grid-area: person; justify-self: end; }
+      .topic-row > span:nth-child(5) { display: none; }
+      .topic-row > svg { grid-area: chevron; }
+      .topic-details { padding: 0 9px 9px; }
+      .topic.open .topic-details { grid-template-columns: 1fr; }
+      .data-block.full { grid-column: auto; }
+      .card-note { font-size: 8px; }
+      .table-wrap { display: none; }
+      .violation-card-mobile, .daily-cards { margin: 12px; display: grid; gap: 9px; }
+      .mobile-data-card { padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+      .mobile-data-card h3 { margin: 0 0 9px; font-size: 12px; line-height: 1.5; }
+      .mobile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+      .mobile-field.wide { grid-column: 1 / -1; }
+      .mobile-field span { display: block; color: var(--muted); font-size: 8px; }
+      .mobile-field strong { display: block; margin-top: 3px; font-size: 9px; line-height: 1.45; }
+      .pagination { padding: 0 12px 13px; }
+      .empty-state { min-height: 210px; margin: 12px; }
+      .schema-note { margin-inline: 12px; }
+
+      .bottom-nav {
+        height: 68px;
+        padding: 7px 10px max(7px,env(safe-area-inset-bottom));
+        border-top: 1px solid var(--line);
+        background: rgba(252,252,253,.96);
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 9;
+        display: grid;
+        grid-template-columns: repeat(5,1fr);
+        backdrop-filter: blur(14px);
+      }
+      .bottom-nav button { border: 0; background: transparent; color: var(--muted); display: grid; place-items: center; align-content: center; gap: 3px; font-size: 8px; }
+      .bottom-nav button.active { color: var(--navy); font-weight: 900; }
+      .bottom-nav button.active .icon { color: var(--gold); }
+    }
+
+    /* SRS-aligned interaction layer */
+    button, a, input, select, textarea, summary { -webkit-tap-highlight-color: transparent; }
+    button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible,
+    textarea:focus-visible, summary:focus-visible {
+      outline: 3px solid rgba(49, 89, 199, .28);
+      outline-offset: 2px;
+    }
+    input, select, textarea { color: var(--ink); }
+    .page-actions { flex-wrap: wrap; }
+    .date-control {
+      min-height: 38px;
+      padding: 0 11px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--ink);
+      font-size: 11px;
+      font-weight: 750;
+    }
+    .date-control input { width: 120px; border: 0; outline: 0; background: transparent; direction: ltr; }
+    .state-preview { margin-right: auto; display: flex; align-items: center; gap: 7px; }
+    .state-preview label { color: var(--muted); font-size: 9px; font-weight: 800; }
+    .compact-select {
+      min-height: 36px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--surface);
+      font-size: 10px;
+    }
+
+    .metric {
+      width: 100%;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      color: var(--ink);
+      text-align: right;
+      transition: background 160ms ease, transform 160ms ease;
+    }
+    .metric .metric-icon { margin-top: 0; color: inherit; display: grid; }
+    .metric > span:nth-child(2) { margin-top: 0; color: inherit; }
+    .metric:hover { background: var(--soft); }
+    .metric:active { transform: translateY(1px); }
+    .metric.active { box-shadow: inset 0 -3px currentColor; }
+    .metric-filter {
+      margin: -5px 0 14px;
+      min-height: 43px;
+      padding: 8px 12px;
+      border: 1px solid #ccd9ff;
+      border-radius: 11px;
+      background: var(--blue-soft);
+      color: #244ba9;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      font-weight: 800;
+    }
+    .metric-filter button { margin-right: auto; border: 0; background: transparent; color: inherit; font-size: 10px; font-weight: 900; }
+
+    .operation-bar {
+      padding: 12px 17px;
+      border-bottom: 1px solid var(--line);
+      background: var(--soft);
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+    .operation-bar .primary-action { background: var(--navy); border-color: var(--navy); color: #fff; }
+    .operation-bar .danger-action { color: var(--red); }
+    .toolbar-spacer { margin-right: auto; }
+    .control-field { min-width: 180px; display: grid; gap: 4px; }
+    .control-field label { color: var(--muted); font-size: 8px; font-weight: 800; }
+    .control-field small { max-width: 245px; color: var(--muted); font-size: 7px; line-height: 1.45; }
+    .control-field input, .control-field select {
+      width: 100%;
+      height: 36px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--surface);
+      font-size: 10px;
+    }
+    .filters {
+      margin: 14px 17px 0;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--soft);
+      display: grid;
+      grid-template-columns: repeat(5, minmax(130px, 1fr)) auto;
+      align-items: end;
+      gap: 9px;
+    }
+    .filters.daily-filters { grid-template-columns: minmax(180px, 1fr) minmax(160px, 1fr) auto; }
+    .filter-buttons { display: flex; gap: 6px; }
+
+    .assignment-columns { grid-template-columns: 1fr; gap: 18px; }
+    .assignment-card { border: 0; background: transparent; overflow: visible; }
+    .assignment-head { margin-bottom: 11px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
+    .assignment-card + .assignment-card { margin-top: 0; }
+    .assignment-grid {
+      width: 100%;
+      padding: 0;
+      background: transparent;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 13px;
+    }
+    .assignment-grid > .later-grid-row:last-child:nth-child(odd) { grid-column: 1 / -1; }
+    .later-grid-head { display: none; }
+    .later-grid-row {
+      min-width: 0;
+      padding: 17px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      grid-template-areas:
+        "number subject subject subject subject subject subject subject followup followup followup followup"
+        "assignee assignee assignee assignee instructions instructions instructions instructions supervisor supervisor supervisor supervisor"
+        "supervisor-note supervisor-note supervisor-note supervisor-note supervisor-note supervisor-note supervisor-note supervisor-note attachments attachments attachments attachments"
+        "actions actions actions actions actions actions actions actions actions actions actions actions";
+      gap: 11px 14px;
+      align-items: stretch;
+      font-size: 12px;
+      box-shadow: 0 10px 28px rgba(30, 47, 76, .055);
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+    .incoming .later-grid-row { box-shadow: inset 0 3px 0 #4266d9, 0 10px 28px rgba(30, 47, 76, .055); }
+    .outgoing .later-grid-row { box-shadow: inset 0 3px 0 #c6a63c, 0 10px 28px rgba(30, 47, 76, .055); }
+    .later-grid-row:hover {
+      border-color: #cbd5e6;
+      box-shadow: inset 0 3px 0 #4266d9, 0 15px 34px rgba(30, 47, 76, .09);
+      transform: translateY(-2px);
+    }
+    .outgoing .later-grid-row:hover { box-shadow: inset 0 3px 0 #c6a63c, 0 15px 34px rgba(30, 47, 76, .09); }
+    .later-cell {
+      min-width: 0;
+      padding: 8px 3px;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      display: block;
+      line-height: 1.6;
+    }
+    .task-field-label {
+      margin-bottom: 5px;
+      color: var(--muted);
+      display: block;
+      font-size: 9px;
+      font-weight: 850;
+    }
+    .later-cell:nth-child(1) { grid-area: number; padding: 10px; border-radius: 11px; background: var(--blue-soft); color: var(--blue); text-align: center; font-size: 20px; font-weight: 900; font-variant-numeric: tabular-nums; }
+    .later-cell:nth-child(2) { grid-area: subject; background: transparent; padding-inline: 3px; }
+    .later-cell:nth-child(3) { grid-area: followup; padding: 10px; border-radius: 10px; background: var(--soft); }
+    .later-cell:nth-child(4) { grid-area: assignee; }
+    .later-cell:nth-child(5) { grid-area: instructions; padding: 11px; border-radius: 10px; background: var(--soft); }
+    .later-cell:nth-child(6) { grid-area: supervisor; }
+    .later-cell:nth-child(7) { grid-area: supervisor-note; padding: 11px; border-radius: 10px; background: var(--soft); }
+    .later-cell:nth-child(8) { grid-area: attachments; padding: 11px; border-radius: 10px; background: var(--soft); }
+    .later-cell:nth-child(9) { grid-area: actions; padding: 11px 0 0; border-top: 1px solid var(--line); border-radius: 0; background: transparent; }
+    .later-cell.subject strong { display: block; margin-bottom: 4px; font-size: 15px; line-height: 1.45; }
+    .later-cell.subject small { color: var(--muted); font-size: 10px; line-height: 1.6; }
+    .cell-actions { display: flex; flex-wrap: wrap; align-content: center; gap: 6px; }
+    .later-grid-row .mini-action, .completed-task-card .mini-action { min-height: 36px; padding-inline: 10px; font-size: 10px; }
+    .later-grid-row button.text-link, .completed-task-card button.text-link { min-height: 36px; display: inline-flex; align-items: center; }
+    .text-link { padding: 0; border: 0; background: transparent; color: var(--blue); font: inherit; font-weight: 900; text-decoration: none; cursor: pointer; }
+    .assignment-view[hidden] { display: none; }
+
+    .completed-cards {
+      margin: 15px 17px 17px;
+      display: grid;
+      gap: 14px;
+    }
+    .completed-task-card {
+      border: 1px solid var(--line);
+      border-top: 3px solid var(--green);
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: 0 12px 30px rgba(30, 47, 76, .06);
+      overflow: hidden;
+    }
+    .completed-card-head {
+      padding: 15px 16px;
+      border-bottom: 1px solid var(--line);
+      background: #fbfcfd;
+      display: grid;
+      grid-template-columns: 54px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+    }
+    .completed-number { min-height: 52px; border-radius: 11px; background: var(--green-soft); color: var(--green); display: grid; place-items: center; align-content: center; }
+    .completed-number span, .completed-subject span, .completed-field span, .completed-action-group > span { color: var(--muted); display: block; font-size: 9px; font-weight: 850; }
+    .completed-number strong { margin-top: 2px; font-size: 17px; font-variant-numeric: tabular-nums; }
+    .completed-subject h3 { margin: 4px 0 0; font-size: 15px; line-height: 1.55; }
+    .completed-card-body { padding: 14px 16px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+    .completed-field { min-width: 0; min-height: 58px; padding: 10px; border-radius: 9px; background: var(--soft); }
+    .completed-field.wide { grid-column: span 2; }
+    .completed-field strong { margin-top: 4px; display: block; font-size: 11px; line-height: 1.55; }
+    .completed-field button { margin-top: 6px; }
+    .completed-card-actions { padding: 13px 16px 15px; border-top: 1px solid var(--line); display: grid; grid-template-columns: minmax(150px, .55fr) minmax(150px, .55fr) minmax(320px, 1.5fr); gap: 9px; }
+    .completed-action-group { min-width: 0; padding: 10px; border-radius: 10px; background: #fbfcfd; }
+    .completed-action-group > button, .completed-action-group .action-list { margin-top: 7px; }
+    .row-actions { min-width: 220px; display: flex; flex-wrap: wrap; gap: 5px; }
+    .mini-action {
+      min-height: 27px;
+      padding: 0 7px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: var(--surface);
+      color: var(--ink);
+      font-size: 8px;
+      font-weight: 800;
+    }
+    .mini-action.primary { background: var(--navy); border-color: var(--navy); color: white; }
+    .mini-action.warn { background: var(--gold-soft); border-color: #e8d99f; color: #755d18; }
+
+    .daily-table table { min-width: 2400px; }
+    .daily-table td, .daily-table th { max-width: 210px; }
+    .mobile-more { margin-top: 10px; border-top: 1px solid var(--line); }
+    .mobile-more summary { min-height: 38px; display: flex; align-items: center; color: var(--blue); font-size: 9px; font-weight: 900; cursor: pointer; }
+    .mobile-more .mobile-grid { padding-top: 9px; }
+
+    .inline-no-results { margin: 14px 17px 17px; min-height: 150px; }
+    .state-stage { min-height: 350px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); display: grid; place-items: center; text-align: center; box-shadow: var(--shadow); }
+    .state-stage .state-content { max-width: 430px; padding: 34px; }
+    .state-stage .state-icon { width: 48px; height: 48px; margin: 0 auto 13px; border-radius: 14px; background: var(--soft); color: var(--muted); display: grid; place-items: center; }
+    .state-stage .state-icon .icon { width: 24px; height: 24px; }
+    .state-stage h2 { margin: 0 0 7px; font-size: 16px; }
+    .state-stage p { margin: 0 0 15px; color: var(--muted); font-size: 10px; line-height: 1.7; }
+    .spinner { width: 24px; height: 24px; border: 3px solid var(--line); border-top-color: var(--blue); border-radius: 50%; animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      padding: 20px;
+      background: rgba(15, 23, 42, .55);
+      display: grid;
+      place-items: center;
+    }
+    .modal {
+      width: min(620px, 100%);
+      max-height: min(760px, calc(100vh - 40px));
+      border-radius: 18px;
+      background: var(--surface);
+      box-shadow: 0 28px 80px rgba(0,0,0,.22);
+      overflow: auto;
+    }
+    .modal-head { min-height: 62px; padding: 14px 18px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 10px; }
+    .modal-head h2 { margin: 0; font-size: 16px; }
+    .modal-head button { margin-right: auto; }
+    .modal-body { padding: 17px; display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
+    .modal-body .control-field { min-width: 0; }
+    .modal-body .wide { grid-column: 1 / -1; }
+    .modal-body textarea { min-height: 88px; padding: 10px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); resize: vertical; font-size: 10px; }
+    .modal-actions { padding: 13px 17px; border-top: 1px solid var(--line); display: flex; justify-content: flex-end; gap: 7px; }
+    .toast {
+      min-width: min(360px, calc(100vw - 28px));
+      max-width: 460px;
+      min-height: 50px;
+      padding: 11px 13px;
+      border-radius: 11px;
+      color: white;
+      position: fixed;
+      right: 26px;
+      bottom: 24px;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      box-shadow: 0 18px 44px rgba(0,0,0,.2);
+      font-size: 10px;
+      font-weight: 800;
+      transform: translateY(20px);
+      opacity: 0;
+      pointer-events: none;
+      transition: 180ms ease;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.success { background: var(--green); }
+    .toast.error { background: var(--red); }
+    .audit-note { padding: 10px 17px; border-top: 1px solid var(--line); background: var(--gold-soft); color: #725916; font-size: 9px; line-height: 1.6; }
+
+    @media (max-width: 1200px) {
+      .assignment-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 980px) {
+      .filters { grid-template-columns: repeat(2, minmax(130px, 1fr)); }
+      .filter-buttons { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 760px) {
+      .state-preview { width: 100%; margin-right: 0; }
+      .state-preview .compact-select { flex: 1; }
+      .date-control { flex: 0 0 auto; }
+      .date-control input { width: 108px; }
+      .metric { min-height: 76px; }
+      .metric-filter { margin-top: 0; }
+      .operation-bar { padding: 10px 11px; overflow-x: auto; flex-wrap: nowrap; }
+      .operation-bar .small-button { flex: 0 0 auto; }
+      .operation-bar .toolbar-spacer { display: none; }
+      #assignments .operation-bar { overflow: visible; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+      #assignments .operation-bar .control-field { min-width: 0; grid-column: 1 / -1; }
+      #assignments .operation-bar .small-button { width: 100%; min-width: 0; padding-inline: 7px; justify-content: center; }
+      #assignments .operation-bar .small-button:last-child { grid-column: 1 / -1; }
+      .control-field { min-width: 150px; }
+      .filters, .filters.daily-filters { margin: 11px 11px 0; grid-template-columns: 1fr; }
+      .filter-buttons { grid-column: auto; }
+      .assignment-columns { padding: 10px; }
+      .assignment-card + .assignment-card { margin-top: 10px; }
+      .assignment-grid { padding: 0; grid-template-columns: 1fr; overflow: visible; }
+      .later-grid-row {
+        min-width: 0;
+        margin: 0;
+        padding: 11px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-areas:
+          "number followup"
+          "subject subject"
+          "assignee supervisor"
+          "instructions instructions"
+          "supervisor-note supervisor-note"
+          "attachments attachments"
+          "actions actions";
+        gap: 8px;
+      }
+      .assignment-grid > .later-grid-row:last-child:nth-child(odd) { grid-column: auto; }
+      .later-cell { min-height: 0; padding: 9px; border: 0; display: block; }
+      .later-cell:nth-child(2) { padding: 5px 2px; }
+      .later-cell:nth-child(9) { padding-top: 10px; }
+      .task-field-label { margin-bottom: 3px; font-size: 8px; }
+      .later-cell.subject strong { margin: 0 0 3px; font-size: 13px; }
+      .cell-actions { display: flex; }
+      .completed-cards { margin: 11px; gap: 9px; }
+      .completed-card-head { padding: 12px; grid-template-columns: 44px minmax(0, 1fr); gap: 9px; }
+      .completed-card-head > .status { grid-column: 1 / -1; justify-self: start; }
+      .completed-number { min-height: 44px; }
+      .completed-subject h3 { font-size: 13px; }
+      .completed-card-body { padding: 10px 11px; grid-template-columns: 1fr 1fr; gap: 7px; }
+      .completed-field.wide { grid-column: 1 / -1; }
+      .completed-card-actions { padding: 10px 11px 12px; grid-template-columns: 1fr; gap: 7px; }
+      .daily-table { display: none; }
+      .daily-cards { display: grid; }
+      .violation-card-mobile { display: grid; }
+      .modal-body { grid-template-columns: 1fr; }
+      .modal-body .wide { grid-column: auto; }
+      .toast { right: 14px; bottom: 82px; }
+      .state-stage { min-height: 290px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+    }
+  </style>
+</head>
+<body>
+  <svg aria-hidden="true" width="0" height="0" style="position:absolute">
+    <symbol id="home" viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h13V10"/><path d="M9.5 20v-6h5v6"/></symbol>
+    <symbol id="task" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h5M8 16h7"/></symbol>
+    <symbol id="calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/></symbol>
+    <symbol id="file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5"/></symbol>
+    <symbol id="users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3.5 20c.4-4 2.2-6 5.5-6s5.1 2 5.5 6"/><circle cx="17" cy="9" r="2.5"/></symbol>
+    <symbol id="search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+    <symbol id="bell" viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></symbol>
+    <symbol id="menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="alert" viewBox="0 0 24 24"><path d="M12 3 2.5 20h19z"/><path d="M12 9v5M12 17.5v.5"/></symbol>
+    <symbol id="clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="layers" viewBox="0 0 24 24"><path d="m12 3-9 5 9 5 9-5z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/></symbol>
+    <symbol id="check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/></symbol>
+    <symbol id="link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1.2 1.2"/><path d="M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1.2-1.2"/></symbol>
+    <symbol id="chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="filter" viewBox="0 0 24 24"><path d="M3 5h18l-7 8v5l-4 2v-7z"/></symbol>
+    <symbol id="paperclip" viewBox="0 0 24 24"><path d="m8 12 5.5-5.5a3 3 0 0 1 4.2 4.2L10 18.4a5 5 0 1 1-7.1-7.1L11 3.2"/></symbol>
+    <symbol id="briefcase" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V4h8v3M3 12h18"/></symbol>
+    <symbol id="more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></symbol>
+    <symbol id="arrow-left" viewBox="0 0 24 24"><path d="M19 12H5M10 7l-5 5 5 5"/></symbol>
+  </svg>
+
+  <div class="app">
+    <aside class="sidebar">
+      <div class="logo"><img src="data:image/png;base64,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" alt="نياشين، استراتيجية الإدارة" /></div>
+      <div class="nav-group-title">الرئيسية</div>
+      <nav class="nav">
+        <button class="active" data-nav-home><svg class="icon"><use href="#home"/></svg>الرئيسية</button>
+      </nav>
+      <div class="nav-group-title">مساحة العمل</div>
+      <nav class="nav">
+        <button data-nav-module="assignments"><svg class="icon"><use href="#task"/></svg>الكرت التكليفي<span class="nav-badge">2</span></button>
+        <button data-nav-module="violations"><svg class="icon"><use href="#alert"/></svg>المخالفات<span class="nav-badge danger">1</span></button>
+        <button data-nav-module="daily"><svg class="icon"><use href="#briefcase"/></svg>كرت الأعمال اليومي<span class="nav-badge">98</span></button>
+        <button data-nav-module="assigned-work"><svg class="icon"><use href="#layers"/></svg>كرت الأعمال التكليفي<span class="nav-badge">0</span></button>
+      </nav>
+      <div class="nav-group-title">الفهارس التي صممناها</div>
+      <nav class="nav">
+        <a href="indexes-redesign.html?tab=sites"><svg class="icon"><use href="#home"/></svg>شركات ومواقع</a>
+        <a href="indexes-redesign.html?tab=general"><svg class="icon"><use href="#task"/></svg>فهرس الفهارس</a>
+        <a href="indexes-redesign.html?tab=directories"><svg class="icon"><use href="#users"/></svg>الدليل بحسب التخصص</a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="title-block"><h1>الرئيسية</h1><p>ملخص أعمال ميساب لليوم</p></div>
+        <label class="search"><svg class="icon"><use href="#search"/></svg><input placeholder="بحث..." /></label>
+        <button class="round-button desktop-bell" aria-label="الإشعارات"><svg class="icon"><use href="#bell"/></svg><span class="notify-dot"></span></button>
+        <button class="round-button" aria-label="القائمة"><svg class="icon"><use href="#menu"/></svg></button>
+      </header>
+
+      <div class="content">
+        <div class="page-actions">
+          <label class="date-control" for="dashboardDate">
+            <svg class="icon"><use href="#calendar"/></svg>
+            <span>تاريخ العمل</span>
+            <input id="dashboardDate" type="date" value="2026-07-21" aria-label="اختيار تاريخ لوحة العمل" />
+          </label>
+          <button class="small-button statement" type="button" data-toast="تم فتح منصة البيان في نموذج الواجهة." data-toast-type="success"><svg class="icon"><use href="#link"/></svg>منصة البيان</button>
+          <div class="state-preview">
+            <label for="statePreview">معاينة حالة الشاشة</label>
+            <select id="statePreview" class="compact-select">
+              <option value="data">البيانات</option>
+              <option value="loading">تحميل</option>
+              <option value="empty">فارغ</option>
+              <option value="no-results">لا نتائج</option>
+              <option value="error">خطأ</option>
+              <option value="blocked">غير مصرح 403</option>
+              <option value="session-expired">انتهت الجلسة</option>
+            </select>
+          </div>
+        </div>
+
+        <section class="metrics" aria-label="مؤشرات العمل اليومية">
+          <button class="metric red" data-metric-filter="غير المنجزة اليوم" data-metric-count="87" aria-label="فتح التكليفات غير المنجزة اليوم، 87">
+            <span class="metric-icon"><svg class="icon"><use href="#alert"/></svg></span><span><strong>87</strong><span>تكليفات لم يتم إنجازها اليوم</span></span>
+          </button>
+          <button class="metric amber" data-metric-filter="المستعجلة اليوم" data-metric-count="7" aria-label="فتح التكليفات المستعجلة اليوم، 7">
+            <span class="metric-icon"><svg class="icon"><use href="#clock"/></svg></span><span><strong>7</strong><span>تكليفات مستعجلة اليوم</span></span>
+          </button>
+          <button class="metric blue" data-metric-filter="تكليفات اليوم" data-metric-count="0" aria-label="فتح تكليفات اليوم، صفر">
+            <span class="metric-icon"><svg class="icon"><use href="#layers"/></svg></span><span><strong>0</strong><span>عدد التكليفات اليوم</span></span>
+          </button>
+          <button class="metric green" data-metric-filter="المنجزة اليوم" data-metric-count="0" aria-label="فتح التكليفات المنجزة اليوم، صفر">
+            <span class="metric-icon"><svg class="icon"><use href="#check"/></svg></span><span><strong>0</strong><span>تكليفات منجزة اليوم</span></span>
+          </button>
+        </section>
+
+        <div class="metric-filter" id="metricFilterBanner" hidden>
+          <svg class="icon"><use href="#filter"/></svg>
+          <span id="metricFilterText"></span>
+          <button type="button" id="clearMetricFilter">إلغاء الفلتر</button>
+        </div>
+
+        <section class="secondary-summary" aria-label="معلومات إضافية من الصفحة الحالية">
+          <div class="secondary-item"><svg class="icon"><use href="#calendar"/></svg><span>موعد الاجتماع الرئيسي / التحضيري</span><button type="button" data-toast="موعد الاجتماع: الثلاثاء، 11:00 صباحاً." data-toast-type="success">عرض</button></div>
+          <div class="secondary-item"><svg class="icon"><use href="#check"/></svg><span>مهام منجزة في التكليفي</span><strong>0</strong></div>
+        </section>
+
+        <nav class="module-tabs" aria-label="أقسام الصفحة الرئيسية">
+          <button class="module-tab active" data-module="assignments"><svg class="icon"><use href="#task"/></svg>الكرت التكليفي <span class="count">2</span></button>
+          <button class="module-tab" data-module="violations"><svg class="icon"><use href="#alert"/></svg>المخالفات <span class="count">1</span></button>
+          <button class="module-tab" data-module="daily"><svg class="icon"><use href="#briefcase"/></svg>كرت الأعمال اليومي <span class="count">98</span></button>
+          <button class="module-tab" data-module="assigned-work"><svg class="icon"><use href="#layers"/></svg>كرت الأعمال التكليفي <span class="count">0</span></button>
+        </nav>
+
+        <section class="state-stage" id="stateStage" hidden aria-live="polite">
+          <div class="state-content">
+            <div class="state-icon" id="stateIcon"><svg class="icon"><use href="#alert"/></svg></div>
+            <h2 id="stateTitle">تعذر تحميل البيانات</h2>
+            <p id="stateMessage">حدث خطأ غير متوقع. لم نفقد فلاترك ويمكنك إعادة المحاولة.</p>
+            <button class="small-button" id="retryState">إعادة المحاولة</button>
+          </div>
+        </section>
+
+        <section class="module-panel active" id="assignments">
+          <div class="module-shell">
+            <header class="module-head">
+              <div><h2 id="assignmentHeading">الكرت التكليفي اللاحق</h2><p>المهام مجمعة بحسب المرسل والمستلم والتاريخ المختار: <strong data-selected-date>21-07-2026</strong>.</p></div>
+            </header>
+            <div class="operation-bar" aria-label="إجراءات الكرت التكليفي">
+              <div class="control-field">
+                <label for="assignmentSearch">بحث بحسب المكلف</label>
+                <input id="assignmentSearch" type="search" placeholder="مثال: ميساب أو هيثم" />
+              </div>
+              <button class="small-button primary-action" data-open-modal="assignmentModal">إضافة تكليف جديد</button>
+              <button class="small-button" id="toggleCompletedAssignments">الانتقال إلى المنجز</button>
+              <button class="small-button" data-toast="تم حفظ التعديلات مرة واحدة وتسجيل التغيير قبل/بعد." data-toast-type="success">إرسال وحفظ</button>
+              <button class="small-button" data-print>طباعة</button>
+              <button class="small-button" data-toast="تم تجهيز ملف Excel وفق الفلاتر الحالية." data-toast-type="success">تصدير Excel</button>
+            </div>
+
+            <div class="assignment-view" id="assignmentActiveView">
+              <div class="assignment-columns">
+                <article class="assignment-card incoming" data-assignment-card>
+                  <header class="assignment-head">
+                    <div class="assignment-head-top"><span class="direction">وارد</span><h3>من هيثم أبو طير إلى ميساب</h3></div>
+                    <div class="assignment-meta">
+                      <div class="meta"><span>التاريخ</span><strong class="ltr" data-selected-date-iso>2026-07-21</strong></div>
+                      <div class="meta"><span>اليوم</span><strong data-selected-day>الثلاثاء</strong></div>
+                      <div class="meta"><span>المقدر</span><strong>60 دقيقة</strong></div>
+                      <div class="meta"><span>الفعلي</span><strong>60 دقيقة</strong></div>
+                      <div class="meta"><span>عدد المواضيع الظاهرة</span><strong data-visible-topic-count>3</strong></div>
+                    </div>
+                  </header>
+                  <div class="assignment-grid" role="list" aria-label="بطاقات التكليفات الواردة">
+                    <article class="later-grid-row" role="listitem" data-assignee="ميساب" data-metric-tags="غير المنجزة اليوم المستعجلة اليوم">
+                      <div class="later-cell" data-label="رقم">1</div>
+                      <div class="later-cell subject" data-label="الموضوع"><span><strong>فهرس شركات ومواقع</strong><small>صفحة مستقلة للمواقع والعقود والمناقصات</small></span></div>
+                      <div class="later-cell" data-label="المتابعة/الإنجاز">—</div>
+                      <div class="later-cell" data-label="المكلف">ميساب</div>
+                      <div class="later-cell" data-label="تعليمات المكلف">فتح الفهرس وإدارة سجلات الشركات والمواقع.</div>
+                      <div class="later-cell" data-label="المشرف المدقق">هيثم أبو طير</div>
+                      <div class="later-cell" data-label="تعليمات المشرف/المدقق">مراجعة السجل وربطه بالموقع الصحيح.</div>
+                      <div class="later-cell" data-label="المرفقات"><button class="mini-action" data-toast="لا يوجد مرفق لهذا الصف." data-toast-type="error">فتح/رفع</button></div>
+                      <div class="later-cell cell-actions" data-label="العمليات"><a class="mini-action primary text-link" href="indexes-redesign.html?tab=sites">فتح الفهرس</a><button class="mini-action" data-open-modal="assignmentModal">تعديل</button><button class="mini-action" data-toast="تم حفظ الصف وتسجيل النسخة السابقة." data-toast-type="success">حفظ</button></div>
+                    </article>
+                    <article class="later-grid-row" role="listitem" data-assignee="ميساب" data-metric-tags="غير المنجزة اليوم">
+                      <div class="later-cell" data-label="رقم">2</div>
+                      <div class="later-cell subject" data-label="الموضوع"><span><strong>فهرس الفهارس</strong><small>إنشاء وإدارة الفهارس المخصصة</small></span></div>
+                      <div class="later-cell" data-label="المتابعة/الإنجاز">—</div>
+                      <div class="later-cell" data-label="المكلف">ميساب</div>
+                      <div class="later-cell" data-label="تعليمات المكلف">فتح الفهرس العام ومراجعة محتوياته.</div>
+                      <div class="later-cell" data-label="المشرف المدقق">هيثم أبو طير</div>
+                      <div class="later-cell" data-label="تعليمات المشرف/المدقق">التأكد من الأعمدة والفهرسة.</div>
+                      <div class="later-cell" data-label="المرفقات"><button class="mini-action" data-toast="تم فتح نافذة المرفقات." data-toast-type="success">فتح/رفع</button></div>
+                      <div class="later-cell cell-actions" data-label="العمليات"><a class="mini-action primary text-link" href="indexes-redesign.html?tab=general">فتح الفهرس</a><button class="mini-action" data-open-modal="assignmentModal">تعديل</button><button class="mini-action" data-toast="تم حفظ الصف وتسجيل النسخة السابقة." data-toast-type="success">حفظ</button></div>
+                    </article>
+                    <article class="later-grid-row" role="listitem" data-assignee="ميساب" data-metric-tags="غير المنجزة اليوم">
+                      <div class="later-cell" data-label="رقم">3</div>
+                      <div class="later-cell subject" data-label="الموضوع"><span><strong>فهرس دليل بحسب التخصص</strong><small>المقاولون والعمال والصناعة والموظفون والموردون والزبائن</small></span></div>
+                      <div class="later-cell" data-label="المتابعة/الإنجاز">—</div>
+                      <div class="later-cell" data-label="المكلف">ميساب</div>
+                      <div class="later-cell" data-label="تعليمات المكلف">الوصول إلى أدلة التخصص الستة.</div>
+                      <div class="later-cell" data-label="المشرف المدقق">هيثم أبو طير</div>
+                      <div class="later-cell" data-label="تعليمات المشرف/المدقق">مراجعة اكتمال أدلة الأطراف.</div>
+                      <div class="later-cell" data-label="المرفقات"><button class="mini-action" data-toast="تم فتح نافذة المرفقات." data-toast-type="success">فتح/رفع</button></div>
+                      <div class="later-cell cell-actions" data-label="العمليات"><a class="mini-action primary text-link" href="indexes-redesign.html?tab=directories">فتح الفهرس</a><button class="mini-action" data-open-modal="assignmentModal">تعديل</button><button class="mini-action" data-toast="تم حفظ الصف وتسجيل النسخة السابقة." data-toast-type="success">حفظ</button></div>
+                    </article>
+                  </div>
+                </article>
+
+                <article class="assignment-card outgoing" data-assignment-card>
+                  <header class="assignment-head">
+                    <div class="assignment-head-top"><span class="direction">صادر</span><h3>من ميساب إلى هيثم أبو طير</h3></div>
+                    <div class="assignment-meta">
+                      <div class="meta"><span>التاريخ</span><strong class="ltr" data-selected-date-iso>2026-07-21</strong></div>
+                      <div class="meta"><span>اليوم</span><strong data-selected-day>الثلاثاء</strong></div>
+                      <div class="meta"><span>المقدر</span><strong>60 دقيقة</strong></div>
+                      <div class="meta"><span>الفعلي</span><strong>60 دقيقة</strong></div>
+                      <div class="meta"><span>عدد المواضيع الظاهرة</span><strong data-visible-topic-count>1</strong></div>
+                    </div>
+                  </header>
+                  <div class="assignment-grid" role="list" aria-label="بطاقات التكليفات الصادرة">
+                    <article class="later-grid-row" role="listitem" data-assignee="هيثم أبو طير" data-metric-tags="غير المنجزة اليوم">
+                      <div class="later-cell" data-label="رقم">1</div>
+                      <div class="later-cell subject" data-label="الموضوع"><span><strong>إختبار 1</strong><small>موضوع تكليفي صادر</small></span></div>
+                      <div class="later-cell ltr" data-label="المتابعة/الإنجاز">2026-07-25</div>
+                      <div class="later-cell" data-label="المكلف">هيثم أبو طير</div>
+                      <div class="later-cell" data-label="تعليمات المكلف">يبيبس</div>
+                      <div class="later-cell" data-label="المشرف المدقق">هيثم أبو طير</div>
+                      <div class="later-cell" data-label="تعليمات المشرف/المدقق"><button class="text-link" type="button" data-toast="تم فتح تعليمات المشرف ويمكن تعديلها من زر تعديل التكليف." data-toast-type="success">عرض التعليمات وتعديل الإجراء</button></div>
+                      <div class="later-cell cell-actions" data-label="المرفقات"><button class="mini-action" data-toast="تم فتح المرفقات." data-toast-type="success">مرفق</button><button class="mini-action" data-toast="تعذر فتح رابط المرفق التجريبي." data-toast-type="error">رابط</button></div>
+                      <div class="later-cell cell-actions" data-label="العمليات"><button class="mini-action primary" data-confirm-action="ترحيل المهمة إلى التكليفي المنجز؟">ترحيل للمنجز</button><button class="mini-action" data-confirm-action="ترحيل المهمة إلى الكرت اليومي؟">للكرت اليومي</button><button class="mini-action">مفاتيح الكرت</button><button class="mini-action" data-open-modal="assignmentModal">تعديل</button></div>
+                    </article>
+                  </div>
+                </article>
+              </div>
+              <div class="empty-state inline-no-results" id="assignmentNoResults" hidden><div><svg class="icon"><use href="#search"/></svg><h3>لا توجد نتائج مطابقة</h3><p>غيّر اسم المكلف أو ألغِ فلتر المؤشر.</p></div></div>
+              <div class="audit-note">عند الحفظ يحتفظ النظام بقيمة تاريخ المتابعة والتعليمات قبل التعديل وبعده. فشل رفع المرفق لا يمسح بقية بيانات الصف.</div>
+            </div>
+
+            <div class="assignment-view" id="assignmentCompletedView" hidden>
+              <div class="filters completed-filters">
+                <div class="control-field"><label for="completedAssignee">المكلف إليه</label><select id="completedAssignee"><option value="">الكل</option><option>ميساب</option><option>هيثم أبو طير</option></select></div>
+                <div class="control-field"><label for="completedTopic">بحث الموضوع</label><input id="completedTopic" type="search" placeholder="الموضوع" /></div>
+                <div class="control-field"><label for="completedSupervisor">بحث المشرف</label><input id="completedSupervisor" type="search" placeholder="المشرف المدقق" /></div>
+                <div class="control-field"><label for="completedDate">بحث التاريخ</label><input id="completedDate" type="date" /></div>
+                <div class="control-field"><label for="completedInstructions">بحث التعليمات</label><input id="completedInstructions" type="search" placeholder="كلمة من التعليمات" /></div>
+                <div class="control-field"><label for="completedAttachment">بحث المرفق/الفهرس</label><input id="completedAttachment" type="search" placeholder="اسم المرفق أو الفهرس" /></div>
+                <div class="control-field"><label for="completedOperations">بحث العمليات</label><input id="completedOperations" type="search" placeholder="ترحيل، تعديل، إنشاء" /></div>
+                <div class="filter-buttons"><button class="small-button primary-action" id="searchCompletedAssignments">بحث</button><button class="small-button" data-print>طباعة</button></div>
+              </div>
+              <div class="completed-cards" id="completedCards" role="list" aria-label="بطاقات التكليفات المنجزة">
+                <article
+                  class="completed-task-card"
+                  role="listitem"
+                  data-completed-tags="منجزة سابقة"
+                  data-assignee="ميساب"
+                  data-topic="فقرة 5 من بروتوكول التدريب للموظف في الشركات التابعة لنياشين"
+                  data-supervisor="هيثم أبو طير"
+                  data-date="2026-01-10"
+                  data-instructions="مراجعة فقرة التدريب واعتمادها التأكد من توثيق نتيجة المراجعة"
+                  data-attachment="مرفق رابط فهرس داخلي عرض إضافة"
+                  data-operations="عرض التواريخ ترحيل للمنجز ترحيل لليومي فهرس مخصص Excel قالب تعديل المهمة"
+                >
+                  <header class="completed-card-head">
+                    <div class="completed-number" data-completed-field="number"><span>الرقم</span><strong>1</strong></div>
+                    <div class="completed-subject" data-completed-field="subject"><span>الموضوع</span><h3>فقرة (5) من بروتوكول التدريب للموظف في الشركات التابعة لنياشين</h3></div>
+                    <span class="status good">منجز</span>
+                  </header>
+                  <div class="completed-card-body">
+                    <div class="completed-field" data-completed-field="assignee"><span>المكلف</span><strong>ميساب</strong></div>
+                    <div class="completed-field" data-completed-field="supervisor"><span>المشرف المدقق</span><strong>هيثم أبو طير</strong></div>
+                    <div class="completed-field" data-completed-field="followup"><span>المتابعة/الإنجاز</span><strong class="ltr">2026-01-10</strong></div>
+                    <div class="completed-field" data-completed-field="dates"><span>تواريخ المتابعة</span><button class="mini-action">عرض التواريخ</button></div>
+                    <div class="completed-field wide" data-completed-field="assignee-instructions"><span>تعليمات المكلف</span><strong>مراجعة فقرة التدريب واعتمادها.</strong></div>
+                    <div class="completed-field wide" data-completed-field="supervisor-instructions"><span>تعليمات المشرف/المدقق</span><strong>التأكد من توثيق نتيجة المراجعة.</strong></div>
+                    <div class="completed-field" data-completed-field="attachments"><span>المرفقات</span><button class="mini-action">عرض/إضافة</button></div>
+                    <div class="completed-field" data-completed-field="attachment-link"><span>رابط مرفق</span><button class="text-link" type="button" data-toast="تم فتح رابط المرفق التجريبي." data-toast-type="success">فتح الرابط</button></div>
+                    <div class="completed-field" data-completed-field="internal-indexes"><span>فهارس داخلية</span><button class="mini-action">إنشاء فهرس</button></div>
+                    <div class="completed-field" data-completed-field="additional"><span>الحقل الإضافي بحسب بنية الفهرس</span><strong>—</strong></div>
+                  </div>
+                  <footer class="completed-card-actions">
+                    <div class="completed-action-group" data-completed-field="move-completed"><span>الترحيل للتكليفي المنجز</span><button class="mini-action warn" data-confirm-action="تأكيد الترحيل إلى التكليفي المنجز؟">ترحيل للمنجز</button></div>
+                    <div class="completed-action-group" data-completed-field="move-daily"><span>الترحيل للكرت اليومي</span><button class="mini-action warn" data-confirm-action="تأكيد الترحيل إلى الكرت اليومي؟">ترحيل لليومي</button></div>
+                    <div class="completed-action-group operations" data-completed-field="operations"><span>العمليات</span><div class="action-list"><button class="mini-action">فهرس مخصص</button><button class="mini-action">من Excel</button><button class="mini-action">من قالب</button><button class="mini-action primary" data-open-modal="assignmentModal">تعديل المهمة</button></div></div>
+                  </footer>
+                </article>
+              </div>
+              <div class="empty-state inline-no-results" id="completedNoResults" hidden><div><svg class="icon"><use href="#search"/></svg><h3>لا توجد مهام منجزة مطابقة</h3><p>غيّر المكلف أو حقول البحث الستة ثم أعد المحاولة.</p></div></div>
+              <div class="pagination" id="completedPagination"><span>عرض 1–20 من 103 سجلات، تحميل كسول</span><button>‹</button><button>1</button><button>›</button></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="module-panel" id="violations">
+          <div class="module-shell">
+            <header class="module-head"><div><h2>المخالفات والشكاوى</h2><p>سجل إجرائي يحتوي الأطراف والاستئنافات وقرار اللجنة.</p></div></header>
+            <div class="operation-bar">
+              <button class="small-button primary-action" data-toast="تم فتح نموذج إضافة مخالفة." data-toast-type="success">إضافة مخالفة</button>
+              <button class="small-button" data-toast="تم فتح ملخص ريكوز للمخالفات." data-toast-type="success">ريكوز</button>
+            </div>
+            <div class="filters" aria-label="فلاتر المخالفات الخمسة">
+              <div class="control-field"><label for="violationType">نوع المخالفة</label><select id="violationType"><option value="">الكل</option><option value="مخالفة">مخالفة</option><option value="تنبيه">تنبيه</option><option value="إنذار">إنذار</option></select></div>
+              <div class="control-field"><label for="violationPlaintiff">المدعي</label><input id="violationPlaintiff" type="search" placeholder="اسم المدعي" /></div>
+              <div class="control-field"><label for="violationDefendant">المدعى عليه</label><input id="violationDefendant" type="search" placeholder="اسم المدعى عليه" /></div>
+              <div class="control-field"><label for="violationFrom">تاريخ المخالفة من</label><input id="violationFrom" type="date" /></div>
+              <div class="control-field"><label for="violationTo">تاريخ المخالفة إلى</label><input id="violationTo" type="date" /></div>
+              <div class="filter-buttons"><button class="small-button primary-action" id="searchViolations">بحث</button><button class="small-button" id="resetViolations">مسح</button></div>
+            </div>
+            <div class="table-wrap" id="violationTable">
+              <table>
+                <thead><tr><th>#</th><th>بند المخالفة</th><th>تاريخ المخالفة</th><th>الساعة</th><th>التاريخ الفعلي للإضافة</th><th>تاريخ الإبلاغ</th><th>المدعي</th><th>المدعى عليه</th><th>حالة المخالفة</th><th>نوع المخالفة</th><th>إضافة وعرض الاستئنافات</th><th>لجنة إصدار قرار</th><th>عمليات</th></tr></thead>
+                <tbody><tr><td>1</td><td class="long-cell">عدم وجود تاريخ إنجاز لمشاكل تطبيق</td><td class="ltr">2025-09-08</td><td class="ltr">18:26</td><td class="ltr">2025/09/09 10:13:25am</td><td class="ltr">2025-09-08</td><td>محمد نبيل - مدير المالي</td><td>ميساب</td><td><span class="status good">المخالفة مقبولة</span></td><td>مخالفة</td><td><button class="mini-action" data-toast="تم فتح سجل الاستئنافات (حتى ثلاثة لكل طرف)." data-toast-type="success">إضافة/عرض</button></td><td><button class="mini-action" data-toast="تم فتح نموذج إضافة القرار وسجل القرارات السابقة." data-toast-type="success">إضافة/عرض القرار</button></td><td><button class="mini-action primary" data-toast="تم فتح تعديل المخالفة." data-toast-type="success">تعديل</button></td></tr></tbody>
+              </table>
+            </div>
+            <div class="violation-card-mobile" id="violationMobile">
+              <article class="mobile-data-card"><h3>عدم وجود تاريخ إنجاز لمشاكل تطبيق</h3><div class="mobile-grid"><div class="mobile-field"><span>الرقم</span><strong>1</strong></div><div class="mobile-field"><span>النوع</span><strong>مخالفة</strong></div><div class="mobile-field"><span>تاريخ المخالفة</span><strong class="ltr">2025-09-08</strong></div><div class="mobile-field"><span>الساعة</span><strong class="ltr">18:26</strong></div><div class="mobile-field wide"><span>التاريخ الفعلي للإضافة</span><strong class="ltr">2025/09/09 10:13:25am</strong></div><div class="mobile-field"><span>تاريخ الإبلاغ</span><strong class="ltr">2025-09-08</strong></div><div class="mobile-field"><span>الحالة</span><strong>المخالفة مقبولة</strong></div><div class="mobile-field"><span>المدعي</span><strong>محمد نبيل - مدير المالي</strong></div><div class="mobile-field"><span>المدعى عليه</span><strong>ميساب</strong></div><div class="mobile-field wide"><span>بند المخالفة</span><strong>عدم وجود تاريخ إنجاز لمشاكل تطبيق</strong></div><div class="mobile-field"><span>الاستئنافات</span><strong>إضافة/عرض</strong></div><div class="mobile-field"><span>قرار اللجنة</span><strong>إضافة/عرض القرار</strong></div><div class="mobile-field wide"><span>العمليات</span><button class="mini-action primary">تعديل المخالفة</button></div></div></article>
+            </div>
+            <div class="empty-state inline-no-results" id="violationNoResults" hidden><div><svg class="icon"><use href="#search"/></svg><h3>لا توجد مخالفات مطابقة</h3><p>تحقق من الأطراف أو نطاق التاريخ ثم أعد البحث.</p></div></div>
+            <div class="pagination" id="violationPagination"><span>عرض 1 من 1,254 — ترقيم صفحات من الخادم</span><button>‹</button><button>1</button><button>›</button></div>
+          </div>
+        </section>
+
+        <section class="module-panel" id="daily">
+          <div class="module-shell">
+            <header class="module-head"><div><h2>كرت الأعمال اليومي</h2><p>سجل الوقت الكامل بـ21 عموداً ومعادلة ساعات موحدة بين الواجهة والخادم.</p></div></header>
+            <div class="operation-bar" aria-label="إجراءات الكرت اليومي السبعة">
+              <button class="small-button primary-action" data-toast="تم فتح كرت اليوم." data-toast-type="success">كرت اليوم</button>
+              <button class="small-button" data-toast="تم فتح نموذج الإضافة للكرت اليومي." data-toast-type="success">إضافة للكرت اليومي</button>
+              <button class="small-button" data-print>طباعة الجميع</button>
+              <button class="small-button" data-print>طباعة</button>
+              <button class="small-button" data-toast="تم تجهيز Excel وفق المستخدم والتاريخ." data-toast-type="success">تصدير Excel</button>
+            </div>
+            <div class="filters daily-filters">
+              <div class="control-field"><label for="dailyUser">المستخدم</label><select id="dailyUser" aria-describedby="dailyUserHint"><option value="">كل المستخدمين</option><option value="ميساب">ميساب</option><option value="هيثم أبو طير">هيثم أبو طير</option></select><small id="dailyUserHint">تُحمّل قائمة المستخدمين الحالية (49 خياراً في النظام المرصود) من الـAPI.</small></div>
+              <div class="control-field"><label for="dailyDate">تاريخ التكليف</label><input id="dailyDate" type="date" value="2026-07-21" /></div>
+              <div class="filter-buttons"><button class="small-button primary-action" id="searchDaily">بحث</button><button class="small-button" id="resetDaily">مسح</button></div>
+            </div>
+            <div class="table-wrap daily-table" id="dailyTable">
+              <table>
+                <thead><tr><th>الرقم</th><th>ساعة الموعد</th><th>ثابت</th><th>الموضوع</th><th>المهمة المنجزة</th><th>الشركة المشغلة</th><th>لحساب موقع</th><th>مكان الدوام</th><th>الوقت المقدر حسب المقرر</th><th>الساعات المقدرة حسب البرنامج</th><th>ساعة الحضور</th><th>ساعة المغادرة</th><th>الساعات المحتسبة</th><th>ساعات إضافية</th><th>ساعات تحفيزية</th><th>استراحات</th><th>مجموع الساعات</th><th>تعليمات المكلف</th><th>تعليمات المشرف</th><th>المرفقات</th><th>عمليات</th></tr></thead>
+                <tbody>
+                  <tr><td>117673</td><td class="ltr">12:00</td><td>لا</td><td class="long-cell">يوجد خلل في رفع المرفقات على فهرس المواقع والكرت التكليفي</td><td>متابعة الخلل وتوثيقه</td><td>نياشين</td><td>مكتب ميساب</td><td>المكتب</td><td>60 دقيقة</td><td>1:00</td><td class="ltr">12:00</td><td class="ltr">13:00</td><td>1:00</td><td>0:00</td><td>0:00</td><td>0:00</td><td>1:00</td><td>رفع تقرير بالمشكلة</td><td>التأكد من سلامة المرفقات</td><td><button class="mini-action">عرض</button></td><td><button class="mini-action primary" data-toast="تم فتح تعديل الصف 117673." data-toast-type="success">تعديل الصف</button></td></tr>
+                  <tr><td>117674</td><td class="ltr">09:15</td><td>لا</td><td class="long-cell">تعديل كرت اليومي لسامر عويضات حسب بطاقة المشرف</td><td>مراجعة الساعات</td><td>نياشين</td><td>الإدارة</td><td>المكتب</td><td>45 دقيقة</td><td>0:45</td><td class="ltr">09:15</td><td class="ltr">10:00</td><td>0:45</td><td>0:00</td><td>0:00</td><td>0:00</td><td>0:45</td><td>مطابقة البطاقة</td><td>مراجعة نهائية</td><td>—</td><td><button class="mini-action primary">تعديل الصف</button></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="daily-cards" id="dailyMobile">
+              <article class="mobile-data-card">
+                <h3>يوجد خلل في رفع المرفقات على فهرس المواقع والكرت التكليفي</h3>
+                <div class="mobile-grid"><div class="mobile-field"><span>الرقم</span><strong>117673</strong></div><div class="mobile-field"><span>ساعة الموعد</span><strong class="ltr">12:00</strong></div><div class="mobile-field"><span>ثابت</span><strong>لا</strong></div><div class="mobile-field"><span>مكان الدوام</span><strong>المكتب</strong></div><div class="mobile-field"><span>ساعة الحضور</span><strong class="ltr">12:00</strong></div><div class="mobile-field"><span>ساعة المغادرة</span><strong class="ltr">13:00</strong></div><div class="mobile-field"><span>مجموع الساعات</span><strong>1:00</strong></div><div class="mobile-field"><span>المرفقات</span><strong>عرض</strong></div></div>
+                <details class="mobile-more"><summary>عرض جميع حقول الكرت (21)</summary><div class="mobile-grid"><div class="mobile-field wide"><span>المهمة المنجزة</span><strong>متابعة الخلل وتوثيقه</strong></div><div class="mobile-field"><span>الشركة المشغلة</span><strong>نياشين</strong></div><div class="mobile-field"><span>لحساب موقع</span><strong>مكتب ميساب</strong></div><div class="mobile-field"><span>الوقت المقدر حسب المقرر</span><strong>60 دقيقة</strong></div><div class="mobile-field"><span>الساعات المقدرة حسب البرنامج</span><strong>1:00</strong></div><div class="mobile-field"><span>الساعات المحتسبة</span><strong>1:00</strong></div><div class="mobile-field"><span>ساعات إضافية</span><strong>0:00</strong></div><div class="mobile-field"><span>ساعات تحفيزية</span><strong>0:00</strong></div><div class="mobile-field"><span>استراحات</span><strong>0:00</strong></div><div class="mobile-field wide"><span>تعليمات المكلف</span><strong>رفع تقرير بالمشكلة</strong></div><div class="mobile-field wide"><span>تعليمات المشرف</span><strong>التأكد من سلامة المرفقات</strong></div><div class="mobile-field wide"><span>العمليات</span><button class="mini-action primary">تعديل الصف</button></div></div></details>
+              </article>
+            </div>
+            <div class="empty-state inline-no-results" id="dailyNoResults" hidden><div><svg class="icon"><use href="#search"/></svg><h3>لا توجد أعمال يومية مطابقة</h3><p>غيّر المستخدم أو التاريخ ثم أعد البحث.</p></div></div>
+            <div class="audit-note">مجموع الساعات = الساعات المحتسبة + الإضافية + التحفيزية − الاستراحات. يمنع الحفظ إذا كانت المغادرة أسبق من الحضور ما لم يحدد العمل العابر لمنتصف الليل.</div>
+            <div class="pagination" id="dailyPagination"><span>عرض 1–20 من 98 سجلاً</span><button>‹</button><button>1</button><button>›</button></div>
+          </div>
+        </section>
+
+        <section class="module-panel" id="assigned-work">
+          <div class="module-shell">
+            <header class="module-head"><div><h2>كرت الأعمال التكليفي</h2><p>لا توجد سجلات منجزة أو لاحقة في الحساب حالياً.</p></div></header>
+            <div class="sub-tabs"><button class="sub-tab active">المنجز <span class="count">0</span></button><button class="sub-tab">اللاحق <span class="count">0</span></button></div>
+            <div class="empty-state"><div><svg class="icon"><use href="#briefcase"/></svg><h3>لا توجد أعمال تكليفية لعرضها</h3><p>سيظهر هنا أي سجل جديد مع جميع حقول الجدول.</p></div></div>
+            <p class="schema-note">هذه حالة Empty فعلية. يمكن معاينة Loading وNo Results وError و403 من قائمة «معاينة حالة الشاشة» أعلى الصفحة.</p>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="assignmentModal" hidden role="dialog" aria-modal="true" aria-labelledby="assignmentModalTitle">
+    <section class="modal">
+      <header class="modal-head">
+        <h2 id="assignmentModalTitle">إضافة أو تعديل تكليف</h2>
+        <button class="round-button" type="button" data-close-modal aria-label="إغلاق النافذة">×</button>
+      </header>
+      <div class="modal-body">
+        <div class="control-field wide"><label for="taskTitle">عنوان التكليف</label><input id="taskTitle" value="إختبار 1" /></div>
+        <div class="control-field"><label for="taskAssignee">المكلف الحالي</label><select id="taskAssignee"><option>هيثم أبو طير</option><option>ميساب</option></select></div>
+        <div class="control-field"><label for="taskAuditor">المشرفون/المدققون</label><select id="taskAuditor" multiple size="2"><option selected>هيثم أبو طير</option><option>محمد نبيل</option></select></div>
+        <div class="control-field"><label for="taskFollowDate">تاريخ المتابعة</label><input id="taskFollowDate" type="date" value="2026-07-25" /></div>
+        <div class="control-field"><label for="taskAttachment">المرفق</label><input id="taskAttachment" type="file" /></div>
+        <div class="control-field wide"><label for="taskInstructions">تعليمات المكلف</label><textarea id="taskInstructions">يبيبس</textarea></div>
+        <div class="control-field wide"><label for="supervisorInstructions">تعليمات المشرف</label><textarea id="supervisorInstructions">مراجعة التنفيذ وتوثيق النتيجة.</textarea></div>
+        <div class="control-field wide"><label for="attachmentUrl">رابط المرفق</label><input id="attachmentUrl" type="url" placeholder="https://example.com/file" /></div>
+      </div>
+      <footer class="modal-actions">
+        <button class="small-button danger-action" type="button" id="simulateSaveError">محاكاة فشل الحفظ</button>
+        <button class="small-button" type="button" data-close-modal>إلغاء</button>
+        <button class="small-button primary-action" type="button" id="saveAssignment">حفظ مرة واحدة</button>
+      </footer>
+    </section>
+  </div>
+
+  <div class="toast success" id="toast" role="status" aria-live="polite">
+    <svg class="icon"><use href="#check"/></svg>
+    <span id="toastMessage">تم الحفظ بنجاح.</span>
+  </div>
+
+  <nav class="bottom-nav">
+    <button class="active"><svg class="icon"><use href="#home"/></svg>الرئيسية</button>
+    <button><svg class="icon"><use href="#task"/></svg>المهام</button>
+    <button><svg class="icon"><use href="#calendar"/></svg>اليوم</button>
+    <button><svg class="icon"><use href="#bell"/></svg>التنبيهات</button>
+    <button><svg class="icon"><use href="#menu"/></svg>المزيد</button>
+  </nav>
+
+  <script>
+    const moduleTabs = [...document.querySelectorAll('.module-tab[data-module]')];
+    const panels = [...document.querySelectorAll('.module-panel')];
+    const statePreview = document.getElementById('statePreview');
+    const stateStage = document.getElementById('stateStage');
+    const stateIcon = document.getElementById('stateIcon');
+    const stateTitle = document.getElementById('stateTitle');
+    const stateMessage = document.getElementById('stateMessage');
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toastMessage');
+    let activeModule = 'assignments';
+    let toastTimer;
+
+    document.querySelectorAll('.later-cell[data-label]').forEach(cell => {
+      const label = document.createElement('span');
+      label.className = 'task-field-label';
+      label.textContent = cell.dataset.label;
+      cell.prepend(label);
+    });
+
+    const moduleTitles = {
+      assignments: ['الرئيسية', 'الكرت التكليفي اللاحق والمنجز'],
+      violations: ['المخالفات', 'الشكاوى والتحكيم والقرارات'],
+      daily: ['كرت الأعمال اليومي', 'الحضور والساعات والأعمال'],
+      'assigned-work': ['كرت الأعمال التكليفي', 'متابعة الأعمال التكليفية']
+    };
+
+    const stateCopy = {
+      loading: ['جاري تحميل البيانات', 'يتم الآن جلب البيانات ضمن صلاحياتك والفلاتر الحالية.'],
+      empty: ['لا توجد بيانات بعد', 'هذه الوحدة فارغة حالياً. استخدم الإجراء الرئيسي لإضافة أول سجل.'],
+      'no-results': ['لا توجد نتائج مطابقة', 'لم نجد سجلات ضمن التاريخ أو الفلاتر المحددة. غيّر الفلاتر وحاول مجدداً.'],
+      error: ['تعذر تحميل البيانات', 'حدث خطأ غير متوقع. لم نفقد فلاترك ويمكنك إعادة المحاولة.'],
+      blocked: ['لا تملك صلاحية الوصول', 'رمز الحالة 403 — اطلب الصلاحية من مدير النظام أو عد إلى مساحة عملك.'],
+      'session-expired': ['انتهت الجلسة', 'سجّل الدخول مجدداً للمتابعة. يحتفظ النظام بمسار الرجوع ولا يعيد إرسال آخر عملية تلقائياً.']
+    };
+
+    function showToast(message, type = 'success') {
+      clearTimeout(toastTimer);
+      toastMessage.textContent = message;
+      toast.classList.remove('success', 'error', 'show');
+      toast.classList.add(type === 'error' ? 'error' : 'success', 'show');
+      toast.querySelector('use').setAttribute('href', type === 'error' ? '#alert' : '#check');
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 3400);
+    }
+
+    function setPreviewState(value) {
+      statePreview.value = value;
+      if (value === 'data') {
+        stateStage.hidden = true;
+        panels.forEach(panel => {
+          panel.hidden = panel.id !== activeModule;
+          panel.classList.toggle('active', panel.id === activeModule);
+        });
+        return;
+      }
+      panels.forEach(panel => panel.hidden = true);
+      stateStage.hidden = false;
+      const copy = stateCopy[value] || stateCopy.error;
+      stateTitle.textContent = copy[0];
+      stateMessage.textContent = copy[1];
+      if (value === 'loading') {
+        stateIcon.innerHTML = '<span class="spinner" aria-hidden="true"></span>';
+        document.getElementById('retryState').hidden = true;
+      } else {
+        const icon = value === 'blocked' || value === 'session-expired' ? '#alert' : value === 'empty' ? '#briefcase' : value === 'no-results' ? '#search' : '#alert';
+        stateIcon.innerHTML = '<svg class="icon"><use href="' + icon + '"></use></svg>';
+        document.getElementById('retryState').hidden = false;
+      }
+    }
+
+    function openModule(id) {
+      activeModule = id;
+      moduleTabs.forEach(tab => tab.classList.toggle('active', tab.dataset.module === id));
+      const heading = moduleTitles[id] || moduleTitles.assignments;
+      document.querySelector('.title-block h1').textContent = heading[0];
+      document.querySelector('.title-block p').textContent = heading[1];
+      setPreviewState('data');
+    }
+
+    moduleTabs.forEach(tab => tab.addEventListener('click', () => openModule(tab.dataset.module)));
+    document.querySelectorAll('[data-nav-module]').forEach(button => button.addEventListener('click', () => {
+      openModule(button.dataset.navModule);
+      document.querySelectorAll('.sidebar [data-nav-module], .sidebar [data-nav-home]').forEach(item => item.classList.toggle('active', item === button));
+      document.querySelector('.module-tabs').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }));
+    document.querySelector('[data-nav-home]').addEventListener('click', () => {
+      openModule('assignments');
+      document.querySelectorAll('.sidebar [data-nav-module], .sidebar [data-nav-home]').forEach(item => item.classList.toggle('active', item.hasAttribute('data-nav-home')));
+      scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    statePreview.addEventListener('change', () => setPreviewState(statePreview.value));
+    document.getElementById('retryState').addEventListener('click', () => {
+      setPreviewState('loading');
+      setTimeout(() => {
+        setPreviewState('data');
+        showToast('تم تحميل البيانات بنجاح.');
+      }, 650);
+    });
+
+    const dashboardDate = document.getElementById('dashboardDate');
+    dashboardDate.addEventListener('change', () => {
+      const date = new Date(dashboardDate.value + 'T12:00:00');
+      const day = new Intl.DateTimeFormat('ar-PS', { weekday: 'long' }).format(date);
+      const displayDate = dashboardDate.value.split('-').reverse().join('-');
+      document.querySelectorAll('[data-selected-date]').forEach(node => node.textContent = displayDate);
+      document.querySelectorAll('[data-selected-date-iso]').forEach(node => node.textContent = dashboardDate.value);
+      document.querySelectorAll('[data-selected-day]').forEach(node => node.textContent = day);
+      document.getElementById('dailyDate').value = dashboardDate.value;
+      showToast('تم تحديث لوحة العمل إلى ' + displayDate + ' حسب توقيت غزة.');
+    });
+
+    const metricFilterBanner = document.getElementById('metricFilterBanner');
+    const metricFilterText = document.getElementById('metricFilterText');
+    let currentMetricFilter = '';
+    function filterActiveAssignments() {
+      const query = assignmentSearch.value.trim().toLocaleLowerCase('ar');
+      let visibleRows = 0;
+      document.querySelectorAll('#assignmentActiveView .later-grid-row').forEach(row => {
+        const assignee = (row.dataset.assignee || '').toLocaleLowerCase('ar');
+        const searchMatch = !query || assignee.includes(query);
+        const metricMatch = !currentMetricFilter || (row.dataset.metricTags || '').includes(currentMetricFilter);
+        const match = searchMatch && metricMatch;
+        row.hidden = !match;
+        if (match) visibleRows += 1;
+      });
+      document.querySelectorAll('[data-assignment-card]').forEach(card => {
+        const visibleCards = [...card.querySelectorAll('.later-grid-row')].filter(row => !row.hidden);
+        card.hidden = visibleCards.length === 0;
+        const count = card.querySelector('[data-visible-topic-count]');
+        if (count) count.textContent = visibleCards.length;
+      });
+      document.getElementById('assignmentNoResults').hidden = visibleRows > 0;
+    }
+    document.querySelectorAll('[data-metric-filter]').forEach(metric => metric.addEventListener('click', () => {
+      document.querySelectorAll('[data-metric-filter]').forEach(item => item.classList.toggle('active', item === metric));
+      openModule('assignments');
+      currentMetricFilter = metric.dataset.metricFilter;
+      metricFilterBanner.hidden = false;
+      metricFilterText.textContent = 'القائمة مفلترة حسب: ' + currentMetricFilter + ' (' + metric.dataset.metricCount + ')';
+      const completedMetric = currentMetricFilter === 'المنجزة اليوم';
+      activeAssignments.hidden = completedMetric;
+      completedAssignments.hidden = !completedMetric;
+      completedToggle.textContent = completedMetric ? 'العودة إلى اللاحق' : 'الانتقال إلى المنجز';
+      document.getElementById('assignmentHeading').textContent = completedMetric ? 'الكرت التكليفي المنجز — اليوم' : 'الكرت التكليفي اللاحق';
+      if (completedMetric) filterCompletedAssignments(); else filterActiveAssignments();
+      document.querySelector('.module-tabs').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }));
+    document.getElementById('clearMetricFilter').addEventListener('click', () => {
+      currentMetricFilter = '';
+      metricFilterBanner.hidden = true;
+      document.querySelectorAll('[data-metric-filter]').forEach(item => item.classList.remove('active'));
+      activeAssignments.hidden = false;
+      completedAssignments.hidden = true;
+      completedToggle.textContent = 'الانتقال إلى المنجز';
+      document.getElementById('assignmentHeading').textContent = 'الكرت التكليفي اللاحق';
+      setPreviewState('data');
+      filterActiveAssignments();
+    });
+
+    const assignmentSearch = document.getElementById('assignmentSearch');
+    assignmentSearch.addEventListener('input', filterActiveAssignments);
+
+    const activeAssignments = document.getElementById('assignmentActiveView');
+    const completedAssignments = document.getElementById('assignmentCompletedView');
+    const completedToggle = document.getElementById('toggleCompletedAssignments');
+    function filterCompletedAssignments() {
+      const filters = {
+        assignee: document.getElementById('completedAssignee').value,
+        topic: document.getElementById('completedTopic').value,
+        supervisor: document.getElementById('completedSupervisor').value,
+        date: document.getElementById('completedDate').value,
+        instructions: document.getElementById('completedInstructions').value,
+        attachment: document.getElementById('completedAttachment').value,
+        operations: document.getElementById('completedOperations').value
+      };
+      Object.keys(filters).forEach(key => { filters[key] = filters[key].trim().toLocaleLowerCase('ar'); });
+      let visibleRows = 0;
+      document.querySelectorAll('#completedCards .completed-task-card').forEach(card => {
+        const searchMatch = Object.entries(filters).every(([key, value]) => {
+          if (!value) return true;
+          return (card.dataset[key] || '').toLocaleLowerCase('ar').includes(value);
+        });
+        const metricMatch = currentMetricFilter !== 'المنجزة اليوم' || (card.dataset.completedTags || '').includes('منجزة اليوم');
+        const visible = searchMatch && metricMatch;
+        card.hidden = !visible;
+        if (visible) visibleRows += 1;
+      });
+      document.getElementById('completedCards').hidden = visibleRows === 0;
+      document.getElementById('completedNoResults').hidden = visibleRows > 0;
+      document.getElementById('completedPagination').hidden = visibleRows === 0;
+      return visibleRows;
+    }
+    document.getElementById('searchCompletedAssignments').addEventListener('click', () => {
+      const count = filterCompletedAssignments();
+      showToast(count ? 'تم تطبيق حقول بحث المنجز الستة.' : 'لا توجد مهام منجزة مطابقة.', count ? 'success' : 'error');
+    });
+    completedToggle.addEventListener('click', () => {
+      const showCompleted = completedAssignments.hidden;
+      currentMetricFilter = '';
+      metricFilterBanner.hidden = true;
+      document.querySelectorAll('[data-metric-filter]').forEach(item => item.classList.remove('active'));
+      activeAssignments.hidden = showCompleted;
+      completedAssignments.hidden = !showCompleted;
+      completedToggle.textContent = showCompleted ? 'العودة إلى اللاحق' : 'الانتقال إلى المنجز';
+      document.getElementById('assignmentHeading').textContent = showCompleted ? 'الكرت التكليفي المنجز' : 'الكرت التكليفي اللاحق';
+      if (showCompleted) filterCompletedAssignments(); else filterActiveAssignments();
+      showToast(showCompleted ? 'تم فتح الكرت المنجز بتحميل كسول.' : 'تمت العودة إلى التكليفات اللاحقة.');
+    });
+
+    function applyViolationFilters() {
+      const type = document.getElementById('violationType').value;
+      const plaintiff = document.getElementById('violationPlaintiff').value.trim();
+      const defendant = document.getElementById('violationDefendant').value.trim();
+      const from = document.getElementById('violationFrom').value;
+      const to = document.getElementById('violationTo').value;
+      const recordDate = '2025-09-08';
+      const match = (!type || type === 'مخالفة') &&
+        (!plaintiff || 'محمد نبيل - مدير المالي'.includes(plaintiff)) &&
+        (!defendant || 'ميساب'.includes(defendant)) &&
+        (!from || recordDate >= from) && (!to || recordDate <= to);
+      document.getElementById('violationTable').hidden = !match;
+      document.getElementById('violationMobile').hidden = !match;
+      document.getElementById('violationNoResults').hidden = match;
+      document.getElementById('violationPagination').hidden = !match;
+      showToast(match ? 'تم تطبيق فلاتر المخالفات.' : 'اكتمل البحث دون نتائج.', match ? 'success' : 'error');
+    }
+    document.getElementById('searchViolations').addEventListener('click', applyViolationFilters);
+    document.getElementById('resetViolations').addEventListener('click', () => {
+      ['violationType', 'violationPlaintiff', 'violationDefendant', 'violationFrom', 'violationTo'].forEach(id => document.getElementById(id).value = '');
+      applyViolationFilters();
+    });
+
+    function applyDailyFilters() {
+      const user = document.getElementById('dailyUser').value;
+      const date = document.getElementById('dailyDate').value;
+      const match = (!user || user === 'ميساب') && (!date || date === '2026-07-21');
+      document.getElementById('dailyTable').hidden = !match;
+      document.getElementById('dailyMobile').hidden = !match;
+      document.getElementById('dailyNoResults').hidden = match;
+      document.getElementById('dailyPagination').hidden = !match;
+      showToast(match ? 'تم تطبيق فلتر الكرت اليومي.' : 'لا توجد أعمال يومية ضمن الفلتر.', match ? 'success' : 'error');
+    }
+    document.getElementById('searchDaily').addEventListener('click', applyDailyFilters);
+    document.getElementById('resetDaily').addEventListener('click', () => {
+      document.getElementById('dailyUser').value = '';
+      document.getElementById('dailyDate').value = '';
+      applyDailyFilters();
+    });
+
+    document.querySelectorAll('[data-toast]').forEach(control => control.addEventListener('click', event => {
+      if (control.tagName === 'A' && control.getAttribute('href') === '#') event.preventDefault();
+      showToast(control.dataset.toast, control.dataset.toastType || 'success');
+    }));
+    document.querySelectorAll('[data-print]').forEach(control => control.addEventListener('click', () => {
+      showToast('تم تجهيز النسخة المطبوعة وفق العرض والفلاتر الحالية.');
+      setTimeout(() => window.print(), 220);
+    }));
+    document.querySelectorAll('[data-confirm-action]').forEach(control => control.addEventListener('click', () => {
+      if (window.confirm(control.dataset.confirmAction)) showToast('تم تنفيذ الترحيل وتسجيل العملية في سجل التدقيق.');
+    }));
+
+    const modalBackdrop = document.getElementById('assignmentModal');
+    let modalTrigger = null;
+    function openModal(trigger) {
+      modalTrigger = trigger;
+      const activeCard = trigger.closest('.later-grid-row');
+      const completedCard = trigger.closest('.completed-task-card');
+      if (activeCard) {
+        const fields = activeCard.querySelectorAll('.later-cell');
+        document.getElementById('taskTitle').value = fields[1]?.querySelector('strong')?.textContent.trim() || '';
+        document.getElementById('taskAssignee').value = activeCard.dataset.assignee || '';
+        const followDate = fields[2]?.textContent.replace(fields[2]?.querySelector('.task-field-label')?.textContent || '', '').trim() || '';
+        if (/^\d{4}-\d{2}-\d{2}$/.test(followDate)) document.getElementById('taskFollowDate').value = followDate;
+        document.getElementById('taskInstructions').value = fields[4]?.textContent.replace(fields[4]?.querySelector('.task-field-label')?.textContent || '', '').trim() || '';
+        document.getElementById('supervisorInstructions').value = fields[6]?.textContent.replace(fields[6]?.querySelector('.task-field-label')?.textContent || '', '').trim() || '';
+      } else if (completedCard) {
+        document.getElementById('taskTitle').value = completedCard.querySelector('.completed-subject h3')?.textContent.trim() || '';
+        document.getElementById('taskAssignee').value = completedCard.dataset.assignee || '';
+        document.getElementById('taskFollowDate').value = completedCard.dataset.date || '';
+        document.getElementById('taskInstructions').value = completedCard.querySelector('[data-completed-field="assignee-instructions"] strong')?.textContent.trim() || '';
+        document.getElementById('supervisorInstructions').value = completedCard.querySelector('[data-completed-field="supervisor-instructions"] strong')?.textContent.trim() || '';
+      }
+      modalBackdrop.hidden = false;
+      document.body.style.overflow = 'hidden';
+      document.getElementById('taskTitle').focus();
+    }
+    function closeModal() {
+      modalBackdrop.hidden = true;
+      document.body.style.overflow = '';
+      if (modalTrigger) modalTrigger.focus();
+    }
+    document.querySelectorAll('[data-open-modal="assignmentModal"]').forEach(trigger => trigger.addEventListener('click', () => openModal(trigger)));
+    document.querySelectorAll('[data-close-modal]').forEach(trigger => trigger.addEventListener('click', closeModal));
+    modalBackdrop.addEventListener('click', event => {
+      if (event.target === modalBackdrop) closeModal();
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && !modalBackdrop.hidden) closeModal();
+    });
+    document.getElementById('saveAssignment').addEventListener('click', () => {
+      const title = document.getElementById('taskTitle').value.trim();
+      if (!title) {
+        showToast('عنوان التكليف مطلوب، ولم تُفقد بقية المدخلات.', 'error');
+        document.getElementById('taskTitle').focus();
+        return;
+      }
+      closeModal();
+      showToast('تم حفظ «' + title + '» مرة واحدة وتسجيل القيم قبل/بعد.');
+    });
+    document.getElementById('simulateSaveError').addEventListener('click', () => {
+      showToast('فشل رفع المرفق التجريبي؛ بقيت بقية بيانات المهمة محفوظة في النموذج.', 'error');
+    });
+
+    document.querySelectorAll('.bottom-nav button').forEach((button, index) => button.addEventListener('click', () => {
+      document.querySelectorAll('.bottom-nav button').forEach(item => item.classList.toggle('active', item === button));
+      if (index === 0) openModule('assignments');
+      if (index === 1) openModule('assignments');
+      if (index === 2) openModule('daily');
+      if (index === 3) showToast('لا توجد تنبيهات جديدة.');
+      if (index === 4) showToast('تم فتح قائمة المزيد في نموذج الواجهة.');
+    }));
+
+    setPreviewState('data');
+  </script>
+</body>
+</html>
