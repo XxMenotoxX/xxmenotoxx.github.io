@@ -1,0 +1,841 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <!-- GitHub Pages preview build -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>نياشين | الفهارس</title>
+  <style>
+    :root{
+      color-scheme:light;
+      --bg:#f2f4f8;--surface:#fff;--soft:#f7f8fb;--ink:#182238;--muted:#667185;
+      --line:#dde2eb;--navy:#24283c;--navy-2:#30354e;--gold:#b9942e;--gold-soft:#fbf5df;
+      --blue:#315fc8;--blue-soft:#edf2ff;--green:#247348;--green-soft:#e9f6ee;
+      --red:#b73e39;--red-soft:#fcedeb;--amber:#9b600c;--amber-soft:#fff3d9;
+      --shadow:0 18px 45px rgba(23,34,56,.08);--radius:16px
+    }
+    *{box-sizing:border-box}
+    html{background:var(--bg);scroll-behavior:smooth}
+    body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans Arabic","Noto Sans Arabic",Tahoma,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+    button,input,select,textarea{font:inherit}
+    button,a,select{cursor:pointer}
+    button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid rgba(49,95,200,.28);outline-offset:2px}
+    [hidden]{display:none!important}
+    .icon{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+    .app{min-height:100vh;display:grid;grid-template-columns:minmax(0,1fr) 232px;grid-template-areas:"main side";direction:ltr}
+    .main,.sidebar{direction:rtl}
+    .sidebar{grid-area:side;height:100vh;position:sticky;top:0;z-index:20;padding:21px 15px;background:var(--navy);color:#dfe3ed;overflow:auto}
+    .logo{height:62px;padding:4px 8px 17px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;align-items:center}
+    .logo img{width:138px;display:block}
+    .nav-title{margin:24px 11px 8px;color:#8991a5;font-size:10px;font-weight:800}
+    .nav{display:grid;gap:3px}
+    .nav button{min-height:44px;padding:0 11px;border:0;border-radius:10px;background:transparent;color:inherit;display:flex;align-items:center;gap:10px;text-align:right;font-size:12px}
+    .nav button.active{background:rgba(255,255,255,.1);color:#fff}
+    .nav button.active .icon{color:var(--gold)}
+    .nav small{margin-right:auto;color:#8f97aa}
+    .sidebar-note{margin-top:24px;padding:12px;border:1px solid rgba(255,255,255,.1);border-radius:11px;color:#9ea6b9;font-size:9px;line-height:1.8}
+    .main{grid-area:main;min-width:0}
+    .topbar{height:68px;padding:0 26px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.94);display:flex;align-items:center;gap:11px;position:sticky;top:0;z-index:15;backdrop-filter:blur(14px)}
+    .heading{min-width:245px}
+    .heading h1{margin:0;font-size:19px}
+    .heading p{margin:4px 0 0;color:var(--muted);font-size:9px}
+    .global-search{width:min(350px,32vw);height:40px;margin-right:auto;padding:0 12px;border:1px solid var(--line);border-radius:11px;background:var(--soft);color:var(--muted);display:flex;align-items:center;gap:8px}
+    .global-search input{width:100%;border:0;outline:0;background:transparent;color:var(--ink)}
+    .round{width:40px;height:40px;border:1px solid var(--line);border-radius:11px;background:var(--surface);color:var(--ink);display:grid;place-items:center}
+    .content{padding:20px 26px 42px}
+    .breadcrumbs{margin-bottom:12px;display:flex;align-items:center;gap:7px;color:var(--muted);font-size:10px}
+    .breadcrumbs button{padding:0;border:0;background:transparent;color:var(--blue);font-weight:850}
+    .index-switch{margin-bottom:13px;padding:4px;border:1px solid var(--line);border-radius:13px;background:var(--surface);display:grid;grid-template-columns:repeat(3,1fr);gap:3px}
+    .index-tab{min-height:43px;padding:0 12px;border:0;border-radius:10px;background:transparent;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:8px;font-size:11px;font-weight:850}
+    .index-tab.active{background:var(--navy);color:#fff}
+    .index-panel{display:none}
+    .index-panel.active{display:block;animation:enter .22s ease both}
+    @keyframes enter{from{opacity:.2;transform:translateY(4px)}to{opacity:1;transform:none}}
+    .page-shell{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+    .page-head{padding:18px 19px 16px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;flex-wrap:wrap;gap:13px}
+    .page-head>div:first-child{min-width:260px;flex:1 1 360px}
+    .page-head h2{margin:0;font-size:18px}
+    .page-head p{margin:5px 0 0;color:var(--muted);font-size:10px;line-height:1.65}
+    .title-meta{margin-top:8px;display:flex;align-items:center;gap:7px}
+    .chip{padding:5px 8px;border-radius:999px;background:var(--gold-soft);color:#7b6016;font-size:8px;font-weight:900}
+    .page-actions{min-width:0;flex:1 1 520px;margin-right:auto;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:7px}
+    .btn{min-height:37px;padding:0 11px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--ink);display:inline-flex;align-items:center;justify-content:center;gap:7px;font-size:9px;font-weight:850;text-decoration:none;white-space:nowrap}
+    .btn:hover{border-color:#bdc7d8;background:var(--soft)}
+    .btn.primary{background:var(--navy);border-color:var(--navy);color:#fff}
+    .btn.blue{background:var(--blue);border-color:var(--blue);color:#fff}
+    .btn.green{background:var(--green);border-color:var(--green);color:#fff}
+    .btn.danger{color:var(--red);border-color:#e6bab6;background:var(--red-soft)}
+    .btn:disabled{cursor:not-allowed;opacity:.5}
+    .departments{padding:10px 15px;border-bottom:1px solid var(--line);display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+    .departments::-webkit-scrollbar{display:none}
+    .department{flex:0 0 auto;min-height:32px;padding:0 10px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--muted);font-size:9px;font-weight:800}
+    .department.active{background:var(--gold-soft);border-color:#e4d39e;color:#785f18}
+    .toolbar{padding:11px 15px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:7px}
+    .toolbar-search{width:min(330px,34vw);height:37px;padding:0 10px;border:1px solid var(--line);border-radius:9px;background:var(--soft);display:flex;align-items:center;gap:7px;color:var(--muted)}
+    .toolbar-search input{width:100%;border:0;outline:0;background:transparent;color:var(--ink)}
+    .select{height:37px;padding:0 10px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--ink);font-size:9px}
+    .toolbar-end{margin-right:auto;display:flex;gap:7px}
+    .view-toggle{padding:3px;border:1px solid var(--line);border-radius:10px;background:var(--soft);display:flex;gap:2px}
+    .view-toggle button{min-height:29px;padding:0 9px;border:0;border-radius:7px;background:transparent;color:var(--muted);font-size:8px;font-weight:850}
+    .view-toggle button.active{background:var(--surface);color:var(--ink);box-shadow:0 2px 8px rgba(23,34,56,.07)}
+    .summary-line{padding:9px 15px;border-bottom:1px solid var(--line);background:var(--soft);display:flex;gap:16px;color:var(--muted);font-size:9px}
+    .summary-line strong{color:var(--ink)}
+    .site-workspace{min-height:590px;display:grid;grid-template-columns:minmax(0,1fr) 305px;grid-template-areas:"detail list";direction:ltr}
+    .site-list{grid-area:list;padding:14px;background:var(--soft);border-left:1px solid var(--line);direction:rtl}
+    .list-heading{padding:0 4px 11px;display:flex;align-items:center;justify-content:space-between}
+    .list-heading h3{margin:0;font-size:13px}
+    .list-heading span{color:var(--muted);font-size:9px}
+    .sites{display:grid;gap:8px}
+    .site-item{width:100%;padding:12px;border:1px solid transparent;border-radius:12px;background:transparent;color:var(--ink);text-align:right}
+    .site-item:hover{background:rgba(255,255,255,.7)}
+    .site-item.active{border-color:#d7c57e;background:var(--surface);box-shadow:0 8px 22px rgba(23,34,56,.06)}
+    .site-item-top{display:flex;align-items:center;gap:7px}
+    .site-item strong{font-size:11px}
+    .site-item p{margin:7px 0;color:var(--muted);font-size:8px;line-height:1.5}
+    .site-item-meta{display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:8px}
+    .status{display:inline-flex;align-items:center;gap:5px;padding:4px 7px;border-radius:999px;background:var(--green-soft);color:var(--green);font-size:8px;font-weight:900}
+    .status::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor}
+    .status.complete{background:var(--blue-soft);color:var(--blue)}
+    .site-detail{grid-area:detail;min-width:0;direction:rtl}
+    .detail-head{padding:17px 18px 14px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;gap:10px}
+    .detail-head h3{margin:0;font-size:16px}
+    .detail-head p{margin:4px 0 0;color:var(--muted);font-size:9px}
+    .detail-head .status{margin-right:auto}
+    .detail-meta{padding:13px 18px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}
+    .meta span{display:block;color:var(--muted);font-size:8px}
+    .meta strong{display:block;margin-top:4px;font-size:10px;line-height:1.4}
+    .business-grid{padding:16px 18px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .business-section{border:1px solid var(--line);border-radius:13px;overflow:hidden}
+    .business-head{min-height:47px;padding:10px 12px;border-bottom:1px solid var(--line);background:var(--soft);display:flex;align-items:center;gap:8px}
+    .business-head h4{margin:0;font-size:11px}
+    .contract-check{margin-right:auto;display:flex;align-items:center;gap:5px;color:var(--red);font-size:8px;font-weight:900}
+    .contract-check b{width:18px;height:18px;border-radius:6px;background:var(--red-soft);display:grid;place-items:center}
+    .link-list{display:grid}
+    .business-link{min-height:39px;padding:0 11px;border:0;border-bottom:1px solid var(--line);background:var(--surface);color:var(--ink);display:flex;align-items:center;gap:8px;text-align:right;text-decoration:none;font-size:9px;font-weight:750}
+    .business-link:last-child{border-bottom:0}
+    .business-link:hover{background:var(--blue-soft);color:var(--blue)}
+    .business-link .icon{margin-right:auto;width:15px;height:15px;color:var(--blue)}
+    .detail-footer{padding:0 18px 17px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+    .detail-action-bar{width:100%;display:flex;gap:7px;overflow-x:auto;scrollbar-width:none}
+    .detail-action-bar::-webkit-scrollbar{display:none}
+    .detail-action-bar .btn{flex:0 0 auto}
+    .operations-note{margin-right:auto;padding:8px 10px;border:1px solid var(--line);border-radius:9px;background:var(--soft);color:var(--muted);font-size:8px}
+    .site-open-label{display:none}
+    .full-table{display:none;padding:14px 15px 17px;overflow-x:auto}
+    .site-shell.table-mode .site-workspace{display:none}
+    .site-shell.table-mode .full-table{display:block}
+    .data-table{width:100%;border-collapse:collapse;font-size:8px}
+    .data-table.wide{min-width:1760px}
+    .data-table th{padding:10px 8px;background:var(--soft);color:var(--muted);text-align:right;white-space:nowrap;border-bottom:1px solid var(--line)}
+    .data-table thead .group th{background:#eef0f5;color:var(--ink);text-align:center;font-weight:900;border-left:1px solid #d9dee7}
+    .data-table td{padding:10px 8px;border-top:1px solid var(--line);vertical-align:top;line-height:1.55}
+    .data-table tr.selected td{background:var(--gold-soft)}
+    .long{min-width:210px}
+    .table-link{color:var(--blue);text-decoration:underline;text-underline-offset:2px}
+    .x{color:var(--red);font-weight:900}
+    .ltr{direction:ltr;unicode-bidi:embed}
+    .segmented{padding:3px;border:1px solid var(--line);border-radius:10px;background:var(--soft);display:inline-flex;gap:2px}
+    .segmented button{min-height:31px;padding:0 12px;border:0;border-radius:7px;background:transparent;color:var(--muted);font-size:9px;font-weight:850}
+    .segmented button.active{background:var(--surface);color:var(--ink);box-shadow:0 2px 8px rgba(23,34,56,.07)}
+    .general-layout{min-height:600px;display:grid;grid-template-columns:minmax(0,1fr) 315px}
+    .catalog-list-pane{padding:14px;background:var(--soft);border-right:1px solid var(--line)}
+    .catalog-list{display:grid;gap:7px}
+    .catalog-item{min-height:54px;padding:9px 11px;border:1px solid transparent;border-radius:10px;background:transparent;color:var(--ink);display:flex;align-items:center;gap:9px;text-align:right}
+    .catalog-item:hover{background:rgba(255,255,255,.75)}
+    .catalog-item.active{border-color:#ccd8f5;background:var(--surface)}
+    .catalog-item strong{display:block;font-size:10px}
+    .catalog-item small{display:block;margin-top:3px;color:var(--muted);font-size:8px}
+    .catalog-item .count{margin-right:auto;min-width:25px;padding:3px 6px;border-radius:999px;background:var(--blue-soft);color:var(--blue);text-align:center;font-size:8px;font-weight:900}
+    .catalog-overview{min-width:0;padding:17px}
+    .catalog-overview h3{margin:0;font-size:15px}
+    .catalog-overview>p{margin:5px 0 15px;color:var(--muted);font-size:9px}
+    .method-grid{margin-bottom:14px;display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+    .method{min-height:84px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);display:flex;align-items:center;gap:10px;text-align:right}
+    .method:hover{border-color:#bcc9e8;background:var(--blue-soft)}
+    .method-icon{width:40px;height:40px;border-radius:11px;background:var(--blue-soft);color:var(--blue);display:grid;place-items:center}
+    .method strong{display:block;font-size:10px}
+    .method small{display:block;margin-top:4px;color:var(--muted);font-size:8px}
+    .schema-box{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+    .schema-head{padding:11px 12px;border-bottom:1px solid var(--line);background:var(--soft);display:flex;align-items:center;gap:8px}
+    .schema-head strong{font-size:10px}
+    .schema-head span{margin-right:auto;color:var(--muted);font-size:8px}
+    .schema-fields{padding:12px;display:flex;flex-wrap:wrap;gap:6px}
+    .field{padding:5px 8px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--muted);font-size:8px}
+    .catalog-cta{padding:12px;border-top:1px solid var(--line);background:var(--soft);display:flex;align-items:center;gap:8px}
+    .catalog-cta p{margin:0;color:var(--muted);font-size:8px}
+    .catalog-cta .btn{margin-right:auto}
+    .registry-table-wrap{margin-top:14px;border:1px solid var(--line);border-radius:12px;overflow:auto}
+    .registry-table-wrap .data-table{min-width:1120px}
+    .registry-table-title{padding:10px 12px;border-bottom:1px solid var(--line);background:var(--soft);display:flex;align-items:center;gap:8px}
+    .registry-table-title strong{font-size:10px}
+    .registry-table-title span{margin-right:auto;color:var(--muted);font-size:8px}
+    .registry-mobile-card{display:none;margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+    .registry-mobile-card h4{margin:0 0 10px;font-size:11px}
+    .registry-mobile-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+    .registry-mobile-grid div{padding:8px;border-radius:8px;background:var(--soft)}
+    .registry-mobile-grid span{display:block;color:var(--muted);font-size:8px}
+    .registry-mobile-grid strong{display:block;margin-top:3px;font-size:9px}
+    .catalog-screen .index-switch{display:none}
+    .catalog-screen .screen-catalog-detail{display:block}
+    .screen-catalog-detail{display:none}
+    .catalog-detail-layout{display:grid;grid-template-columns:minmax(0,1fr) 285px;min-height:610px}
+    .record-workspace{min-width:0}
+    .record-aside{padding:14px;border-right:1px solid var(--line);background:var(--soft)}
+    .record-aside h3{margin:0 0 10px;font-size:12px}
+    .filter-tabs{margin-bottom:10px;display:grid;grid-template-columns:1fr 1fr;gap:3px;padding:3px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+    .filter-tabs button{min-height:32px;border:0;border-radius:7px;background:transparent;color:var(--muted);font-size:8px;font-weight:850}
+    .filter-tabs button.active{background:var(--navy);color:#fff}
+    .filter-pane{display:none}
+    .filter-pane.active{display:block}
+    .aside-field{margin-bottom:9px}
+    .aside-field label{display:block;margin-bottom:4px;color:var(--muted);font-size:8px;font-weight:800}
+    .aside-field small{display:block;margin-top:5px;color:var(--muted);font-size:7px;line-height:1.55}
+    .aside-field input,.aside-field select{width:100%;height:35px;padding:0 9px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:9px}
+    .column-searches{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+    .column-searches .aside-field{margin:0}
+    .record-toolbar{padding:11px 14px;border-bottom:1px solid var(--line);display:flex;gap:7px;overflow-x:auto;scrollbar-width:none}
+    .record-toolbar::-webkit-scrollbar{display:none}
+    .record-toolbar .btn{flex:0 0 auto}
+    .record-table-wrap{padding:13px;overflow-x:auto}
+    .record-table-wrap .data-table{min-width:1050px}
+    .record-table-wrap tbody tr{cursor:pointer}
+    .record-table-wrap tbody tr:hover td{background:var(--blue-soft)}
+    .attachment-list{display:flex;flex-wrap:wrap;gap:5px}
+    .attachment{padding:4px 6px;border-radius:7px;background:var(--blue-soft);color:var(--blue);text-decoration:none;font-size:8px}
+    .directory-toolbar{padding:11px 15px;border-bottom:1px solid var(--line);display:flex;gap:7px;align-items:center}
+    .directory-toolbar .toolbar-search{margin-left:auto}
+    .directory-layout{padding:15px;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .directory-card{min-height:180px;padding:14px;border:1px solid var(--line);border-radius:13px;background:var(--surface);color:var(--ink);text-decoration:none;display:flex;flex-direction:column}
+    .directory-card:hover{border-color:#becaea;background:var(--blue-soft)}
+    .directory-top{display:flex;align-items:center;gap:8px}
+    .directory-top .icon{color:var(--blue)}
+    .directory-top strong{font-size:11px}
+    .directory-top b{margin-right:auto;color:var(--blue);font-size:8px}
+    .directory-fields{margin-top:13px;padding-top:11px;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+    .directory-fields dt{color:var(--muted);font-size:8px}
+    .directory-fields dd{margin:4px 0 0;font-size:9px;font-weight:800;line-height:1.5}
+    .directory-fields .action{color:var(--blue)}
+    .directory-detail{margin:0 15px 15px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+    .directory-detail header{padding:11px 12px;border-bottom:1px solid var(--line);background:var(--soft);display:flex;align-items:center;gap:8px}
+    .directory-detail h3{margin:0;font-size:11px}
+    .directory-detail p{margin:0 0 0 auto;color:var(--muted);font-size:8px}
+    .directory-target[hidden]{display:none}
+    #directoryShell.directory-open>.page-head,#directoryShell.directory-open>#directoryList,#directoryShell.directory-open>#directoryPreview{display:none}
+    .directory-target{min-height:610px;padding:18px}
+    .directory-target-head{padding-bottom:14px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;gap:12px}
+    .directory-target-head h2{margin:8px 0 4px;font-size:18px}
+    .directory-target-head p{margin:0;color:var(--muted);font-size:9px}
+    .directory-target-head .chip{margin-right:auto}
+    .directory-target-table{margin-top:16px;border:1px solid var(--line);border-radius:12px;overflow:auto}
+    .directory-target-table .data-table{min-width:850px}
+    .state-stage{min-height:530px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow);display:grid;place-items:center;text-align:center}
+    .state-stage .state-icon{width:54px;height:54px;margin:auto;border-radius:16px;background:var(--blue-soft);color:var(--blue);display:grid;place-items:center}
+    .state-stage h2{margin:13px 0 5px;font-size:16px}
+    .state-stage p{max-width:390px;margin:0;color:var(--muted);font-size:10px;line-height:1.7}
+    .state-stage .btn{margin-top:14px}
+    .spinner{width:27px;height:27px;border:3px solid #cfdaef;border-top-color:var(--blue);border-radius:50%;animation:spin .75s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .modal-layer{position:fixed;inset:0;z-index:50;padding:24px;background:rgba(22,29,45,.54);display:none;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
+    .modal-layer.open{display:flex}
+    .modal{width:min(720px,100%);max-height:min(820px,92vh);border:1px solid rgba(255,255,255,.25);border-radius:17px;background:var(--surface);box-shadow:0 28px 90px rgba(15,22,38,.28);overflow:auto}
+    .modal.narrow{width:min(540px,100%)}
+    .modal-head{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;gap:10px;position:sticky;top:0;z-index:2;background:var(--surface)}
+    .modal-head h2{margin:0;font-size:16px}
+    .modal-head p{margin:4px 0 0;color:var(--muted);font-size:9px}
+    .modal-close{margin-right:auto;width:35px;height:35px;border:1px solid var(--line);border-radius:9px;background:var(--surface);font-size:18px}
+    .modal-body{padding:17px 18px}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+    .form-field.full{grid-column:1/-1}
+    .form-field label{display:flex;align-items:center;gap:5px;margin-bottom:5px;color:var(--muted);font-size:9px;font-weight:800}
+    .required{color:var(--red)}
+    .form-field input,.form-field select,.form-field textarea{width:100%;min-height:39px;padding:8px 10px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--ink);font-size:10px}
+    .form-field textarea{min-height:80px;resize:vertical}
+    .form-field.invalid input,.form-field.invalid select,.form-field.invalid textarea{border-color:var(--red);background:var(--red-soft)}
+    .field-error{display:none;margin-top:4px;color:var(--red);font-size:8px}
+    .form-field.invalid .field-error{display:block}
+    .check-row{min-height:39px;padding:0 10px;border:1px solid var(--line);border-radius:9px;display:flex;align-items:center;gap:8px;font-size:9px}
+    .modal-foot{padding:13px 18px;border-top:1px solid var(--line);background:var(--soft);display:flex;justify-content:flex-start;gap:7px;position:sticky;bottom:0}
+    .warning{margin-bottom:13px;padding:11px 12px;border:1px solid #ebd092;border-radius:10px;background:var(--amber-soft);color:#78500d;font-size:9px;line-height:1.7}
+    .related-card-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .related-card-grid div{padding:11px;border:1px solid var(--line);border-radius:10px;background:var(--soft)}
+    .related-card-grid span{display:block;color:var(--muted);font-size:8px}
+    .related-card-grid strong{display:block;margin-top:4px;font-size:10px}
+    .preview-table{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+    .preview-table table{width:100%;min-width:600px;border-collapse:collapse;font-size:8px}
+    .preview-table th,.preview-table td{padding:8px;border-bottom:1px solid var(--line);text-align:right}
+    .preview-table th{background:var(--soft);color:var(--muted)}
+    .progress{height:7px;border-radius:99px;background:#e6e9ef;overflow:hidden}
+    .progress i{display:block;width:68%;height:100%;background:var(--blue)}
+    .toast{position:fixed;right:26px;bottom:26px;z-index:80;min-width:280px;max-width:420px;padding:12px 14px;border-radius:11px;background:var(--navy);color:#fff;box-shadow:0 16px 45px rgba(20,27,43,.25);display:none;align-items:center;gap:8px;font-size:10px}
+    .toast.show{display:flex;animation:toast .25s ease both}
+    .toast.success .icon{color:#73d09c}
+    @keyframes toast{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+    .mobile-site-detail,.bottom-nav,.mobile-only{display:none}
+    .mobile-back{border:0;background:transparent;color:var(--blue);display:flex;align-items:center;gap:5px;font-size:10px;font-weight:900}
+    .mobile-section{margin:0 12px 10px;border:1px solid var(--line);border-radius:11px;background:var(--surface);overflow:hidden}
+    .mobile-section-head{min-height:42px;padding:0 11px;border-bottom:1px solid var(--line);background:var(--soft);display:flex;align-items:center;gap:8px}
+    .mobile-section-head h4{margin:0;font-size:10px}
+    .mobile-section-head .contract-check{margin-right:auto}
+    .mobile-operations{padding:0 12px 13px;color:var(--muted);font-size:9px}
+    @media(max-width:1120px){
+      .app{grid-template-columns:minmax(0,1fr) 205px}
+      .business-grid{grid-template-columns:1fr}
+      .detail-meta{grid-template-columns:repeat(3,1fr)}
+      .directory-fields{grid-template-columns:repeat(2,1fr)}
+    }
+    @media(max-width:760px){
+      body{padding-bottom:69px;overflow-x:hidden}
+      .app{display:block}.sidebar{display:none}
+      .topbar{height:61px;padding:0 13px}
+      .heading{min-width:0;flex:1;overflow:hidden}
+      .heading h1{font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+      .heading p{font-size:8px}
+      .global-search,.desktop-only{display:none}
+      .content{padding:12px 12px 24px}
+      .breadcrumbs{margin-bottom:10px}
+      .index-switch{display:flex;overflow-x:auto;scrollbar-width:none}
+      .index-switch::-webkit-scrollbar{display:none}
+      .index-tab{flex:0 0 auto;min-width:150px;min-height:39px}
+      .page-shell{border-radius:14px}
+      .page-head{padding:14px;display:block}
+      .page-head>div:first-child{min-width:0}
+      .page-head h2{font-size:16px}
+      .page-actions{margin-top:11px;justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}
+      .page-actions::-webkit-scrollbar{display:none}
+      .page-actions .btn{flex:0 0 auto}
+      .departments{padding-inline:12px}
+      .toolbar{padding:10px 12px;overflow-x:auto;scrollbar-width:none}
+      .toolbar::-webkit-scrollbar{display:none}
+      .toolbar-search{min-width:218px}
+      .toolbar-end{margin-right:0;display:flex}
+      .view-toggle{display:none}
+      .toolbar .btn,.toolbar .select{flex:0 0 auto}
+      .summary-line{overflow-x:auto;white-space:nowrap}
+      .mobile-only{display:flex}
+      .site-workspace{display:block;min-height:0}
+      .site-list{padding:11px;border-left:0;background:var(--surface)}
+      .sites{gap:9px}
+      .site-item{padding:13px;border:1px solid var(--line);background:var(--surface)}
+      .site-item.active{border-color:#d5c27f}
+      .site-item strong{font-size:13px}
+      .site-item p,.site-item-meta{font-size:10px}
+      .site-open-label{margin-top:10px;padding-top:9px;border-top:1px solid var(--line);color:var(--blue);display:flex;align-items:center;justify-content:space-between;font-size:10px;font-weight:900}
+      .site-detail,.mobile-site-detail{display:none}
+      .site-shell.mobile-detail-mode .page-head,.site-shell.mobile-detail-mode .departments,.site-shell.mobile-detail-mode .toolbar,.site-shell.mobile-detail-mode .summary-line,.site-shell.mobile-detail-mode .site-list{display:none}
+      .site-shell.mobile-detail-mode .mobile-site-detail{margin:0;display:block;overflow:hidden;direction:rtl}
+      .mobile-detail-head{padding:13px;border-bottom:1px solid var(--line);background:var(--soft);display:flex;align-items:center;gap:8px}
+      .mobile-detail-title{margin-right:4px}
+      .mobile-detail-title h3{margin:0;font-size:14px}
+      .mobile-detail-title p{margin:3px 0 0;color:var(--muted);font-size:9px}
+      .mobile-detail-head .status{margin-right:auto}
+      .mobile-grid{padding:13px;display:grid;grid-template-columns:1fr 1fr;gap:11px}
+      .mobile-field span{display:block;color:var(--muted);font-size:9px}
+      .mobile-field strong{display:block;margin-top:4px;font-size:11px;line-height:1.5}
+      .mobile-section .business-link{min-height:44px;font-size:10px}
+      .detail-footer{padding:0 12px 12px;flex-wrap:wrap}
+      .full-table{display:none!important}
+      .mobile-detail-open .breadcrumbs,.mobile-detail-open .index-switch{display:none}
+      .general-layout{display:block;min-height:0}
+      .catalog-list-pane{padding:11px;border-right:0;background:var(--surface)}
+      .catalog-overview{padding:13px}
+      .method-grid{grid-template-columns:1fr}
+      .schema-fields{max-height:112px;overflow:auto}
+      .registry-table-wrap{display:none}
+      .registry-mobile-card{display:block}
+      .catalog-detail-layout{display:block;min-height:0}
+      .record-aside{border-right:0;border-bottom:1px solid var(--line)}
+      .column-searches{grid-template-columns:1fr 1fr}
+      .record-toolbar{padding:10px 11px}
+      .directory-toolbar{overflow-x:auto}
+      .directory-layout{padding:11px;grid-template-columns:1fr}
+      .directory-card{min-height:190px}
+      .directory-fields{grid-template-columns:1fr 1fr}
+      .directory-detail{margin-inline:11px;overflow-x:auto}
+      .directory-target{min-height:540px;padding:12px}
+      .directory-target-head{display:block}
+      .directory-target-head .chip{display:inline-flex;margin:10px 0 0}
+      .related-card-grid{grid-template-columns:1fr}
+      .modal-layer{padding:0;align-items:flex-end}
+      .modal,.modal.narrow{width:100%;max-height:92svh;border-radius:18px 18px 0 0}
+      .form-grid{grid-template-columns:1fr}
+      .form-field.full{grid-column:auto}
+      .state-stage{min-height:470px}
+      .toast{right:12px;bottom:82px;left:12px;min-width:0}
+      .bottom-nav{height:69px;padding:7px 6px max(7px,env(safe-area-inset-bottom));border-top:1px solid var(--line);background:rgba(255,255,255,.97);position:fixed;right:0;bottom:0;left:0;z-index:40;display:grid;grid-template-columns:repeat(5,1fr);backdrop-filter:blur(14px)}
+      .bottom-nav button{border:0;background:transparent;color:var(--muted);display:grid;place-items:center;align-content:center;gap:3px;font-size:8px}
+      .bottom-nav button.active{color:var(--navy);font-weight:900}
+      .bottom-nav button.active .icon{color:var(--gold)}
+    }
+  </style>
+</head>
+<body>
+  <svg aria-hidden="true" width="0" height="0" style="position:absolute">
+    <symbol id="home" viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h13V10"/><path d="M9.5 20v-6h5v6"/></symbol>
+    <symbol id="index" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h5M8 16h7"/></symbol>
+    <symbol id="search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+    <symbol id="menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="filter" viewBox="0 0 24 24"><path d="M3 5h18l-7 8v5l-4 2v-7z"/></symbol>
+    <symbol id="plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="table" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 4v16M15 4v16"/></symbol>
+    <symbol id="list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></symbol>
+    <symbol id="arrow" viewBox="0 0 24 24"><path d="M19 12H5M10 7l-5 5 5 5"/></symbol>
+    <symbol id="building" viewBox="0 0 24 24"><path d="M4 21V6l8-3 8 3v15M8 8h1M15 8h1M8 12h1M15 12h1M8 16h1M15 16h1M10 21v-4h4v4"/></symbol>
+    <symbol id="file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5"/></symbol>
+    <symbol id="upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M5 20h14"/></symbol>
+    <symbol id="print" viewBox="0 0 24 24"><path d="M7 8V3h10v5M7 17H4v-7h16v7H7z"/></symbol>
+    <symbol id="send" viewBox="0 0 24 24"><path d="m3 11 18-8-7 18-3-7zM11 14 21 3"/></symbol>
+    <symbol id="user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c.5-5 3-7 8-7s7.5 2 8 7"/></symbol>
+    <symbol id="folder" viewBox="0 0 24 24"><path d="M3 6h7l2 2h9v11H3z"/></symbol>
+    <symbol id="chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></symbol>
+    <symbol id="bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></symbol>
+    <symbol id="calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></symbol>
+    <symbol id="tasks" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><path d="m3 6 1 1 2-2M3 12l1 1 2-2M3 18l1 1 2-2"/></symbol>
+    <symbol id="close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="edit" viewBox="0 0 24 24"><path d="m4 20 4.5-1 10-10-3.5-3.5-10 10zM13.5 6.5 17 10"/></symbol>
+    <symbol id="link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"/></symbol>
+    <symbol id="warning" viewBox="0 0 24 24"><path d="M12 3 2.5 20h19z"/><path d="M12 9v5M12 18h.01"/></symbol>
+    <symbol id="refresh" viewBox="0 0 24 24"><path d="M20 6v5h-5M4 18v-5h5"/><path d="M18.5 10a7 7 0 0 0-12-3L4 11M5.5 14a7 7 0 0 0 12 3l2.5-4"/></symbol>
+  </svg>
+
+  <div class="app">
+    <aside class="sidebar" aria-label="التنقل الرئيسي">
+      <div class="logo"><img src="data:image/png;base64,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" alt="نياشين"></div>
+      <div class="nav-title">الرئيسية</div>
+      <nav class="nav">
+        <button type="button" data-dashboard-home><svg class="icon"><use href="#home"></use></svg>الرئيسية والتكليفات</button>
+      </nav>
+      <div class="nav-title">الفهارس</div>
+      <nav class="nav">
+        <button type="button" class="active" data-index="sites"><svg class="icon"><use href="#building"></use></svg>شركات ومواقع<small>SEC-004</small></button>
+        <button type="button" data-index="general"><svg class="icon"><use href="#index"></use></svg>فهرس الفهارس<small>SEC-005</small></button>
+        <button type="button" data-index="directories"><svg class="icon"><use href="#folder"></use></svg>دليل بحسب التخصص<small>SEC-007</small></button>
+      </nav>
+      <div class="sidebar-note">نسخة واجهات مطابقة لنطاق الشاشات المحللة. البيانات المعروضة تجريبية ولا تنفذ عمليات على الخادم.</div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="heading"><h1 id="pageTitle">فهرس شركات ومواقع</h1><p id="pageSubtitle">إدارة المواقع ومسارات الزبائن والموردين</p></div>
+        <label class="global-search desktop-only"><svg class="icon"><use href="#search"></use></svg><input id="globalSearch" type="search" aria-label="بحث شامل" placeholder="بحث شامل في الصفحة"></label>
+        <label class="desktop-only"><span class="sr-only"></span><select class="select" id="demoState" aria-label="حالة العرض التجريبية"><option value="ready">الحالة: بيانات فعلية</option><option value="loading">تحميل</option><option value="empty">فارغ</option><option value="no-results">لا نتائج</option><option value="error">خطأ</option><option value="blocked">غير مصرح</option><option value="session-expired">انتهت الجلسة</option></select></label>
+        <button class="round" type="button" aria-label="التنبيهات"><svg class="icon"><use href="#bell"></use></svg></button>
+        <button class="round mobile-only" type="button" aria-label="القائمة"><svg class="icon"><use href="#menu"></use></svg></button>
+      </header>
+
+      <div class="content">
+        <div class="breadcrumbs" id="breadcrumbs"><button type="button" data-dashboard-home>الرئيسية</button><span>/</span><button type="button" data-index-home>الفهارس</button><span>/</span><span id="crumb">شركات ومواقع</span></div>
+        <div class="index-switch" id="indexSwitch" role="tablist" aria-label="صفحات الفهارس">
+          <button class="index-tab active" type="button" role="tab" aria-selected="true" data-index="sites"><svg class="icon"><use href="#building"></use></svg>شركات ومواقع</button>
+          <button class="index-tab" type="button" role="tab" aria-selected="false" data-index="general"><svg class="icon"><use href="#index"></use></svg>فهرس الفهارس</button>
+          <button class="index-tab" type="button" role="tab" aria-selected="false" data-index="directories"><svg class="icon"><use href="#folder"></use></svg>دليل بحسب التخصص</button>
+        </div>
+
+        <div id="stateStage" class="state-stage" hidden aria-live="polite"></div>
+        <div id="screenContent">
+          <section class="index-panel active" id="sites">
+            <div class="page-shell site-shell">
+              <header class="page-head">
+                <div><h2>فهرس شركات ومواقع: ميساب</h2><p>إدارة المواقع والتفرعات والوصول إلى معاملات الزبائن والموردين دون إسقاط أي حقل من الجدول الأصلي.</p><div class="title-meta"><span class="chip">3 مواقع</span><span class="chip">2 مكتملة</span><span class="chip">14 عموداً دلالياً</span><span class="chip">SEC-004</span></div></div>
+                <div class="page-actions">
+                  <button class="btn primary" type="button" data-open-modal="siteModal"><svg class="icon"><use href="#plus"></use></svg>إضافة موقع</button>
+                  <button class="btn" type="button" data-completed-toggle><svg class="icon"><use href="#check"></use></svg>المواقع المكتملة</button>
+                  <button class="btn" type="button" data-open-modal="sendModal"><svg class="icon"><use href="#send"></use></svg>إرسال</button>
+                  <button class="btn" type="button" data-demo-action="تم تجهيز الصفحة للطباعة"><svg class="icon"><use href="#print"></use></svg>طباعة</button>
+                  <button class="btn" type="button" data-dashboard-home><svg class="icon"><use href="#home"></use></svg>رجوع للرئيسية</button>
+                </div>
+              </header>
+              <div class="departments" aria-label="مسارات الأقسام">
+                <button class="department active" type="button">مناقصات وعقود وتقديم حسابات</button><button class="department" type="button">محاسبة</button><button class="department" type="button">إدارة مكتبية</button><button class="department" type="button">إدارة تنفيذية</button><button class="department" type="button">احترازي وتطوير</button><button class="department" type="button">إدارة عمليات</button><button class="department" type="button">نقطة بيع</button>
+              </div>
+              <div class="toolbar">
+                <label class="toolbar-search"><svg class="icon"><use href="#search"></use></svg><input id="siteSearch" type="search" aria-label="البحث بعنوان الشركة" placeholder="عنوان الشركة أو الموقع"></label>
+                <div class="toolbar-end">
+                  <div class="view-toggle" aria-label="نوع العرض"><button class="active" type="button" data-site-view="workspace"><svg class="icon"><use href="#list"></use></svg>تشغيلي</button><button type="button" data-site-view="table"><svg class="icon"><use href="#table"></use></svg>الجدول الكامل</button></div>
+                </div>
+              </div>
+              <div class="summary-line"><span>النتائج: <strong id="siteResultCount">3</strong></span><span>فعال: <strong>3</strong></span><span>مكتمل: <strong>2</strong></span><span>آخر تحديث: <strong>2026-07-21</strong></span></div>
+              <div class="site-workspace">
+                <aside class="site-list">
+                  <div class="list-heading"><h3 id="siteListTitle">المواقع الحالية</h3><span id="siteListCount">3 سجلات</span></div>
+                  <div class="sites" id="siteList">
+                    <button class="site-item active" type="button" data-site="main" data-type="main" data-status="complete" data-search="الرئيسي ميساب رئيسي">
+                      <span class="site-item-top"><strong>الرئيسي ميساب</strong><span class="status complete">مكتمل</span></span><p>السجل الرئيسي للشركة</p><span class="site-item-meta"><span>الرقم: #</span><span>الموقع: —</span></span><span class="site-open-label">عرض كامل السجل <svg class="icon"><use href="#arrow"></use></svg></span>
+                    </button>
+                    <button class="site-item" type="button" data-site="office" data-type="office" data-status="complete" data-search="مكتب ميساب مكتب">
+                      <span class="site-item-top"><strong>مكتب ميساب</strong><span class="status complete">مكتمل</span></span><p>سجل موقع مكتب ميساب</p><span class="site-item-meta"><span>الرقم: *</span><span>الموقع: —</span></span><span class="site-open-label">عرض كامل السجل <svg class="icon"><use href="#arrow"></use></svg></span>
+                    </button>
+                    <button class="site-item" type="button" data-site="branch" data-type="branch" data-status="active" data-search="تجربة تفريع 1111 عكا فرع">
+                      <span class="site-item-top"><strong>تجربة تفريع</strong><span class="status">فعال</span></span><p>سجل موقع مع تفرّع</p><span class="site-item-meta"><span>الرقم: 1</span><span>الموقع: عكا</span></span><span class="site-open-label">عرض كامل السجل <svg class="icon"><use href="#arrow"></use></svg></span>
+                    </button>
+                  </div>
+                </aside>
+                <article class="site-detail">
+                  <header class="detail-head"><div><h3 data-bind="name">الرئيسي ميساب</h3><p data-bind="subtitle">السجل الرئيسي للشركة</p></div><span class="status complete" data-bind-status>مكتمل</span></header>
+                  <div class="detail-meta"><div class="meta"><span>الرقم</span><strong data-bind="number">#</strong></div><div class="meta"><span>م.ش\ر.هـ</span><strong data-bind="registration">—</strong></div><div class="meta"><span>الموقع</span><strong data-bind="location">—</strong></div><div class="meta"><span>التقسيمات والتفرع</span><strong data-bind="divisions">—</strong></div><div class="meta"><span>فروع مركز التكلفة</span><strong data-bind="costCenter">المركز الرئيسي</strong></div><div class="meta"><span>أنواع الأعمال</span><strong data-bind="work">שלד k</strong></div><div class="meta"><span>المكلف إليه</span><strong data-bind="assignee">ميساب</strong></div></div>
+                  <div class="business-grid">
+                    <section class="business-section"><header class="business-head"><h4>أعمال الزبائن</h4><span class="contract-check">لا يوجد خلل: <b>×</b></span></header><div class="link-list"><a class="business-link" href="?tab=sites&flow=customer-tenders">المناقصات للزبائن<svg class="icon"><use href="#arrow"></use></svg></a><a class="business-link" href="?tab=sites&flow=customer-pricing">جدوى سعر<svg class="icon"><use href="#arrow"></use></svg></a><a class="business-link" href="?tab=sites&flow=customer-deal">طلبية صفقة<svg class="icon"><use href="#arrow"></use></svg></a><a class="business-link" href="?tab=sites&flow=customer-specialty">طلبية تخصصية<svg class="icon"><use href="#arrow"></use></svg></a><a class="business-link" href="?tab=sites&flow=customer-contracts">فهرس عقود الزبائن<svg class="icon"><use href="#arrow"></use></svg></a><a class="business-link" href="?tab=sites&flow=customer-running-accounts">تقديم حسابات تراكمية<svg class="icon"><use href="#arrow"></use></svg></a><a class="business-link" href="?tab=sites&flow=customer-labour-accounts">تقديم حسابات الأيدي العاملة<svg class="icon"><use href="#arrow"></use></svg></a></div></section>
+                    <section class="business-section"><header class="business-head"><h4>أعمال الموردين</h4><span class="contract-check">لا يوجد خلل: <b>×</b></span></header><div class="link-list"><a class="business-link" href="?tab=sites&flow=supplier-bids">العطاءات للموردين<svg class="icon"><use href="#arrow"></use></svg></a><a class="business-link" href="?tab=sites&flow=supplier-pricing">جدوى سعر<svg class="icon"><use href="#arrow"></use></svg></a><a class="business-link" href="?tab=sites&flow=supplier-deal">طلبية صفقة<svg class="icon"><use href="#arrow"></use></svg></a><a class="business-link" href="?tab=sites&flow=supplier-specialty">طلبية تخصصية<svg class="icon"><use href="#arrow"></use></svg></a><a class="business-link" href="?tab=sites&flow=supplier-contracts">فهرس عقود الموردين<svg class="icon"><use href="#arrow"></use></svg></a><a class="business-link" href="?tab=sites&flow=supplier-running-accounts">تقديم حسابات تراكمية<svg class="icon"><use href="#arrow"></use></svg></a><a class="business-link" href="?tab=sites&flow=supplier-labour-accounts">تقديم حسابات الأيدي العاملة<svg class="icon"><use href="#arrow"></use></svg></a></div></section>
+                  </div>
+                  <footer class="detail-footer"><span class="meta"><span>التبعية الإدارية / المسؤول</span><strong data-bind="manager">الإدارة التنفيذية</strong></span><span class="operations-note">العمليات المتاحة: <b data-bind="operations">—</b></span><div class="detail-action-bar" aria-label="إجراءات بطاقات الموقع"><button class="btn" type="button" data-open-related-card="customer"><svg class="icon"><use href="#user"></use></svg>فتح كرت زبون</button><button class="btn" type="button" data-open-related-card="supplier"><svg class="icon"><use href="#building"></use></svg>فتح كرت مورد</button><button class="btn" type="button" data-open-related-card="employee"><svg class="icon"><use href="#user"></use></svg>فتح كرت موظف</button><button class="btn" type="button" data-open-related-card="management"><svg class="icon"><use href="#index"></use></svg>فتح الوحدات الإدارية</button></div></footer>
+                </article>
+                <article class="mobile-site-detail">
+                  <header class="mobile-detail-head"><button class="mobile-back" type="button" data-mobile-back><svg class="icon"><use href="#arrow"></use></svg>رجوع</button><div class="mobile-detail-title"><h3 data-bind="name">الرئيسي ميساب</h3><p data-bind="subtitle">السجل الرئيسي للشركة</p></div><span class="status complete" data-bind-status>مكتمل</span></header>
+                  <div class="mobile-grid"><div class="mobile-field"><span>الرقم</span><strong data-bind="number">#</strong></div><div class="mobile-field"><span>م.ش\ر.هـ</span><strong data-bind="registration">—</strong></div><div class="mobile-field"><span>الموقع</span><strong data-bind="location">—</strong></div><div class="mobile-field"><span>التقسيمات</span><strong data-bind="divisions">—</strong></div><div class="mobile-field"><span>فروع مركز التكلفة</span><strong data-bind="costCenter">المركز الرئيسي</strong></div><div class="mobile-field"><span>أنواع الأعمال</span><strong data-bind="work">שלד k</strong></div><div class="mobile-field"><span>المكلف إليه</span><strong data-bind="assignee">ميساب</strong></div><div class="mobile-field"><span>التبعية الإدارية</span><strong data-bind="manager">الإدارة التنفيذية</strong></div></div>
+                  <section class="mobile-section"><header class="mobile-section-head"><h4>معاملات الزبائن</h4><span class="contract-check">الحقل: <b>×</b></span></header><div class="link-list"><a class="business-link" href="?tab=sites&flow=customer-tenders">المناقصات للزبائن ومرفقاتها<svg class="icon"><use href="#arrow"></use></svg></a><a class="business-link" href="?tab=sites&flow=customer-contracts">فهرس عقود الزبائن وتقديم الحسابات<svg class="icon"><use href="#arrow"></use></svg></a></div></section>
+                  <section class="mobile-section"><header class="mobile-section-head"><h4>معاملات الموردين</h4><span class="contract-check">الحقل: <b>×</b></span></header><div class="link-list"><a class="business-link" href="?tab=sites&flow=supplier-bids">العطاءات للموردين ومرفقاتها<svg class="icon"><use href="#arrow"></use></svg></a><a class="business-link" href="?tab=sites&flow=supplier-contracts">فهرس عقود الموردين وتقديم الحسابات<svg class="icon"><use href="#arrow"></use></svg></a></div></section>
+                  <div class="mobile-operations">العمليات المتاحة: <b data-bind="operations">—</b><div class="detail-action-bar" style="margin-top:10px"><button class="btn" type="button" data-open-related-card="customer">كرت زبون</button><button class="btn" type="button" data-open-related-card="supplier">كرت مورد</button><button class="btn" type="button" data-open-related-card="employee">كرت موظف</button><button class="btn" type="button" data-open-related-card="management">الوحدات الإدارية</button></div></div>
+                </article>
+              </div>
+              <div class="full-table">
+                <table class="data-table wide" aria-label="الجدول الكامل لفهرس الشركات والمواقع">
+                  <thead><tr class="group"><th rowspan="2">ملخص فهرس الشركات والمواقع</th><th rowspan="2">المناقصات والعقود وتقديم الحسابات</th><th rowspan="2">رقم</th><th rowspan="2">اسم الزبون / الرخصة / الموقع / التقسيمات</th><th rowspan="2">أنواع الأعمال المتفق عليها</th><th rowspan="2">المسؤول</th><th colspan="3">معاملات الزبائن</th><th colspan="3">معاملات الموردين</th><th rowspan="2">الحالة</th><th rowspan="2">العمليات</th></tr><tr><th>المناقصات ومرفقاتها</th><th>فهرس العقود وتقديم الحسابات</th><th>سلامة عقود الزبائن</th><th>العطاءات ومرفقاتها</th><th>فهرس العقود وتقديم الحسابات</th><th>سلامة عقود الموردين</th></tr></thead>
+                  <tbody id="siteTableBody">
+                    <tr data-site-row="main" data-type="main" data-status="complete" data-search="الرئيسي ميساب رئيسي"><td>السجل الرئيسي للشركة</td><td>مناقصات، عقود، حسابات زبائن وموردين</td><td>#</td><td class="long">الرئيسي ميساب<br>م.ش\ر.هـ: —<br>الموقع: —<br>التقسيمات: —</td><td>שלד k</td><td>الإدارة التنفيذية</td><td><a class="table-link" href="?tab=sites&flow=customer-tenders">المناقصات والطلبات</a></td><td><a class="table-link" href="?tab=sites&flow=customer-contracts">العقود وتقديم الحسابات</a></td><td class="x">×</td><td><a class="table-link" href="?tab=sites&flow=supplier-bids">العطاءات والطلبات</a></td><td><a class="table-link" href="?tab=sites&flow=supplier-contracts">العقود وتقديم الحسابات</a></td><td class="x">×</td><td>مكتمل</td><td>عرض</td></tr>
+                    <tr data-site-row="office" data-type="office" data-status="complete" data-search="مكتب ميساب مكتب"><td>موقع مكتب تابع</td><td>مناقصات، عقود، حسابات زبائن وموردين</td><td>*</td><td class="long">مكتب ميساب<br>م.ش\ر.هـ: —<br>الموقع: —<br>التقسيمات: —</td><td>שלד k</td><td>الإدارة المكتبية</td><td><a class="table-link" href="?tab=sites&flow=customer-tenders">المناقصات والطلبات</a></td><td><a class="table-link" href="?tab=sites&flow=customer-contracts">العقود وتقديم الحسابات</a></td><td class="x">×</td><td><a class="table-link" href="?tab=sites&flow=supplier-bids">العطاءات والطلبات</a></td><td><a class="table-link" href="?tab=sites&flow=supplier-contracts">العقود وتقديم الحسابات</a></td><td class="x">×</td><td>مكتمل</td><td>عرض</td></tr>
+                    <tr data-site-row="branch" data-type="branch" data-status="active" data-search="تجربة تفريع 1111 عكا فرع"><td>فرع تشغيلي</td><td>مناقصات، عقود، حسابات زبائن وموردين</td><td>1</td><td class="long">تجربة تفريع<br>م.ش\ر.هـ: 1111<br>الموقع: عكا<br>يوجد تفرع</td><td>تنتن</td><td>الإدارة التنفيذية</td><td><a class="table-link" href="?tab=sites&flow=customer-tenders">المناقصات والطلبات</a></td><td><a class="table-link" href="?tab=sites&flow=customer-contracts">العقود وتقديم الحسابات</a></td><td class="x">×</td><td><a class="table-link" href="?tab=sites&flow=supplier-bids">العطاءات والطلبات</a></td><td><a class="table-link" href="?tab=sites&flow=supplier-contracts">العقود وتقديم الحسابات</a></td><td class="x">×</td><td>فعال</td><td>حذف</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section class="index-panel" id="general">
+            <div class="page-shell">
+              <header class="page-head">
+                <div><h2>فهرس الفهارس</h2><p>إنشاء وإدارة الفهارس العامة والخاصة بالموظف بأربع طرق مع مراجعة بنية الأعمدة قبل الحفظ.</p><div class="title-meta"><span class="chip">8 فهارس عامة</span><span class="chip">1 فهرس موظف</span><span class="chip">SEC-005</span></div></div>
+                <div class="page-actions"><button class="btn primary" type="button" data-create-method="custom"><svg class="icon"><use href="#plus"></use></svg>فهرس مخصص</button><button class="btn" type="button" data-create-method="standard"><svg class="icon"><use href="#index"></use></svg>إنشاء فهرس</button><button class="btn green" type="button" data-create-method="excel"><svg class="icon"><use href="#upload"></use></svg>رفع Excel</button><button class="btn" type="button" data-create-method="template"><svg class="icon"><use href="#file"></use></svg>إنشاء من قالب</button><button class="btn" type="button" data-open-modal="columnsModal"><svg class="icon"><use href="#edit"></use></svg>إضافة/تعديل الأعمدة</button><button class="btn" type="button" data-demo-action="تم تجهيز فهرس الفهارس للطباعة"><svg class="icon"><use href="#print"></use></svg>طباعة</button></div>
+              </header>
+              <div class="toolbar">
+                <div class="segmented" role="tablist" aria-label="نوع الفهارس"><button class="active" type="button" data-catalog-view="common" aria-selected="true">متداول للجميع</button><button type="button" data-catalog-view="employee" aria-selected="false">خاص بالموظف</button></div>
+                <button class="btn" type="button" data-demo-action="تم تجهيز قائمة الفهارس للتصدير"><svg class="icon"><use href="#upload"></use></svg>تصدير</button>
+              </div>
+              <div class="general-layout">
+                <aside class="catalog-list-pane"><div class="list-heading"><h3 id="catalogPaneTitle">الفهارس العامة</h3><span id="catalogCount">8 ظاهرة</span></div>
+                  <div class="catalog-list" id="commonCatalogs">
+                    <button class="catalog-item active" type="button" data-catalog="test06jun"><svg class="icon"><use href="#index"></use></svg><span><strong>test06jun</strong><small>فهرس مخصص</small></span><span class="count">3</span></button>
+                    <button class="catalog-item" type="button" data-catalog="ممممممم"><svg class="icon"><use href="#index"></use></svg><span><strong>ممممممم</strong><small>فهرس مخصص</small></span><span class="count">0</span></button>
+                    <button class="catalog-item" type="button" data-catalog="BPB"><svg class="icon"><use href="#index"></use></svg><span><strong>BPB</strong><small>فهرس معياري</small></span><span class="count">0</span></button>
+                    <button class="catalog-item" type="button" data-catalog="s4"><svg class="icon"><use href="#index"></use></svg><span><strong>s4</strong><small>فهرس مخصص</small></span><span class="count">0</span></button>
+                    <button class="catalog-item" type="button" data-catalog="test two"><svg class="icon"><use href="#index"></use></svg><span><strong>test two</strong><small>من إكسل</small></span><span class="count">0</span></button>
+                    <button class="catalog-item" type="button" data-catalog="1105"><svg class="icon"><use href="#index"></use></svg><span><strong>1105</strong><small>من قالب</small></span><span class="count">0</span></button>
+                    <button class="catalog-item" type="button" data-catalog="فهرس فهارس"><svg class="icon"><use href="#index"></use></svg><span><strong>فهرس فهارس</strong><small>فهرس مخصص</small></span><span class="count">0</span></button>
+                    <button class="catalog-item" type="button" data-catalog="ahmad"><svg class="icon"><use href="#index"></use></svg><span><strong>ahmad</strong><small>فهرس مخصص</small></span><span class="count">0</span></button>
+                  </div>
+                  <div class="catalog-list" id="employeeCatalogs" hidden><button class="catalog-item" type="button" data-catalog="فهرس ميساب الشخصي"><svg class="icon"><use href="#user"></use></svg><span><strong>فهرس ميساب الشخصي</strong><small>خاص بالموظف</small></span><span class="count">1</span></button></div>
+                </aside>
+                <article class="catalog-overview">
+                  <h3>اختر طريقة إنشاء الفهرس</h3><p>كل طريقة تنتهي بمعاينة الأعمدة وتحديد نطاق التداول قبل إنشاء الفهرس.</p>
+                  <div class="method-grid">
+                    <button class="method" type="button" data-create-method="standard"><span class="method-icon"><svg class="icon"><use href="#index"></use></svg></span><span><strong>فهرس معياري</strong><small>ابدأ من الحقول المعتمدة في النظام.</small></span></button>
+                    <button class="method" type="button" data-create-method="custom"><span class="method-icon"><svg class="icon"><use href="#plus"></use></svg></span><span><strong>فهرس مخصص</strong><small>سمّ الفهرس وحدد حقوله يدوياً.</small></span></button>
+                    <button class="method" type="button" data-create-method="excel"><span class="method-icon"><svg class="icon"><use href="#upload"></use></svg></span><span><strong>استيراد من إكسل</strong><small>معاينة الأعمدة والصفوف قبل الاعتماد.</small></span></button>
+                    <button class="method" type="button" data-create-method="template"><span class="method-icon"><svg class="icon"><use href="#file"></use></svg></span><span><strong>إنشاء من قالب</strong><small>إعادة استخدام قالب محفوظ ومعتمد.</small></span></button>
+                  </div>
+                  <div class="schema-box"><header class="schema-head"><strong>بنية الفهرس المعتمدة — 10 أعمدة</strong><span>العام والخاص بالموظف</span></header><div class="schema-fields"><span class="field">متداول للجميع / أصل ثابت</span><span class="field">رقم</span><span class="field">الموضوع</span><span class="field">تاريخ المتابعة</span><span class="field">المكلف</span><span class="field">تعليمات المكلف</span><span class="field">المشرف المدقق</span><span class="field">تعليمات المشرف</span><span class="field">المرفقات</span><span class="field">العمليات</span></div><div class="catalog-cta"><p>فتح أي فهرس ينقلك إلى شاشة تفاصيل مستقلة مع فلترة وبحث وعمليات السجل.</p><button class="btn blue" type="button" data-open-selected-catalog>فتح test06jun</button></div></div>
+                  <div class="registry-table-wrap"><div class="registry-table-title"><strong>معاينة جدول فهرس الفهارس</strong><span>10 أعمدة حسب SEC-005</span></div><table class="data-table" aria-label="جدول فهرس الفهارس"><thead><tr><th>متداول للجميع / أصل ثابت</th><th>رقم</th><th>الموضوع</th><th>تاريخ المتابعة</th><th>المكلف</th><th>تعليمات المكلف</th><th>المشرف المدقق</th><th>تعليمات المشرف</th><th>المرفقات</th><th>العمليات</th></tr></thead><tbody><tr><td>متداول للجميع</td><td>1</td><td>test06jun</td><td class="ltr">2026-07-25</td><td>ميساب</td><td>تدقيق السجلات</td><td>هيثم أبو طير</td><td>اعتماد المرفقات</td><td>company.pdf</td><td><a class="table-link" href="?tab=general&amp;screen=catalog&amp;catalog=test06jun">فتح</a></td></tr><tr><td>أصل ثابت</td><td>2</td><td>BPB</td><td class="ltr">2026-07-28</td><td>محمد نبيل</td><td>ربط الأصل</td><td>ميساب</td><td>مراجعة الرقم</td><td>—</td><td><a class="table-link" href="?tab=general&amp;screen=catalog&amp;catalog=BPB">فتح</a></td></tr></tbody></table></div>
+                  <article class="registry-mobile-card"><h4>سجل test06jun — 10 أعمدة</h4><div class="registry-mobile-grid"><div><span>التداول / الأصل الثابت</span><strong>متداول للجميع</strong></div><div><span>الرقم</span><strong>1</strong></div><div><span>الموضوع</span><strong>test06jun</strong></div><div><span>تاريخ المتابعة</span><strong class="ltr">2026-07-25</strong></div><div><span>المكلف</span><strong>ميساب</strong></div><div><span>تعليمات المكلف</span><strong>تدقيق السجلات</strong></div><div><span>المشرف المدقق</span><strong>هيثم أبو طير</strong></div><div><span>تعليمات المشرف</span><strong>اعتماد المرفقات</strong></div><div><span>المرفقات</span><strong>company.pdf</strong></div><div><span>العمليات</span><strong><a class="table-link" href="?tab=general&amp;screen=catalog&amp;catalog=test06jun">فتح الفهرس</a></strong></div></div></article>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <section class="screen-catalog-detail" id="catalogDetail">
+            <div class="page-shell">
+              <header class="page-head">
+                <div><button class="mobile-back" style="display:flex;margin-bottom:8px" type="button" data-catalog-return><svg class="icon"><use href="#arrow"></use></svg>العودة إلى فهرس الفهارس</button><h2>تفاصيل الفهرس: <span data-catalog-title>test06jun</span></h2><p>عرض وتعديل سجلات الفهرس ضمن الحقول والعمليات المعتمدة.</p><div class="title-meta"><span class="chip">SEC-006</span><span class="chip">3 سجلات</span><span class="chip">9 أعمدة</span></div></div>
+                <div class="page-actions"><button class="btn primary" type="button" data-record-action="add"><svg class="icon"><use href="#plus"></use></svg>إضافة تكليف</button><button class="btn" type="button" data-demo-action="تم تجهيز الفهرس للطباعة"><svg class="icon"><use href="#print"></use></svg>طباعة</button><button class="btn" type="button" data-demo-action="تم تجهيز الفهرس للتصدير"><svg class="icon"><use href="#upload"></use></svg>تصدير</button><button class="btn" type="button" data-open-modal="columnsModal"><svg class="icon"><use href="#edit"></use></svg>إضافة عمود</button><button class="btn" type="button" data-open-modal="sendModal"><svg class="icon"><use href="#send"></use></svg>إرسال تعديل</button></div>
+              </header>
+              <div class="catalog-detail-layout">
+                <article class="record-workspace">
+                  <div class="record-toolbar"><button class="btn primary" type="button" data-record-action="add"><svg class="icon"><use href="#plus"></use></svg>إضافة</button><button class="btn" type="button" data-record-action="edit"><svg class="icon"><use href="#edit"></use></svg>تعديل المحدد</button><button class="btn" type="button" data-record-action="file"><svg class="icon"><use href="#upload"></use></svg>رفع مرفق</button><button class="btn" type="button" data-record-action="link"><svg class="icon"><use href="#link"></use></svg>رابط مرفق</button><button class="btn" type="button" data-open-modal="sendModal"><svg class="icon"><use href="#send"></use></svg>إرسال المحدد</button><button class="btn" type="button" data-demo-action="تم تجهيز ملف Excel"><svg class="icon"><use href="#file"></use></svg>Excel</button></div>
+                  <div class="record-table-wrap"><table class="data-table" aria-label="سجلات الفهرس"><thead><tr><th>رقم</th><th>الموضوع</th><th>تاريخ المتابعة</th><th>المكلف</th><th>تعليمات المكلف</th><th>المشرف المدقق</th><th>تعليمات المشرف</th><th>المرفقات</th><th>العمليات</th></tr></thead><tbody id="recordTableBody">
+                    <tr class="selected" tabindex="0" data-record="1"><td>1</td><td>مراجعة ملف الشركة</td><td>2026-07-25</td><td>ميساب</td><td>تدقيق البيانات قبل الإرسال</td><td>هيثم أبو طير</td><td>التأكد من المرفق</td><td><span class="attachment-list"><a class="attachment" href="?attachment=company.pdf">company.pdf</a></span></td><td>تعديل</td></tr>
+                    <tr tabindex="0" data-record="2"><td>2</td><td>تحديث فهرس الموردين</td><td>2026-07-28</td><td>محمد نبيل</td><td>استكمال الأرقام الناقصة</td><td>ميساب</td><td>اعتماد بعد التدقيق</td><td><span class="attachment-list"><a class="attachment" href="?attachment=suppliers.xlsx">suppliers.xlsx</a></span></td><td>تعديل</td></tr>
+                    <tr tabindex="0" data-record="3"><td>3</td><td>تثبيت الأصل</td><td>2026-08-01</td><td>ميساب</td><td>ربط الأصل بالموقع</td><td>هيثم أبو طير</td><td>لا ملاحظات</td><td>—</td><td>تعديل</td></tr>
+                  </tbody></table></div>
+                </article>
+                <aside class="record-aside">
+                  <h3>تصفية وبحث</h3>
+                  <div class="filter-tabs" role="tablist"><button class="active" type="button" data-filter-pane="quick">فلترة عامة</button><button type="button" data-filter-pane="columns">بحث داخل الأعمدة</button></div>
+                  <div class="filter-pane active" data-filter-content="quick"><div class="aside-field"><label for="recordAssigneeFilter">المكلف إليه</label><select id="recordAssigneeFilter" required aria-describedby="recordAssigneeHint"><option value="all">كل المكلفين</option><option>ميساب</option><option>محمد نبيل</option><option>هيثم أبو طير</option></select><small id="recordAssigneeHint">قائمة مرجعية تُحمّل من الـAPI؛ رُصد 39 خياراً في النظام الحالي.</small></div><button class="btn blue" type="button" data-apply-filter>بحث</button></div>
+                  <div class="filter-pane" data-filter-content="columns"><div class="column-searches"><div class="aside-field"><label>الموضوع</label><input type="search" data-column-search="subject"></div><div class="aside-field"><label>تاريخ المتابعة</label><input type="search" data-column-search="date"></div><div class="aside-field"><label>المكلف</label><input type="search" data-column-search="assignee"></div><div class="aside-field"><label>تعليمات المكلف</label><input type="search" data-column-search="instructions"></div><div class="aside-field"><label>المشرف</label><input type="search" data-column-search="auditor"></div><div class="aside-field"><label>تعليمات المشرف</label><input type="search" data-column-search="audit-instructions"></div><div class="aside-field"><label>المرفقات</label><input type="search" data-column-search="attachments"></div><div class="aside-field"><label>العمليات</label><input type="search" data-column-search="operations"></div></div><button class="btn blue" style="margin-top:10px" type="button" data-apply-column-search>بحث في الأعمدة</button></div>
+                </aside>
+              </div>
+            </div>
+          </section>
+
+          <section class="index-panel" id="directories">
+            <div class="page-shell" id="directoryShell">
+              <header class="page-head"><div><h2>فهرس دليل بحسب التخصص</h2><p>ست وجهات مستقلة، وكل بطاقة تعرض الحقول الستة الأصلية قبل فتح الدليل.</p><div class="title-meta"><span class="chip">6 أدلة</span><span class="chip">6 حقول لكل سجل</span><span class="chip">SEC-007</span></div></div></header>
+              <div class="directory-layout" id="directoryList">
+                <a class="directory-card" data-directory="contractors" data-dir-type="business" data-search="مقاولين إدارة تنفيذية DIR-001" href="?tab=directories&directory=contractors"><div class="directory-top"><svg class="icon"><use href="#building"></use></svg><strong>فهرس دليل مقاولين</strong><b>فتح الدليل ←</b></div><dl class="directory-fields"><div><dt>الرقم</dt><dd>1</dd></div><div><dt>الاسم</dt><dd>دليل المقاولين</dd></div><div><dt>الانتساب</dt><dd>الإدارة التنفيذية</dd></div><div><dt>الرقم التعريفي</dt><dd>DIR-001</dd></div><div><dt>المرفق</dt><dd class="action">قائمة المقاولين.pdf</dd></div><div><dt>الملاحظات / الإجراء</dt><dd class="action">عرض الدليل</dd></div></dl></a>
+                <a class="directory-card" data-directory="workers" data-dir-type="people" data-search="عمال الموارد البشرية DIR-002" href="?tab=directories&directory=workers"><div class="directory-top"><svg class="icon"><use href="#user"></use></svg><strong>فهرس دليل عمال</strong><b>فتح الدليل ←</b></div><dl class="directory-fields"><div><dt>الرقم</dt><dd>2</dd></div><div><dt>الاسم</dt><dd>دليل العمال</dd></div><div><dt>الانتساب</dt><dd>الموارد البشرية</dd></div><div><dt>الرقم التعريفي</dt><dd>DIR-002</dd></div><div><dt>المرفق</dt><dd class="action">بيانات العمال.xlsx</dd></div><div><dt>الملاحظات / الإجراء</dt><dd class="action">عرض الدليل</dd></div></dl></a>
+                <a class="directory-card" data-directory="industrial" data-dir-type="business" data-search="صناعية إدارة عمليات DIR-003" href="?tab=directories&directory=industrial"><div class="directory-top"><svg class="icon"><use href="#building"></use></svg><strong>فهرس دليل صناعية</strong><b>فتح الدليل ←</b></div><dl class="directory-fields"><div><dt>الرقم</dt><dd>3</dd></div><div><dt>الاسم</dt><dd>الدليل الصناعي</dd></div><div><dt>الانتساب</dt><dd>إدارة العمليات</dd></div><div><dt>الرقم التعريفي</dt><dd>DIR-003</dd></div><div><dt>المرفق</dt><dd class="action">دليل صناعي.pdf</dd></div><div><dt>الملاحظات / الإجراء</dt><dd class="action">عرض الدليل</dd></div></dl></a>
+                <a class="directory-card" data-directory="employees" data-dir-type="people" data-search="موظفين الموارد البشرية DIR-004" href="?tab=directories&directory=employees"><div class="directory-top"><svg class="icon"><use href="#user"></use></svg><strong>فهرس دليل موظفين</strong><b>فتح الدليل ←</b></div><dl class="directory-fields"><div><dt>الرقم</dt><dd>4</dd></div><div><dt>الاسم</dt><dd>دليل الموظفين</dd></div><div><dt>الانتساب</dt><dd>الموارد البشرية</dd></div><div><dt>الرقم التعريفي</dt><dd>DIR-004</dd></div><div><dt>المرفق</dt><dd class="action">الموظفون.pdf</dd></div><div><dt>الملاحظات / الإجراء</dt><dd class="action">عرض الدليل</dd></div></dl></a>
+                <a class="directory-card" data-directory="suppliers" data-dir-type="business" data-search="موردين المشتريات DIR-005" href="?tab=directories&directory=suppliers"><div class="directory-top"><svg class="icon"><use href="#user"></use></svg><strong>فهرس دليل موردين</strong><b>فتح الدليل ←</b></div><dl class="directory-fields"><div><dt>الرقم</dt><dd>5</dd></div><div><dt>الاسم</dt><dd>دليل الموردين</dd></div><div><dt>الانتساب</dt><dd>المشتريات</dd></div><div><dt>الرقم التعريفي</dt><dd>DIR-005</dd></div><div><dt>المرفق</dt><dd class="action">الموردون.xlsx</dd></div><div><dt>الملاحظات / الإجراء</dt><dd class="action">عرض الدليل</dd></div></dl></a>
+                <a class="directory-card" data-directory="customers" data-dir-type="business" data-search="زبائن المبيعات DIR-006" href="?tab=directories&directory=customers"><div class="directory-top"><svg class="icon"><use href="#user"></use></svg><strong>فهرس دليل زبائن</strong><b>فتح الدليل ←</b></div><dl class="directory-fields"><div><dt>الرقم</dt><dd>6</dd></div><div><dt>الاسم</dt><dd>دليل الزبائن</dd></div><div><dt>الانتساب</dt><dd>المبيعات</dd></div><div><dt>الرقم التعريفي</dt><dd>DIR-006</dd></div><div><dt>المرفق</dt><dd class="action">الزبائن.xlsx</dd></div><div><dt>الملاحظات / الإجراء</dt><dd class="action">عرض الدليل</dd></div></dl></a>
+              </div>
+              <section class="directory-detail" id="directoryPreview"><header><h3>معاينة الدليل</h3><p>اختر إحدى البطاقات لفتح وجهتها المستقلة.</p></header><div style="overflow-x:auto"><table class="data-table"><thead><tr><th>الرقم</th><th>الاسم</th><th>الانتساب</th><th>الرقم التعريفي</th><th>مرفق فهرس دليل بحسب التخصص</th><th>الملاحظات / الإجراء</th></tr></thead><tbody><tr><td>1</td><td>دليل المقاولين</td><td>الإدارة التنفيذية</td><td>DIR-001</td><td><a class="table-link" href="?attachment=contractors.pdf">قائمة المقاولين.pdf</a></td><td><a class="table-link" href="?tab=directories&directory=contractors">فتح الدليل</a></td></tr></tbody></table></div></section>
+              <section class="directory-target" id="directoryTarget" hidden><header class="directory-target-head"><div><button class="mobile-back" type="button" data-directory-back><svg class="icon"><use href="#arrow"></use></svg>العودة إلى دليل التخصص</button><h2 id="directoryTargetTitle">دليل المقاولين</h2><p>وجهة مستقلة مرتبطة بالسجل المختار وصلاحياته.</p></div><span class="chip">SEC-007</span></header><div class="directory-target-table"><table class="data-table" aria-label="الدليل التخصصي المفتوح"><thead><tr><th>الرقم</th><th>الاسم</th><th>الانتساب</th><th>الرقم التعريفي</th><th>مرفق فهرس دليل بحسب التخصص</th><th>الملاحظات / الإجراء</th></tr></thead><tbody><tr><td id="directoryTargetNumber">1</td><td id="directoryTargetName">دليل المقاولين</td><td id="directoryTargetAffiliation">الإدارة التنفيذية</td><td id="directoryTargetId">DIR-001</td><td><a class="table-link" id="directoryTargetAttachment" href="?attachment=contractors.pdf">قائمة المقاولين.pdf</a></td><td>عرض تفاصيل الدليل</td></tr></tbody></table></div></section>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <nav class="bottom-nav" aria-label="تنقل الموبايل">
+    <button type="button" data-dashboard-home><svg class="icon"><use href="#home"></use></svg>الرئيسية</button>
+    <button type="button" class="active"><svg class="icon"><use href="#tasks"></use></svg>المهام</button>
+    <button type="button" data-demo-action="سيتم فتح كرت اليوم"><svg class="icon"><use href="#calendar"></use></svg>اليوم</button>
+    <button type="button" data-demo-action="لا توجد تنبيهات جديدة"><svg class="icon"><use href="#bell"></use></svg>التنبيهات</button>
+    <button type="button" data-demo-action="قائمة المزيد"><svg class="icon"><use href="#more"></use></svg>المزيد</button>
+  </nav>
+
+  <div class="modal-layer" id="siteModal" role="dialog" aria-modal="true" aria-labelledby="siteModalTitle">
+    <section class="modal"><header class="modal-head"><div><h2 id="siteModalTitle">إضافة موقع جديد</h2><p>ثمانية حقول مطابقة لبيانات الموقع قبل إضافته إلى الفهرس.</p></div><button class="modal-close" type="button" data-close-modal aria-label="إغلاق"><svg class="icon"><use href="#close"></use></svg></button></header>
+      <form id="siteForm" novalidate>
+        <input type="hidden" name="user_id" value="demo-user" tabindex="-1" aria-hidden="true"><input type="hidden" name="m" value="site" tabindex="-1" aria-hidden="true"><input type="hidden" name="t" value="index" tabindex="-1" aria-hidden="true"><input type="hidden" name="ti" value="create" tabindex="-1" aria-hidden="true">
+        <div class="modal-body"><div class="form-grid">
+          <div class="form-field" data-required-field><label for="newSiteAssignee">المكلف إليه <span class="required">*</span></label><select id="newSiteAssignee" name="assignee" required><option value="">اختر المكلف</option><option>ميساب</option><option>هيثم أبو طير</option><option>محمد نبيل</option></select><span class="field-error">اختيار المكلف مطلوب.</span></div>
+          <div class="form-field" data-required-field><label for="newSiteCustomer">اسم الزبون <span class="required">*</span></label><input id="newSiteCustomer" name="company_person" autocomplete="organization" required><span class="field-error">اسم الزبون مطلوب.</span></div>
+          <div class="form-field" data-required-field><label for="newSiteLicense">م.ش\ر.هـ / رقم الرخصة <span class="required">*</span></label><input id="newSiteLicense" name="license_no_id" required><span class="field-error">رقم الرخصة مطلوب.</span></div>
+          <div class="form-field" data-required-field><label for="newSiteLocation">الموقع <span class="required">*</span></label><input id="newSiteLocation" name="location" required><span class="field-error">الموقع مطلوب.</span></div>
+          <div class="form-field"><label for="newSiteCostCenter">فروع مركز التكلفة</label><input id="newSiteCostCenter" name="cost_center"></div>
+          <div class="form-field" data-required-field><label for="newSiteWork">أنواع الأعمال المتفق عليها <span class="required">*</span></label><input id="newSiteWork" name="types_of_agreed_upon_work" required><span class="field-error">نوع العمل مطلوب.</span></div>
+          <div class="form-field" data-required-field><label for="newSiteDependency">التبعية الإدارية <span class="required">*</span></label><input id="newSiteDependency" name="administrator_dependence" required><span class="field-error">التبعية الإدارية مطلوبة.</span></div>
+          <div class="form-field"><label for="newSiteStatus">الحالة</label><select id="newSiteStatus" name="status"><option value="active">فعال</option><option value="complete">مكتمل</option><option value="suspended">موقوف</option></select></div>
+        </div></div><footer class="modal-foot"><button class="btn primary" type="submit">حفظ الموقع</button><button class="btn" type="button" data-close-modal>إلغاء</button></footer>
+      </form>
+    </section>
+  </div>
+
+  <div class="modal-layer" id="relatedCardModal" role="dialog" aria-modal="true" aria-labelledby="relatedCardTitle">
+    <section class="modal narrow"><header class="modal-head"><div><h2 id="relatedCardTitle">كرت مرتبط بالموقع</h2><p id="relatedCardSubtitle">عرض مستقل من فهرس شركات ومواقع.</p></div><button class="modal-close" type="button" data-close-modal aria-label="إغلاق"><svg class="icon"><use href="#close"></use></svg></button></header><div class="modal-body"><div class="related-card-grid"><div><span>الجهة</span><strong id="relatedCardName">الرئيسي ميساب</strong></div><div><span>الموقع</span><strong data-bind="location">—</strong></div><div><span>المكلف</span><strong data-bind="assignee">ميساب</strong></div><div><span>التبعية</span><strong data-bind="manager">الإدارة التنفيذية</strong></div></div><div class="warning" style="margin-top:13px;margin-bottom:0">هذه معاينة واجهة مستقلة؛ الربط الفعلي بالبطاقة وسجلها يتم عبر صلاحيات الـAPI.</div></div><footer class="modal-foot"><button class="btn primary" type="button" data-demo-action="تم فتح تفاصيل البطاقة المرتبطة">فتح التفاصيل</button><button class="btn" type="button" data-close-modal>رجوع</button></footer></section>
+  </div>
+
+  <div class="modal-layer" id="sendModal" role="dialog" aria-modal="true" aria-labelledby="sendModalTitle">
+    <section class="modal narrow"><header class="modal-head"><div><h2 id="sendModalTitle">إرسال الصفحة أو السجل</h2><p>حدد المستلم وأضف رسالة قبل الإرسال.</p></div><button class="modal-close" type="button" data-close-modal aria-label="إغلاق"><svg class="icon"><use href="#close"></use></svg></button></header>
+      <form id="sendForm" novalidate><div class="modal-body"><div class="form-grid"><div class="form-field full" data-required-field><label for="sendRecipient">المستلم <span class="required">*</span></label><select id="sendRecipient" required><option value="">اختر المستلم</option><option>هيثم أبو طير</option><option>محمد نبيل</option><option>ميساب</option></select><span class="field-error">اختر مستلماً.</span></div><div class="form-field full"><label for="sendMessage">الرسالة</label><textarea id="sendMessage">يرجى مراجعة البيانات المرفقة.</textarea></div><div class="form-field full"><label class="check-row"><input type="checkbox" checked> إرفاق نسخة PDF من العرض الحالي</label></div></div></div><footer class="modal-foot"><button class="btn primary" type="submit"><svg class="icon"><use href="#send"></use></svg>إرسال</button><button class="btn" type="button" data-close-modal>إلغاء</button></footer></form>
+    </section>
+  </div>
+
+  <div class="modal-layer" id="createModal" role="dialog" aria-modal="true" aria-labelledby="createModalTitle">
+    <section class="modal"><header class="modal-head"><div><h2 id="createModalTitle">إنشاء فهرس</h2><p id="createModalSubtitle">حدد بيانات الفهرس ونطاقه.</p></div><button class="modal-close" type="button" data-close-modal aria-label="إغلاق"><svg class="icon"><use href="#close"></use></svg></button></header>
+      <form id="createForm" novalidate><div class="modal-body"><div class="form-grid"><div class="form-field" data-required-field><label for="catalogName">اسم الفهرس <span class="required">*</span></label><input id="catalogName" required><span class="field-error">اسم الفهرس مطلوب.</span></div><div class="form-field"><label for="catalogScope">نطاق التداول</label><select id="catalogScope"><option>متداول للجميع</option><option>خاص بالموظف</option></select></div><div class="form-field full" id="templateField"><label for="catalogTemplate">القالب</label><select id="catalogTemplate"><option>حقول التكليف القياسية</option><option>قالب الأصول الثابتة</option><option>قالب متابعة العقود</option></select></div><div class="form-field full" id="excelField" hidden><label for="catalogExcel">ملف Excel</label><input id="catalogExcel" type="file" accept=".xlsx,.xls,.csv"><button class="btn" style="margin-top:7px" type="button" data-preview-excel>معاينة ملف تجريبي</button></div><div class="form-field full"><label>حقول الإنشاء</label><div class="check-row"><input type="checkbox" checked> استخدام الحقول القياسية التسعة للسجل</div></div></div><div id="excelPreview" hidden style="margin-top:14px"><div class="warning">تمت قراءة 3 صفوف و9 أعمدة. راجع المطابقة قبل الاعتماد؛ لن تُحفظ البيانات إلا بعد الضغط على إنشاء.</div><div class="preview-table"><table><thead><tr><th>الموضوع</th><th>المتابعة</th><th>المكلف</th><th>المشرف</th><th>المرفقات</th></tr></thead><tbody><tr><td>مراجعة العقد</td><td>2026-07-28</td><td>ميساب</td><td>هيثم</td><td>contract.pdf</td></tr><tr><td>تحديث المورد</td><td>2026-07-30</td><td>محمد</td><td>ميساب</td><td>—</td></tr></tbody></table></div></div></div><footer class="modal-foot"><button class="btn primary" type="submit">إنشاء الفهرس</button><button class="btn" type="button" data-close-modal>إلغاء</button></footer></form>
+    </section>
+  </div>
+
+  <div class="modal-layer" id="columnsModal" role="dialog" aria-modal="true" aria-labelledby="columnsModalTitle">
+    <section class="modal"><header class="modal-head"><div><h2 id="columnsModalTitle">إضافة أو تعديل الأعمدة</h2><p>تغيير البنية يؤثر على الفهارس الموجودة وعمليات الاستيراد.</p></div><button class="modal-close" type="button" data-close-modal aria-label="إغلاق"><svg class="icon"><use href="#close"></use></svg></button></header>
+      <form id="columnsForm"><div class="modal-body"><div class="warning"><strong>تنبيه أثر التغيير:</strong> إعادة تسمية أو حذف عمود قد تؤثر على البيانات المحفوظة، قوالب Excel، الفلاتر، والتقارير المرتبطة. يُنصح بإنشاء نسخة احتياطية قبل التطبيق.</div><div class="form-grid"><div class="form-field"><label>اسم العمود</label><input value="الموضوع"></div><div class="form-field"><label>نوع البيانات</label><select><option>نص</option><option>تاريخ</option><option>رقم</option><option>قائمة</option></select></div><div class="form-field"><label>موضع العمود</label><input type="number" value="2" min="1"></div><div class="form-field"><label>الإلزامية</label><select><option>مطلوب</option><option>اختياري</option></select></div><div class="form-field full"><label class="check-row"><input type="checkbox"> أقر بأن التغيير قد يؤثر على البيانات والقوالب الحالية</label></div></div></div><footer class="modal-foot"><button class="btn danger" type="submit">تطبيق التغيير</button><button class="btn" type="button" data-close-modal>إلغاء</button></footer></form>
+    </section>
+  </div>
+
+  <div class="modal-layer" id="recordModal" role="dialog" aria-modal="true" aria-labelledby="recordModalTitle">
+    <section class="modal"><header class="modal-head"><div><h2 id="recordModalTitle">تعديل سجل الفهرس</h2><p>ثمانية حقول مطابقة لعقد تحرير التكليف، مع إبقاء المكلف الحالي للقراءة فقط.</p></div><button class="modal-close" type="button" data-close-modal aria-label="إغلاق"><svg class="icon"><use href="#close"></use></svg></button></header>
+      <form id="recordForm" novalidate><div class="modal-body"><div class="form-grid">
+        <div class="form-field full" data-required-field><label for="recordSubject">عنوان التكليف <span class="required">*</span></label><input id="recordSubject" value="مراجعة ملف الشركة" required><span class="field-error">عنوان التكليف مطلوب.</span></div>
+        <div class="form-field"><label for="recordCurrentAssignee">المكلف الحالي</label><input id="recordCurrentAssignee" value="ميساب" readonly aria-readonly="true"></div>
+        <div class="form-field"><label for="recordAuditor">المشرفون / المدققون</label><select id="recordAuditor" multiple size="3"><option selected>هيثم أبو طير</option><option>ميساب</option><option>محمد نبيل</option></select></div>
+        <div class="form-field"><label for="recordFollowup">تاريخ المتابعة</label><input id="recordFollowup" type="date" value="2026-07-25"></div>
+        <div class="form-field"><label for="recordInstructions">تعليمات المكلف</label><textarea id="recordInstructions">تدقيق البيانات قبل الإرسال</textarea></div>
+        <div class="form-field full"><label for="recordAuditInstructions">تعليمات المشرف</label><textarea id="recordAuditInstructions">التأكد من المرفق</textarea></div>
+        <div class="form-field"><label for="recordFile">المرفق</label><input id="recordFile" type="file"></div>
+        <div class="form-field"><label for="recordLink">رابط المرفق</label><input id="recordLink" type="url" placeholder="https://example.com/file"></div>
+      </div></div><footer class="modal-foot"><button class="btn primary" type="submit">إرسال وحفظ التعديل</button><button class="btn" type="button" data-close-modal>إلغاء</button></footer></form>
+    </section>
+  </div>
+
+  <div class="toast success" id="toast" role="status" aria-live="polite"><svg class="icon"><use href="#check"></use></svg><span id="toastMessage">تمت العملية بنجاح.</span></div>
+
+  <script>
+    (function(){
+      "use strict";
+      var indexTabs=Array.from(document.querySelectorAll("[data-index]"));
+      var panels=Array.from(document.querySelectorAll(".index-panel"));
+      var screenContent=document.getElementById("screenContent");
+      var stateStage=document.getElementById("stateStage");
+      var indexSwitch=document.getElementById("indexSwitch");
+      var titles={
+        sites:["فهرس شركات ومواقع","إدارة المواقع ومسارات الزبائن والموردين","شركات ومواقع"],
+        general:["فهرس الفهارس","إنشاء وإدارة الفهارس العامة والخاصة","فهرس الفهارس"],
+        directories:["فهرس دليل بحسب التخصص","ستة أدلة مستقلة بكامل حقولها","الدليل بحسب التخصص"]
+      };
+      var selectedCatalog="test06jun";
+      var lastFocus=null;
+      var toastTimer=null;
+      var returnContext={tab:"sites",scroll:0};
+
+      function saveContext(){
+        var active=document.querySelector(".index-panel.active");
+        var context={tab:active?active.id:"general",scroll:window.scrollY,site:document.querySelector("[data-site].active")?document.querySelector("[data-site].active").dataset.site:"main",catalog:selectedCatalog};
+        sessionStorage.setItem("niashinIndexReturn",JSON.stringify(context));
+        returnContext=context;
+      }
+      function updateUrl(values,replace){
+        var url=new URL(location.href);
+        Object.keys(values).forEach(function(key){if(values[key]===null){url.searchParams.delete(key);}else{url.searchParams.set(key,values[key]);}});
+        var state={niashin:true,context:returnContext};
+        if(replace){history.replaceState(state,"",url);}else{history.pushState(state,"",url);}
+      }
+      function openIndex(id,push){
+        if(!titles[id]){id="sites";}
+        document.body.classList.remove("catalog-screen","mobile-detail-open");
+        document.querySelector(".screen-catalog-detail").style.display="none";
+        document.getElementById("directoryShell").classList.remove("directory-open");
+        document.getElementById("directoryTarget").hidden=true;
+        panels.forEach(function(panel){panel.classList.toggle("active",panel.id===id);});
+        indexTabs.forEach(function(tab){
+          var active=tab.dataset.index===id;
+          tab.classList.toggle("active",active);
+          if(tab.getAttribute("role")==="tab"){tab.setAttribute("aria-selected",String(active));}
+        });
+        document.getElementById("pageTitle").textContent=titles[id][0];
+        document.getElementById("pageSubtitle").textContent=titles[id][1];
+        document.getElementById("crumb").textContent=titles[id][2];
+        document.getElementById("breadcrumbs").hidden=false;
+        indexSwitch.hidden=false;
+        if(push!==false){saveContext();updateUrl({tab:id,screen:null,catalog:null,directory:null},false);}
+      }
+      function openCatalogDetail(name,push){
+        saveContext();
+        selectedCatalog=name||selectedCatalog;
+        panels.forEach(function(panel){panel.classList.remove("active");});
+        document.body.classList.add("catalog-screen");
+        document.querySelector(".screen-catalog-detail").style.display="block";
+        indexSwitch.hidden=true;
+        document.querySelectorAll("[data-catalog-title]").forEach(function(node){node.textContent=selectedCatalog;});
+        document.getElementById("pageTitle").textContent="تفاصيل الفهرس: "+selectedCatalog;
+        document.getElementById("pageSubtitle").textContent="إدارة سجلات الفهرس والبحث داخل الأعمدة";
+        document.getElementById("crumb").textContent=selectedCatalog;
+        if(push!==false){updateUrl({tab:"general",screen:"catalog",catalog:selectedCatalog,directory:null},false);}
+        window.scrollTo({top:0,behavior:"smooth"});
+      }
+      indexTabs.forEach(function(tab){tab.addEventListener("click",function(){openIndex(tab.dataset.index,true);});});
+      document.querySelectorAll("[data-index-home]").forEach(function(button){button.addEventListener("click",function(){openIndex("general",true);});});
+      document.querySelectorAll("[data-dashboard-home]").forEach(function(button){button.addEventListener("click",function(){saveContext();location.href="index.html";});});
+
+      var siteData={
+        main:{name:"الرئيسي ميساب",subtitle:"السجل الرئيسي للشركة",number:"#",registration:"—",location:"—",divisions:"—",costCenter:"المركز الرئيسي",work:"שלד k",assignee:"ميساب",manager:"الإدارة التنفيذية",operations:"—",status:"مكتمل"},
+        office:{name:"مكتب ميساب",subtitle:"سجل موقع مكتب ميساب",number:"*",registration:"—",location:"—",divisions:"—",costCenter:"فرع المكتب",work:"שלד k",assignee:"ميساب",manager:"الإدارة المكتبية",operations:"—",status:"مكتمل"},
+        branch:{name:"تجربة تفريع",subtitle:"سجل موقع مع تفرّع",number:"1",registration:"1111",location:"عكا",divisions:"يوجد تفرّع",costCenter:"فرع عكا",work:"تنتن",assignee:"هيثم أبو طير",manager:"الإدارة التنفيذية",operations:"حذف",status:"فعال"}
+      };
+      function selectSite(button,openMobile){
+        document.querySelectorAll("[data-site]").forEach(function(item){item.classList.toggle("active",item===button);});
+        var data=siteData[button.dataset.site];
+        document.querySelectorAll("[data-bind]").forEach(function(node){node.textContent=data[node.dataset.bind];});
+        document.querySelectorAll("[data-bind-status]").forEach(function(node){node.textContent=data.status;node.classList.toggle("complete",data.status==="مكتمل");});
+        if(openMobile!==false&&matchMedia("(max-width:760px)").matches){
+          saveContext();
+          document.querySelector(".site-shell").classList.add("mobile-detail-mode");
+          document.body.classList.add("mobile-detail-open");
+          window.scrollTo({top:0,behavior:"smooth"});
+        }
+      }
+      document.querySelectorAll("[data-site]").forEach(function(button){button.addEventListener("click",function(){selectSite(button,true);});});
+      document.querySelector("[data-mobile-back]").addEventListener("click",function(){document.querySelector(".site-shell").classList.remove("mobile-detail-mode");document.body.classList.remove("mobile-detail-open");window.scrollTo({top:returnContext.scroll||0,behavior:"smooth"});});
+      document.querySelectorAll("[data-site-view]").forEach(function(button){button.addEventListener("click",function(){var table=button.dataset.siteView==="table";document.querySelector(".site-shell").classList.toggle("table-mode",table);document.querySelectorAll("[data-site-view]").forEach(function(item){item.classList.toggle("active",item===button);});});});
+      document.querySelectorAll(".department").forEach(function(button){button.addEventListener("click",function(){document.querySelectorAll(".department").forEach(function(item){item.classList.toggle("active",item===button);});showToast("تم تحديد المسار: "+button.textContent);});});
+
+      var completedOnly=false;
+      function filterSites(){
+        var query=document.getElementById("siteSearch").value.trim().toLowerCase();
+        var shown=0;
+        document.querySelectorAll("[data-site]").forEach(function(item){
+          var visible=(!query||item.dataset.search.toLowerCase().includes(query))&&(!completedOnly||item.dataset.status==="complete");
+          item.hidden=!visible;if(visible){shown++;}
+        });
+        document.querySelectorAll("[data-site-row]").forEach(function(row){
+          var visible=(!query||row.dataset.search.toLowerCase().includes(query))&&(!completedOnly||row.dataset.status==="complete");
+          row.hidden=!visible;
+        });
+        document.getElementById("siteResultCount").textContent=String(shown);
+        document.getElementById("siteListCount").textContent=shown+" سجلات";
+        document.getElementById("siteListTitle").textContent=completedOnly?"المواقع المكتملة":"المواقع الحالية";
+        if(shown===0){showInlineState("no-results");}else{restoreReady();}
+      }
+      document.getElementById("siteSearch").addEventListener("input",filterSites);
+      document.querySelector("[data-completed-toggle]").addEventListener("click",function(event){completedOnly=!completedOnly;event.currentTarget.classList.toggle("blue",completedOnly);filterSites();});
+
+      var relatedCardTitles={customer:["كرت الزبون","بيانات الزبون وعلاقته بالموقع"],supplier:["كرت المورد","بيانات المورد والعقود المرتبطة"],employee:["كرت الموظف","بيانات الموظف المكلف بالموقع"],management:["الوحدات الإدارية","الوحدة والتبعية الإدارية للموقع"]};
+      document.querySelectorAll("[data-open-related-card]").forEach(function(button){button.addEventListener("click",function(){var copy=relatedCardTitles[button.dataset.openRelatedCard];var selected=document.querySelector("[data-site].active");var data=siteData[selected?selected.dataset.site:"main"];document.getElementById("relatedCardTitle").textContent=copy[0];document.getElementById("relatedCardSubtitle").textContent=copy[1];document.getElementById("relatedCardName").textContent=data.name;openModal("relatedCardModal");});});
+
+      document.querySelectorAll("[data-catalog]").forEach(function(button){button.addEventListener("click",function(){selectedCatalog=button.dataset.catalog;document.querySelectorAll("[data-catalog]").forEach(function(item){item.classList.toggle("active",item===button);});document.querySelector("[data-open-selected-catalog]").textContent="فتح "+selectedCatalog;if(matchMedia("(max-width:760px)").matches){openCatalogDetail(selectedCatalog,true);}});});
+      document.querySelector("[data-open-selected-catalog]").addEventListener("click",function(){openCatalogDetail(selectedCatalog,true);});
+      document.querySelector("[data-catalog-return]").addEventListener("click",function(){openIndex("general",false);updateUrl({tab:"general",screen:null,catalog:null},false);setTimeout(function(){window.scrollTo({top:returnContext.scroll||0,behavior:"smooth"});},0);});
+      document.querySelectorAll("[data-catalog-view]").forEach(function(button){button.addEventListener("click",function(){
+        var view=button.dataset.catalogView;
+        document.querySelectorAll("[data-catalog-view]").forEach(function(item){item.classList.toggle("active",item===button);item.setAttribute("aria-selected",String(item===button));});
+        document.getElementById("commonCatalogs").hidden=view!=="common";
+        document.getElementById("employeeCatalogs").hidden=view!=="employee";
+        document.getElementById("catalogPaneTitle").textContent=view==="common"?"الفهارس العامة":"فهارس الموظف";
+        document.getElementById("catalogCount").textContent=view==="common"?"8 ظاهرة":"1 ظاهر";
+      });});
+      function filterCatalogs(query){var q=query.trim().toLowerCase();var visible=0;document.querySelectorAll(".catalog-list:not([hidden]) [data-catalog]").forEach(function(item){var show=item.textContent.toLowerCase().includes(q);item.hidden=!show;if(show){visible++;}});document.getElementById("catalogCount").textContent=visible+" ظاهرة";if(visible===0){showInlineState("no-results");}else{restoreReady();}}
+
+      document.querySelectorAll("[data-filter-pane]").forEach(function(button){button.addEventListener("click",function(){document.querySelectorAll("[data-filter-pane]").forEach(function(item){item.classList.toggle("active",item===button);});document.querySelectorAll("[data-filter-content]").forEach(function(pane){pane.classList.toggle("active",pane.dataset.filterContent===button.dataset.filterPane);});});});
+      document.getElementById("recordTableBody").addEventListener("click",function(event){var row=event.target.closest("tr");if(!row){return;}document.querySelectorAll("#recordTableBody tr").forEach(function(item){item.classList.toggle("selected",item===row);});});
+      document.querySelector("[data-apply-filter]").addEventListener("click",function(){var assignee=document.getElementById("recordAssigneeFilter").value;var count=0;document.querySelectorAll("#recordTableBody tr").forEach(function(row){var visible=assignee==="all"||row.children[3].textContent.trim()===assignee;row.hidden=!visible;if(visible){count++;}});if(count===0){showInlineState("no-results");}else{showToast("نتائج المكلف إليه: "+count);}});
+      document.querySelector("[data-apply-column-search]").addEventListener("click",function(){var columnMap={subject:1,date:2,assignee:3,instructions:4,auditor:5,"audit-instructions":6,attachments:7,operations:8};var inputs=Array.from(document.querySelectorAll("[data-column-search]"));var count=0;document.querySelectorAll("#recordTableBody tr").forEach(function(row){var visible=inputs.every(function(input){var value=input.value.trim().toLowerCase();return !value||row.children[columnMap[input.dataset.columnSearch]].textContent.toLowerCase().includes(value);});row.hidden=!visible;if(visible){count++;}});if(count===0){showInlineState("no-results");}else{showToast("نتائج البحث داخل الأعمدة: "+count);}});
+      document.querySelectorAll("[data-record-action]").forEach(function(button){button.addEventListener("click",function(){var action=button.dataset.recordAction;var title=document.getElementById("recordModalTitle");title.textContent=action==="add"?"إضافة تكليف إلى الفهرس":action==="file"?"إضافة مرفق إلى السجل":action==="link"?"إضافة رابط مرفق":"تعديل سجل الفهرس";openModal("recordModal");if(action==="file"){setTimeout(function(){document.getElementById("recordFile").focus();},0);}if(action==="link"){setTimeout(function(){document.getElementById("recordLink").focus();},0);}});});
+
+      document.querySelectorAll("[data-create-method]").forEach(function(button){button.addEventListener("click",function(){var method=button.dataset.createMethod;var labels={standard:"إنشاء فهرس معياري",custom:"إنشاء فهرس مخصص",excel:"إنشاء فهرس من Excel",template:"إنشاء فهرس من قالب"};document.getElementById("createModalTitle").textContent=labels[method];document.getElementById("excelField").hidden=method!=="excel";document.getElementById("templateField").hidden=method==="excel"||method==="custom";document.getElementById("excelPreview").hidden=true;openModal("createModal");});});
+      document.querySelector("[data-preview-excel]").addEventListener("click",function(){document.getElementById("excelPreview").hidden=false;showToast("تمت معاينة ملف Excel التجريبي");});
+
+      var directoryData={contractors:{number:"1",name:"دليل المقاولين",affiliation:"الإدارة التنفيذية",id:"DIR-001",attachment:"قائمة المقاولين.pdf"},workers:{number:"2",name:"دليل العمال",affiliation:"الموارد البشرية",id:"DIR-002",attachment:"بيانات العمال.xlsx"},industrial:{number:"3",name:"الدليل الصناعي",affiliation:"إدارة العمليات",id:"DIR-003",attachment:"دليل صناعي.pdf"},employees:{number:"4",name:"دليل الموظفين",affiliation:"الموارد البشرية",id:"DIR-004",attachment:"الموظفون.pdf"},suppliers:{number:"5",name:"دليل الموردين",affiliation:"المشتريات",id:"DIR-005",attachment:"الموردون.xlsx"},customers:{number:"6",name:"دليل الزبائن",affiliation:"المبيعات",id:"DIR-006",attachment:"الزبائن.xlsx"}};
+      function openDirectoryTarget(key,push){var data=directoryData[key];if(!data){return;}document.getElementById("directoryShell").classList.add("directory-open");document.getElementById("directoryTarget").hidden=false;document.getElementById("directoryTargetTitle").textContent=data.name;document.getElementById("directoryTargetNumber").textContent=data.number;document.getElementById("directoryTargetName").textContent=data.name;document.getElementById("directoryTargetAffiliation").textContent=data.affiliation;document.getElementById("directoryTargetId").textContent=data.id;document.getElementById("directoryTargetAttachment").textContent=data.attachment;document.getElementById("directoryTargetAttachment").href="?attachment="+encodeURIComponent(data.attachment);document.getElementById("pageTitle").textContent=data.name;document.getElementById("pageSubtitle").textContent="الدليل التخصصي المفتوح";document.getElementById("crumb").textContent=data.name;if(push!==false){saveContext();updateUrl({tab:"directories",directory:key,screen:null,catalog:null},false);}window.scrollTo({top:0,behavior:"smooth"});}
+      document.querySelectorAll(".directory-card").forEach(function(card){card.addEventListener("click",function(event){event.preventDefault();openDirectoryTarget(card.dataset.directory,true);});});
+      document.querySelector("[data-directory-back]").addEventListener("click",function(){openIndex("directories",false);updateUrl({tab:"directories",directory:null,screen:null,catalog:null},false);});
+
+      var stateCopy={
+        loading:{title:"جارٍ تحميل البيانات",body:"يتم استرجاع السجلات والصلاحيات من الخادم.",icon:"spinner"},
+        empty:{title:"لا توجد بيانات بعد",body:"هذه الصفحة جاهزة، لكن لم تتم إضافة أي سجل حتى الآن.",icon:"index"},
+        "no-results":{title:"لا توجد نتائج مطابقة",body:"غيّر كلمات البحث أو أزل بعض الفلاتر لعرض السجلات.",icon:"search"},
+        error:{title:"تعذر تحميل البيانات",body:"حدث خطأ أثناء الاتصال بالخادم. أعد المحاولة دون فقدان سياق الصفحة.",icon:"warning"},
+        blocked:{title:"لا تملك صلاحية الوصول",body:"هذه العملية مقيدة حسب دور المستخدم. رمز الحالة: 403.",icon:"warning"},
+        "session-expired":{title:"انتهت الجلسة",body:"سجّل الدخول مجدداً للمتابعة. سيُستعاد سياق الصفحة دون إعادة إرسال العملية الأخيرة.",icon:"warning"}
+      };
+      function stateMarkup(type){
+        var item=stateCopy[type];var icon=item.icon==="spinner"?'<span class="spinner" aria-hidden="true"></span>':'<svg class="icon"><use href="#'+item.icon+'"></use></svg>';var action=type==="loading"?"":'<button class="btn primary" type="button" data-reset-state><svg class="icon"><use href="#refresh"></use></svg>العودة إلى البيانات</button>';return '<div><div class="state-icon">'+icon+'</div><h2>'+item.title+'</h2><p>'+item.body+'</p>'+action+'</div>';
+      }
+      function showInlineState(type){stateStage.innerHTML=stateMarkup(type);stateStage.hidden=false;screenContent.hidden=true;var reset=stateStage.querySelector("[data-reset-state]");if(reset){reset.addEventListener("click",function(){document.getElementById("demoState").value="ready";restoreReady();});}}
+      function restoreReady(){stateStage.hidden=true;screenContent.hidden=false;}
+      document.getElementById("demoState").addEventListener("change",function(event){if(event.target.value==="ready"){restoreReady();}else{showInlineState(event.target.value);}});
+
+      function openModal(id){
+        var layer=document.getElementById(id);if(!layer){return;}lastFocus=document.activeElement;layer.classList.add("open");document.body.style.overflow="hidden";var first=layer.querySelector("input:not([type=hidden]),select,textarea,button");if(first){setTimeout(function(){first.focus();},0);}
+      }
+      function closeModal(layer){if(!layer){return;}layer.classList.remove("open");document.body.style.overflow="";layer.querySelectorAll(".invalid").forEach(function(field){field.classList.remove("invalid");});if(lastFocus&&typeof lastFocus.focus==="function"){lastFocus.focus();}}
+      document.querySelectorAll("[data-open-modal]").forEach(function(button){button.addEventListener("click",function(){openModal(button.dataset.openModal);});});
+      document.querySelectorAll("[data-close-modal]").forEach(function(button){button.addEventListener("click",function(){closeModal(button.closest(".modal-layer"));});});
+      document.querySelectorAll(".modal-layer").forEach(function(layer){layer.addEventListener("mousedown",function(event){if(event.target===layer){closeModal(layer);}});});
+      document.addEventListener("keydown",function(event){
+        var open=document.querySelector(".modal-layer.open");if(!open){return;}
+        if(event.key==="Escape"){closeModal(open);return;}
+        if(event.key==="Tab"){var focusable=Array.from(open.querySelectorAll('button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),a[href]')).filter(function(node){return !node.hidden;});if(!focusable.length){return;}var first=focusable[0],last=focusable[focusable.length-1];if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}}
+      });
+      function validate(form){
+        var valid=true;form.querySelectorAll("[required]").forEach(function(input){var field=input.closest(".form-field");var invalid=!String(input.value||"").trim();field.classList.toggle("invalid",invalid);if(invalid){valid=false;}});return valid;
+      }
+      function showToast(message){clearTimeout(toastTimer);document.getElementById("toastMessage").textContent=message;document.getElementById("toast").classList.add("show");toastTimer=setTimeout(function(){document.getElementById("toast").classList.remove("show");},3200);}
+      document.querySelectorAll("[data-demo-action]").forEach(function(button){button.addEventListener("click",function(){showToast(button.dataset.demoAction);});});
+      document.getElementById("siteForm").addEventListener("submit",function(event){event.preventDefault();if(!validate(event.currentTarget)){return;}var name=document.getElementById("newSiteCustomer").value.trim();closeModal(document.getElementById("siteModal"));event.currentTarget.reset();showToast("تمت إضافة موقع الزبون «"+name+"» إلى النموذج");});
+      document.getElementById("sendForm").addEventListener("submit",function(event){event.preventDefault();if(!validate(event.currentTarget)){return;}var recipient=document.getElementById("sendRecipient").value;closeModal(document.getElementById("sendModal"));showToast("تم الإرسال إلى "+recipient);});
+      document.getElementById("createForm").addEventListener("submit",function(event){event.preventDefault();if(!validate(event.currentTarget)){return;}var name=document.getElementById("catalogName").value.trim();closeModal(document.getElementById("createModal"));showToast("تم إنشاء الفهرس «"+name+"»");});
+      document.getElementById("columnsForm").addEventListener("submit",function(event){event.preventDefault();closeModal(document.getElementById("columnsModal"));showToast("تم حفظ تعديل الأعمدة مع تسجيل الأثر");});
+      document.getElementById("recordForm").addEventListener("submit",function(event){event.preventDefault();if(!validate(event.currentTarget)){return;}closeModal(document.getElementById("recordModal"));showToast("تم إرسال وحفظ تعديل السجل");});
+      document.getElementById("globalSearch").addEventListener("input",function(event){var query=event.target.value.trim();var active=document.querySelector(".index-panel.active");if(active&&active.id==="sites"){document.getElementById("siteSearch").value=query;filterSites();}else if(active&&active.id==="general"){filterCatalogs(query);}});
+
+      window.addEventListener("popstate",function(){routeFromUrl(false);});
+      window.addEventListener("beforeunload",saveContext);
+      function routeFromUrl(restore){
+        var params=new URLSearchParams(location.search);var tab=params.get("tab")||"sites";var screen=params.get("screen");var catalog=params.get("catalog");var directory=params.get("directory");if(screen==="catalog"&&catalog){openCatalogDetail(catalog,false);}else{openIndex(tab,false);if(tab==="directories"&&directory){openDirectoryTarget(directory,false);}}var mobile=params.get("mobile");if(mobile&&siteData[mobile]){var button=document.querySelector('[data-site="'+mobile+'"]');selectSite(button,false);if(matchMedia("(max-width:760px)").matches){document.querySelector(".site-shell").classList.add("mobile-detail-mode");document.body.classList.add("mobile-detail-open");}}if(restore){try{var saved=JSON.parse(sessionStorage.getItem("niashinIndexReturn")||"null");if(saved&&saved.tab===tab&&!screen&&!directory){setTimeout(function(){window.scrollTo(0,saved.scroll||0);},0);}}catch(error){console.warn("Return context unavailable",error);}}}
+      routeFromUrl(true);
+    })();
+  </script>
+</body>
+</html>
